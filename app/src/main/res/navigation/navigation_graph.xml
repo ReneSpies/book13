@@ -21,7 +21,11 @@
         android:label="TrackingListFragment"
         tools:layout="@layout/fragment_tracking_list">
         <action
-            android:id="@+id/action_trackingListFragment_to_trackingDetailsFragment"
-            app:destination="@id/trackingDetailsFragment" />
+            android:id="@+id/to_trackingDetailsFragment"
+            app:destination="@id/trackingDetailsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 </navigation>
