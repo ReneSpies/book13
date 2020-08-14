@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- FloatingActionButton margins -->
+    <dimen name="floating_action_button_margin">24dp</dimen>
+    <!-- END FloatingActionButton margins -->
+
+    <!-- Guideline margins -->
+    <dimen name="guideline_margin_small">8dp</dimen>
+    <dimen name="guideline_margin_large">16dp</dimen>
+    <!-- END Guideline margins -->
+</resources>
