@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/add_book"
+            android:icon="@drawable/ic_sharp_menu_book_24"
+            android:orderInCategory="101"
+            android:title="Add Book" />
+        <item
+            android:id="@+id/start_tracking"
+            android:icon="@drawable/ic_sharp_timer_24"
+            android:orderInCategory="100"
+            android:title="Start Tracking" />
+    </group>
+</menu>

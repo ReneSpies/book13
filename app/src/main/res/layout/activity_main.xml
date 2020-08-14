@@ -40,12 +40,14 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navGraph="@navigation/navigation_graph" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.leinardi.android.speeddial.SpeedDialView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:id="@+id/speed_dial_view"
             android:layout_margin="@dimen/floating_action_button_margin"
-            app:icon="@drawable/ic_sharp_timer_24" />
+            app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+            app:sdMainFabClosedSrc="@drawable/ic_sharp_add_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

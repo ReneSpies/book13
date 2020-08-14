@@ -6,7 +6,7 @@ buildscript {
             "kotlin"    : "1.4.0",
             "fragment"  : "1.2.5",
             "navigation": "2.3.0",
-            "minSdk"    : 16,
+            "minSdk"    : 21,
             "targetSdk" : 30,
             "compileSdk": 30,
 
