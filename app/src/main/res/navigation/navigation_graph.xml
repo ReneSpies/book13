@@ -9,12 +9,12 @@
         android:id="@+id/addBookFragment"
         android:name="co.aresid.book13.fragments.addbook.AddBookFragment"
         android:label="AddBookFragment"
-        tools:layout="@layout/fragment_add_book"></fragment>
+        tools:layout="@layout/fragment_add_book" />
     <fragment
         android:id="@+id/trackingDetailsFragment"
         android:name="co.aresid.book13.fragments.trackingdetails.TrackingDetailsFragment"
         android:label="TrackingDetailsFragment"
-        tools:layout="@layout/fragment_tracking_details"></fragment>
+        tools:layout="@layout/fragment_tracking_details" />
     <fragment
         android:id="@+id/trackingListFragment"
         android:name="co.aresid.book13.fragments.trackinglist.TrackingListFragment"
@@ -28,4 +28,9 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/startTrackingFragment"
+        android:name="co.aresid.book13.fragments.starttracking.StartTrackingFragment"
+        android:label="StartTrackingFragment"
+        tools:layout="@layout/fragment_start_tracking" />
 </navigation>

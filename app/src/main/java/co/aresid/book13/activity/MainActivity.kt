@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.start_tracking -> {
 
                     navigationController.navigate(
-                        R.id.trackingDetailsFragment,
+                        R.id.startTrackingFragment,
                         null,
                         navigationOptions
                     )

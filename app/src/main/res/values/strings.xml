@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">book13</string>
-    <string name="add_book">Add Book</string>
     <string name="start_tracking">Start Tracking</string>
-    <string name="add_a_book">Add a book</string>
+    <string name="add_a_book">Add A Book</string>
     <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="number_of_pages">Number of pages</string>
@@ -11,4 +10,7 @@
     <string name="add_the_book">Add the book</string>
     <string name="start_colon">Start&#58;</string>
     <string name="finish_colon">Finish&#58;</string>
+    <string name="book">Book</string>
+    <string name="start_page_count">Start page count</string>
+    <string name="end_page_count">End page count</string>
 </resources>
