@@ -1,4 +1,5 @@
 <resources>
+
 	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorPrimary">@color/primaryColor</item>
 		<item name="colorPrimaryVariant">@color/primaryLightColor</item>
@@ -7,6 +8,12 @@
 		<item name="colorSecondary">@color/secondaryColor</item>
 		<item name="colorSecondaryVariant">@color/secondaryLightColor</item>
 		<item name="colorOnSecondary">@color/secondaryTextColor</item>
+		<item name="fontFamily">@font/ibm_plex_serif_regular</item>
+	</style>
+
+	<style name="AppTheme.FragmentHeaderTextView" parent="TextAppearance.AppCompat.Title">
+		<item name="fontFamily">@font/ibm_plex_serif_regular</item>
+		<item name="android:textSize">40sp</item>
 	</style>
 
 </resources>
