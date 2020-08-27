@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,13 +12,105 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/fragment_header_text_view"
+            style="@style/AppTheme.Widget.TextView.FragmentHeaderTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="tracking details fragment"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            android:text="Details"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+        <TextView
+            android:id="@+id/book_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/fragment_header_text_view"
+            tools:text="Book title" />
+
+        <TextView
+            android:id="@+id/book_author_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/book_title_text_view"
+            tools:text="Book author" />
+
+        <TextView
+            android:id="@+id/start_date_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/start_date_colon"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/book_author_text_view" />
+
+        <TextView
+            android:id="@+id/start_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/start_date_title_text_view"
+            tools:text="Actual start date" />
+
+        <TextView
+            android:id="@+id/finish_date_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_date_colon"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/start_date_text_view" />
+
+        <TextView
+            android:id="@+id/finish_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/finish_date_title_text_view"
+            tools:text="Actual finish date" />
+
+        <TextView
+            android:id="@+id/pages_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pages_colon"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/finish_date_text_view" />
+
+        <TextView
+            android:id="@+id/pages_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/pages_title_text_view"
+            tools:text="Actual number of pages" />
+
+        <TextView
+            android:id="@+id/pages_read_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pages_read_colon"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/pages_text_view" />
+
+        <TextView
+            android:id="@+id/pages_read_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/pages_read_title_text_view"
+            tools:text="Actual number of pages read" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"

@@ -8,4 +8,8 @@
     <dimen name="guideline_margin_small">8dp</dimen>
     <dimen name="guideline_margin_large">16dp</dimen>
     <!-- END Guideline margins -->
+
+    <!-- TextView padding -->
+    <dimen name="text_view_padding">3dp</dimen>
+    <!-- END TextView padding -->
 </resources>

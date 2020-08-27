@@ -5,12 +5,15 @@
     <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="number_of_pages">Number of pages</string>
-    <string name="start_date">Start date</string>
-    <string name="finish_date">Finish date</string>
+    <string name="start_date_colon">Start date&#58;</string>
+    <string name="finish_date_colon">Finish date&#58;</string>
     <string name="add_the_book">Add the book</string>
     <string name="start_colon">Start&#58;</string>
     <string name="finish_colon">Finish&#58;</string>
     <string name="book">Book</string>
     <string name="start_page_count">Start page count</string>
     <string name="end_page_count">End page count</string>
+    <string name="pages_colon">Pages&#58;</string>
+    <string name="pages_read_colon">Pages read&#58;</string>
+    <string name="by_placeholder">by %1s</string>
 </resources>
