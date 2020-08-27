@@ -16,4 +16,10 @@
 		<item name="android:textSize">40sp</item>
 	</style>
 
+	<style name="AppTheme.Widget.Button.OutlinedButton.Icon" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
+		<item name="strokeColor">?attr/colorOnBackground</item>
+		<item name="iconTint">?attr/colorOnBackground</item>
+		<item name="android:textColor">?attr/colorOnBackground</item>
+	</style>
+
 </resources>
