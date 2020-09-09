@@ -1,13 +1,11 @@
 package co.aresid.book13.database
 
-
 /**
  *    Created on: 02.09.2020
  *    For Project: book13
  *    Author: René Spies
  *    Copyright: © 2020 ARES ID
  */
-
 
 class DatabaseNames {
 

@@ -9,14 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.databinding.FragmentTrackingDetailsBinding
 import timber.log.Timber
 
-
 /**
  *    Created on: 8/14/20
  *    For Project: book13
  *    Author: René Spies
  *    Copyright: © 2020 ARES ID
  */
-
 
 class TrackingDetailsFragment : Fragment() {
 
@@ -34,10 +32,18 @@ class TrackingDetailsFragment : Fragment() {
 
         Timber.d("onCreateView: called")
 
-        super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(
+            inflater,
+            container,
+            savedInstanceState
+        )
 
         // Define the binding and inflate the layout
-        binding = FragmentTrackingDetailsBinding.inflate(inflater, container, false)
+        binding = FragmentTrackingDetailsBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         // Define the ViewModel
         trackingDetailsViewModel = ViewModelProvider(this).get(TrackingDetailsViewModel::class.java)

@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-
 /**
  *    Created on: 02.09.2020
  *    For Project: book13

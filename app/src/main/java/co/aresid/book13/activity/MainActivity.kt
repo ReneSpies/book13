@@ -29,16 +29,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.speedDialView.setOnActionSelectedListener { actionItem ->
 
-            val navigationOptions =
-                NavOptions.Builder().setPopUpTo(R.id.trackingListFragment, false)
-                    .setEnterAnim(R.anim.fade_in).setPopEnterAnim(R.anim.fade_in)
-                    .setExitAnim(R.anim.fade_out).setPopExitAnim(R.anim.fade_out).build()
+            val navigationOptions = NavOptions.Builder().setPopUpTo(
+                R.id.trackingListFragment,
+                false
+            ).setEnterAnim(R.anim.fade_in).setPopEnterAnim(R.anim.fade_in)
+                .setExitAnim(R.anim.fade_out).setPopExitAnim(R.anim.fade_out).build()
 
             when (actionItem.id) {
 
                 R.id.add_book -> {
 
-                    navigationController.navigate(R.id.addBookFragment, null, navigationOptions)
+                    navigationController.navigate(
+                        R.id.addBookFragment,
+                        null,
+                        navigationOptions
+                    )
 
                 }
 

@@ -9,14 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import timber.log.Timber
 
-
 /**
  *    Created on: 8/14/20
  *    For Project: book13
  *    Author: René Spies
  *    Copyright: © 2020 ARES ID
  */
-
 
 class AddBookFragment : Fragment() {
 
@@ -34,13 +32,24 @@ class AddBookFragment : Fragment() {
 
         Timber.d("onCreateView: called")
 
-        super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(
+            inflater,
+            container,
+            savedInstanceState
+        )
 
         // Define the binding and inflate the layout
-        binding = FragmentAddBookBinding.inflate(inflater, container, false)
+        binding = FragmentAddBookBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         // Define the ViewModel
         addBookViewModel = ViewModelProvider(this).get(AddBookViewModel::class.java)
+
+        // Tell the layout about the ViewModel
+        binding.viewModel = addBookViewModel
 
         // Return the inflated layout
         return binding.root

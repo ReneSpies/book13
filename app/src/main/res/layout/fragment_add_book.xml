@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="co.aresid.book13.fragments.addbook.AddBookViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -40,7 +43,8 @@
                     android:layout_height="match_parent"
                     android:imeActionId="100"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewModel.bookTitle}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +63,8 @@
                     android:layout_height="match_parent"
                     android:imeActionId="101"
                     android:imeOptions="actionNext"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.bookAuthor}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +83,8 @@
                     android:layout_height="match_parent"
                     android:imeActionId="102"
                     android:imeOptions="actionDone"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.bookPages}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -87,6 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.5dp"
+                android:onClick="@{() -> viewModel.addStartDateButtonClicked()}"
                 android:text="@string/start_date"
                 app:icon="@drawable/ic_sharp_add_24"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -99,6 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.5dp"
+                android:onClick="@{() -> viewModel.addFinishDateButtonClicked()}"
                 android:text="@string/finish_date"
                 app:icon="@drawable/ic_sharp_add_24"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -110,6 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.5dp"
+                android:onClick="@{() -> viewModel.addBook()}"
                 android:text="@string/add_the_book"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"

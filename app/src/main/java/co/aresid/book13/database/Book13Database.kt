@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import co.aresid.book13.database.bookdata.BookData
 import co.aresid.book13.database.bookdata.BookDataDao
 import co.aresid.book13.database.trackingdata.TrackingData
-
+import co.aresid.book13.database.trackingdata.TrackingDataDao
 
 /**
  *    Created on: 02.09.2020
@@ -31,7 +31,7 @@ abstract class Book13Database : RoomDatabase() {
     /**
      * Returns [TrackingData].
      */
-    abstract fun getTrackingDataDao(): TrackingData
+    abstract fun getTrackingDataDao(): TrackingDataDao
 
     companion object {
 

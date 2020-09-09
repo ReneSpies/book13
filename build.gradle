@@ -9,6 +9,7 @@ buildscript {
             "minSdk"    : 21,
             "targetSdk" : 30,
             "compileSdk": 30,
+            "room"      : "2.2.5",
 
     ]
 

@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import timber.log.Timber
 
-
 /**
  *    Created on: 8/14/20
  *    For Project: book13
@@ -12,11 +11,13 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-
 class TrackingListAdapter(val clickListener: TrackingListClickListener) :
     RecyclerView.Adapter<TrackingListViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackingListViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TrackingListViewHolder {
 
         Timber.d("onCreateViewHolder: called")
 
@@ -24,13 +25,19 @@ class TrackingListAdapter(val clickListener: TrackingListClickListener) :
 
     }
 
-    override fun onBindViewHolder(holder: TrackingListViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TrackingListViewHolder,
+        position: Int
+    ) {
 
         Timber.d("onBindViewHolder: called")
 
         holder.binding.titleTextView.text = position.toString()
 
-        holder.bind(clickListener, position)
+        holder.bind(
+            clickListener,
+            position
+        )
 
     }
 

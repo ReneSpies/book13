@@ -14,14 +14,12 @@ import co.aresid.book13.recyclerview.TrackingListAdapter
 import co.aresid.book13.recyclerview.TrackingListClickListener
 import timber.log.Timber
 
-
 /**
  *    Created on: 8/14/20
  *    For Project: book13
  *    Author: René Spies
  *    Copyright: © 2020 ARES ID
  */
-
 
 class TrackingListFragment : Fragment() {
 
@@ -39,10 +37,18 @@ class TrackingListFragment : Fragment() {
 
         Timber.d("onCreateView: called")
 
-        super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(
+            inflater,
+            container,
+            savedInstanceState
+        )
 
         // Define the binding and inflate the layout
-        binding = FragmentTrackingListBinding.inflate(inflater, container, false)
+        binding = FragmentTrackingListBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         // Define the ViewModel
         trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
@@ -54,7 +60,10 @@ class TrackingListFragment : Fragment() {
             Timber.d("item number $position clicked")
 
             val arguments = Bundle()
-            arguments.putInt("position", position)
+            arguments.putInt(
+                "position",
+                position
+            )
 
             findNavController().navigate(R.id.to_trackingDetailsFragment)
 

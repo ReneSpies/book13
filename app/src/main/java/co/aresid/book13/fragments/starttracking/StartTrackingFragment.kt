@@ -9,14 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.databinding.FragmentStartTrackingBinding
 import timber.log.Timber
 
-
 /**
  *    Created on: 8/18/20
  *    For Project: book13
  *    Author: René Spies
  *    Copyright: © 2020 ARES ID
  */
-
 
 class StartTrackingFragment : Fragment() {
 
@@ -35,7 +33,11 @@ class StartTrackingFragment : Fragment() {
         Timber.d("onCreateView: called")
 
         // Define the binding and inflate the layout
-        binding = FragmentStartTrackingBinding.inflate(inflater, container, false)
+        binding = FragmentStartTrackingBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         // Define the ViewModel
         startTrackingViewModel = ViewModelProvider(this).get(StartTrackingViewModel::class.java)
