@@ -1,10 +1,14 @@
 package co.aresid.book13.fragments.addbook
 
+import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import timber.log.Timber
@@ -51,8 +55,32 @@ class AddBookFragment : Fragment() {
         // Tell the layout about the ViewModel
         binding.viewModel = addBookViewModel
 
+        // Observe the showDatePickerDialog LiveData
+        addBookViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer { shouldShow ->
+
+            if (shouldShow) {
+
+                showDatePickerDialog()
+
+            }
+
+        })
+
         // Return the inflated layout
         return binding.root
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun showDatePickerDialog() {
+
+        Timber.d("showDatePickerDialog: called")
+
+        val datePickerDialog = DatePickerDialog(requireContext())
+
+        datePickerDialog.show()
+
+        addBookViewModel.datePickerDialogShown()
 
     }
 
