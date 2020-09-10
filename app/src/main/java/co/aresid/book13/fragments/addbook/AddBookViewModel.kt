@@ -27,15 +27,19 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
     var bookStartDate = -1L
     var bookFinishDate = -1L
 
-    private val _showDatePickerDialog = MutableLiveData<Boolean>()
-    val showDatePickerDialog: LiveData<Boolean>
-        get() = _showDatePickerDialog
+    private val _showStartDatePickerDialog = MutableLiveData<Boolean>()
+    val showStartDatePickerDialog: LiveData<Boolean>
+        get() = _showStartDatePickerDialog
+
+    private val _showFinishDatePickerDialog = MutableLiveData<Boolean>()
+    val showFinishDatePickerDialog: LiveData<Boolean>
+        get() = _showFinishDatePickerDialog
 
     init {
 
         Timber.d("init: called")
 
-        initializeShowDatePickerDialogValue()
+        initializeShowStartDatePickerDialogValue()
 
     }
 
@@ -73,37 +77,55 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
     }
 
-    fun addStartDateButtonClicked() {
+    fun startDateButtonClicked() {
 
-        Timber.d("addStartDateButtonClicked: called")
-
-        // TODO: 09/09/2020 Start a DatePickerDialog and show the date locally converted afterwards
-
-        _showDatePickerDialog.value = true
-
-    }
-
-    fun addFinishDateButtonClicked() {
-
-        Timber.d("addFinishDateButtonClicked: called")
+        Timber.d("startDateButtonClicked: called")
 
         // TODO: 09/09/2020 Start a DatePickerDialog and show the date locally converted afterwards
 
-    }
-
-    private fun initializeShowDatePickerDialogValue() {
-
-        Timber.d("resetShowDatePickerDialogValue: called")
-
-        _showDatePickerDialog.value = false
+        _showStartDatePickerDialog.value = true
 
     }
 
-    fun datePickerDialogShown() {
+    fun finishDateButtonClicked() {
 
-        Timber.d("datePickerDialogShown: called")
+        Timber.d("finishDateButtonClicked: called")
 
-        initializeShowDatePickerDialogValue()
+        // TODO: 09/09/2020 Start a DatePickerDialog and show the date locally converted afterwards
+
+        _showFinishDatePickerDialog.value = true
+
+    }
+
+    private fun initializeShowStartDatePickerDialogValue() {
+
+        Timber.d("initializeShowStartDatePickerDialogValue: called")
+
+        _showStartDatePickerDialog.value = false
+
+    }
+
+    private fun initializeShowFinishDatePickerDialogValue() {
+
+        Timber.d("initializeShowFinishDatePickerDialogValue: called")
+
+        _showFinishDatePickerDialog.value = false
+
+    }
+
+    fun startDatePickerDialogShown() {
+
+        Timber.d("startDatePickerDialogShown: called")
+
+        initializeShowStartDatePickerDialogValue()
+
+    }
+
+    fun finishDatePickerDialogShown() {
+
+        Timber.d("finishDatePickerDialogShown: called")
+
+        initializeShowFinishDatePickerDialogValue()
 
     }
 
