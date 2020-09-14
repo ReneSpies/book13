@@ -35,11 +35,22 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
     val showFinishDatePickerDialog: LiveData<Boolean>
         get() = _showFinishDatePickerDialog
 
+    private val _showStartDateView = MutableLiveData<Boolean>()
+    val showStartDateView: LiveData<Boolean>
+        get() = _showStartDateView
+
+    private val _showFinishDateView = MutableLiveData<Boolean>()
+    val showFinishDateView: LiveData<Boolean>
+        get() = _showFinishDateView
+
     init {
 
         Timber.d("init: called")
 
         initializeShowStartDatePickerDialogValue()
+
+        _showStartDateView.value = false
+        _showFinishDateView.value = false
 
     }
 
@@ -126,6 +137,22 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
         Timber.d("finishDatePickerDialogShown: called")
 
         initializeShowFinishDatePickerDialogValue()
+
+    }
+
+    fun showStartDateView() {
+
+        Timber.d("showStartDateView: called")
+
+        _showStartDateView.value = true
+
+    }
+
+    fun showFinishDateView() {
+
+        Timber.d("showFinishDateView: called")
+
+        _showFinishDateView.value = true
 
     }
 

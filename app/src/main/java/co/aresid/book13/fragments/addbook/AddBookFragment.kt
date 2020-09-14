@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import timber.log.Timber
+import java.text.DateFormat
 import java.util.*
 
 /**
@@ -77,16 +78,57 @@ class AddBookFragment : Fragment() {
 
             })
 
+        // Observe the showStartDateView LiveData
+        addBookViewModel.showStartDateView.observe(viewLifecycleOwner, { shouldShow ->
+
+            if (shouldShow) {
+
+                showStartDateView()
+
+            }
+
+        })
+
+        // Observe the showFinishDateView LiveData
+        addBookViewModel.showFinishDateView.observe(viewLifecycleOwner, { shouldShow ->
+
+            if (shouldShow) {
+
+                // TODO: 14/09/2020 Show the view and hide the other
+
+            }
+
+        })
+
         // Return the inflated layout
         return binding.root
 
     }
 
+    private fun showStartDateView() {
+
+        Timber.d("showStartDateView: called")
+
+        val localCalendar = Calendar.getInstance()
+        localCalendar.timeInMillis = addBookViewModel.bookStartDate
+        val startDate = localCalendar.time
+        binding.startTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(startDate)
+        binding.addStartDateButtonGroup.visibility = View.INVISIBLE
+        binding.startDateGroup.visibility = View.VISIBLE
+
+    }
+
     private val startDatePickerListener =
-        DatePickerDialog.OnDateSetListener { _, year, month, day ->
+        DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 
             Timber.d("onDateSet: called")
-            Timber.d("date = $day, $month, $year")
+            Timber.d("date = $day.$month.$year")
+
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, day)
+
+            addBookViewModel.bookStartDate = calendar.timeInMillis
+            addBookViewModel.showStartDateView()
 
         }
 
@@ -94,7 +136,13 @@ class AddBookFragment : Fragment() {
         DatePickerDialog.OnDateSetListener { _, year, month, day ->
 
             Timber.d("onDateSet: called")
-            Timber.d("date = $day, $month, $year")
+            Timber.d("date = $day.$month.$year")
+
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, day)
+
+            addBookViewModel.bookFinishDate = calendar.timeInMillis
+            addBookViewModel.showFinishDateView()
 
         }
 
