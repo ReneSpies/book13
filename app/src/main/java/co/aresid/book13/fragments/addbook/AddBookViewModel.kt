@@ -88,21 +88,17 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
     }
 
-    fun startDateButtonClicked() {
+    fun showStartDatePickerDialog() {
 
         Timber.d("startDateButtonClicked: called")
-
-        // TODO: 09/09/2020 Start a DatePickerDialog and show the date locally converted afterwards
 
         _showStartDatePickerDialog.value = true
 
     }
 
-    fun finishDateButtonClicked() {
+    fun showFinishDatePickerDialog() {
 
         Timber.d("finishDateButtonClicked: called")
-
-        // TODO: 09/09/2020 Start a DatePickerDialog and show the date locally converted afterwards
 
         _showFinishDatePickerDialog.value = true
 

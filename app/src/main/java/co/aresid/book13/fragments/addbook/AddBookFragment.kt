@@ -94,7 +94,7 @@ class AddBookFragment : Fragment() {
 
             if (shouldShow) {
 
-                // TODO: 14/09/2020 Show the view and hide the other
+                showFinishDateView()
 
             }
 
@@ -109,17 +109,56 @@ class AddBookFragment : Fragment() {
 
         Timber.d("showStartDateView: called")
 
-        val localCalendar = Calendar.getInstance()
-        localCalendar.timeInMillis = addBookViewModel.bookStartDate
-        val startDate = localCalendar.time
-        binding.startTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(startDate)
+        binding.startDateTextView.text = getLocallyFormattedStartDateAsString()
         binding.addStartDateButtonGroup.visibility = View.INVISIBLE
         binding.startDateGroup.visibility = View.VISIBLE
 
     }
 
+    private fun showFinishDateView() {
+
+        Timber.d("showFinishDateView: called")
+
+        binding.finishDateTextView.text = getLocallyFormattedFinishDateAsString()
+        binding.addFinishDateButtonGroup.visibility = View.INVISIBLE
+        binding.finishDateGroup.visibility = View.VISIBLE
+
+    }
+
+    private fun getLocallyFormattedDateAsString(date: Date): String {
+
+        Timber.d("getLocallyFormattedDateAsString: called")
+
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(date)
+
+    }
+
+    private fun getLocallyFormattedStartDateAsString(): String {
+
+        Timber.d("getLocallyFormattedStartDateAsString: called")
+
+        val localCalendar = Calendar.getInstance()
+        localCalendar.timeInMillis = addBookViewModel.bookStartDate
+        val startDate = localCalendar.time
+
+        return getLocallyFormattedDateAsString(startDate)
+
+    }
+
+    private fun getLocallyFormattedFinishDateAsString(): String {
+
+        Timber.d("getLocallyFormattedFinishDateAsString: called")
+
+        val localCalendar = Calendar.getInstance()
+        localCalendar.timeInMillis = addBookViewModel.bookFinishDate
+        val startDate = localCalendar.time
+
+        return getLocallyFormattedDateAsString(startDate)
+
+    }
+
     private val startDatePickerListener =
-        DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+        DatePickerDialog.OnDateSetListener { _, year, month, day ->
 
             Timber.d("onDateSet: called")
             Timber.d("date = $day.$month.$year")
