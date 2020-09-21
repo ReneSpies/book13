@@ -3,10 +3,13 @@ package co.aresid.book13.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import co.aresid.book13.R
 import co.aresid.book13.databinding.ActivityMainBinding
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,8 +23,45 @@ class MainActivity : AppCompatActivity() {
         // Define the binding and inflate the layout
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
 
-        // Inflate the menu for the SpeedDial
-        binding.speedDialView.inflate(R.menu.speed_dial)
+        createSpeedDial()
+
+        // Set the inflated layout
+        setContentView(binding.root)
+
+    }
+
+    private fun createSpeedDial() {
+
+        Timber.d("createSpeedDial: called")
+
+        val speedDial = binding.speedDialView
+
+        val startTrackingSpeedDialActionItem = SpeedDialActionItem.Builder(
+            R.id.start_tracking,
+            R.drawable.ic_sharp_timer_24
+        ).setFabImageTintColor(ContextCompat.getColor(this, android.R.color.white))
+            .setLabel(R.string.start_tracking).create()
+
+        val addBookSpeedDialActionItem = SpeedDialActionItem.Builder(
+            R.id.add_book,
+            R.drawable.ic_sharp_menu_book_24
+        ).setFabImageTintColor(ContextCompat.getColor(this, android.R.color.white))
+            .setLabel(R.string.add_a_book).create()
+
+        val speedDialActionItemCollection = listOf(
+            startTrackingSpeedDialActionItem,
+            addBookSpeedDialActionItem
+        )
+
+        speedDial.addAllActionItems(speedDialActionItemCollection)
+
+        createSpeedDialClickListener()
+
+    }
+
+    private fun createSpeedDialClickListener() {
+
+        Timber.d("createSpeedDialClickListener: called")
 
         val navigationHostFragment =
             supportFragmentManager.findFragmentById(R.id.navigation_host) as NavHostFragment
@@ -62,9 +102,6 @@ class MainActivity : AppCompatActivity() {
             false
 
         }
-
-        // Set the inflated layout
-        setContentView(binding.root)
 
     }
 
