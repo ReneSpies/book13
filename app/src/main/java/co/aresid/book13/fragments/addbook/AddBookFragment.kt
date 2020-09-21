@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import co.aresid.book13.R
+import co.aresid.book13.Util.showErrorMessage
+import co.aresid.book13.Util.showLoadingSpinnerAndDisable
 import co.aresid.book13.databinding.FragmentAddBookBinding
+import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
@@ -100,8 +104,59 @@ class AddBookFragment : Fragment() {
 
         })
 
+        // Observe the editTextErrors LiveData
+        addBookViewModel.editTextErrors.observe(viewLifecycleOwner,
+            { state ->
+
+                when (state) {
+
+                    EditTextErrors.INIT -> removeAllEditTextErrors()
+                    EditTextErrors.BOOK_TITLE_MISSING -> {
+
+                        binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
+
+                    }
+                    EditTextErrors.BOOK_AUTHOR_MISSING -> {
+
+                        binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
+
+                    }
+                    EditTextErrors.BOOK_PAGE_COUNT_MISSING -> {
+
+                        binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
+
+                    }
+                    else -> {
+                    }
+
+                }
+
+            })
+
+        binding.addBookButton.showLoadingSpinnerAndDisable()
+
         // Return the inflated layout
         return binding.root
+
+    }
+
+    private fun removeAllEditTextErrors() {
+
+        Timber.d("removeAllEditTextErrors: called")
+
+        for (position in 0..binding.constraintLayout.childCount) {
+
+            val view = binding.constraintLayout.getChildAt(position)
+
+            if (view is TextInputLayout) {
+
+                view.error = null
+
+                view.isErrorEnabled = false
+
+            }
+
+        }
 
     }
 

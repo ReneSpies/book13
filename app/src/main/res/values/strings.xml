@@ -18,4 +18,7 @@
     <string name="pages_colon">Pages&#58;</string>
     <string name="pages_read_colon">Pages read&#58;</string>
     <string name="by_placeholder">by %1s</string>
+    <string name="book_title_missing">Book title missing</string>
+    <string name="book_author_missing">Book author missing</string>
+    <string name="book_page_count_missing">Book page count missing</string>
 </resources>

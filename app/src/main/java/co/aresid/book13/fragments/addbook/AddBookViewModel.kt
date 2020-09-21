@@ -43,6 +43,10 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
     val showFinishDateView: LiveData<Boolean>
         get() = _showFinishDateView
 
+    private val _editTextErrors = MutableLiveData<EditTextErrors>()
+    val editTextErrors: LiveData<EditTextErrors>
+        get() = _editTextErrors
+
     init {
 
         Timber.d("init: called")
@@ -52,17 +56,37 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
         _showStartDateView.value = false
         _showFinishDateView.value = false
 
+        initializeEditTextErrorValue()
+
     }
 
     fun addBook() = viewModelScope.launch {
 
         Timber.d("addBook: called")
 
-        if (bookTitle.isEmpty() || bookAuthor.isEmpty() || bookPages.isEmpty()) {
+        initializeEditTextErrorValue()
+
+        if (bookTitle.isEmpty()) {
+
+            _editTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
 
             return@launch
 
-            // TODO: 10/09/2020 show feedback to the user
+        }
+
+        if (bookAuthor.isEmpty()) {
+
+            _editTextErrors.value = EditTextErrors.BOOK_AUTHOR_MISSING
+
+            return@launch
+
+        }
+
+        if (bookPages.isEmpty()) {
+
+            _editTextErrors.value = EditTextErrors.BOOK_PAGE_COUNT_MISSING
+
+            return@launch
 
         }
 
@@ -112,6 +136,14 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
     }
 
+    private fun initializeEditTextErrorValue() {
+
+        Timber.d("initializeEditTextErrorValue: called")
+
+        _editTextErrors.value = EditTextErrors.INIT
+
+    }
+
     private fun initializeShowFinishDatePickerDialogValue() {
 
         Timber.d("initializeShowFinishDatePickerDialogValue: called")
@@ -151,5 +183,17 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
         _showFinishDateView.value = true
 
     }
+
+}
+
+enum class EditTextErrors {
+
+    INIT,
+
+    BOOK_TITLE_MISSING,
+
+    BOOK_AUTHOR_MISSING,
+
+    BOOK_PAGE_COUNT_MISSING
 
 }
