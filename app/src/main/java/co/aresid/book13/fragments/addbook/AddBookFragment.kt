@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
 import co.aresid.book13.Util.showErrorMessage
-import co.aresid.book13.Util.showLoadingSpinnerAndDisable
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
@@ -132,8 +131,6 @@ class AddBookFragment : Fragment() {
                 }
 
             })
-
-        binding.addBookButton.showLoadingSpinnerAndDisable()
 
         // Return the inflated layout
         return binding.root

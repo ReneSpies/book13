@@ -21,4 +21,5 @@
     <string name="book_title_missing">Book title missing</string>
     <string name="book_author_missing">Book author missing</string>
     <string name="book_page_count_missing">Book page count missing</string>
+    <string name="standard_error_message">Something weird happened, try again.</string>
 </resources>

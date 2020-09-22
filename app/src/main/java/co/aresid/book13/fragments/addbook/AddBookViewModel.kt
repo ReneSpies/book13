@@ -1,12 +1,19 @@
 package co.aresid.book13.fragments.addbook
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import co.aresid.book13.R
+import co.aresid.book13.Util.disableAndShowLoadingSpinner
+import co.aresid.book13.Util.enableAndResetCompoundDrawablesWithIntrinsicBounds
+import co.aresid.book13.Util.enableAndShowCheckFor500Millis
+import co.aresid.book13.Util.showErrorSnackbar
 import co.aresid.book13.database.bookdata.BookData
 import co.aresid.book13.repository.Book13Repository
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,7 +67,7 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
     }
 
-    fun addBook() = viewModelScope.launch {
+    fun addBook(view: View) = viewModelScope.launch {
 
         Timber.d("addBook: called")
 
@@ -102,19 +109,34 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
         )
 
-        withContext(Dispatchers.IO) {
+        // Show a loading spinner on the button
+        val button = view as MaterialButton
+        button.disableAndShowLoadingSpinner()
 
-            repository.insertBookData(bookData)
+        // Try to insert the bookData into the table and if it fails, show an error snackbar
+        // and reset the drawables on the button
+        try {
+
+            withContext(Dispatchers.IO) {
+
+                repository.insertBookData(bookData)
+
+            }
+
+            button.enableAndShowCheckFor500Millis()
+
+        } catch (e: Exception) {
+
+            button.enableAndResetCompoundDrawablesWithIntrinsicBounds()
+            button.showErrorSnackbar(button.context.getString(R.string.standard_error_message))
 
         }
-
-        // TODO: 10/09/2020 Show feedback to the user
 
     }
 
     fun showStartDatePickerDialog() {
 
-        Timber.d("startDateButtonClicked: called")
+        Timber.d("showStartDatePickerDialog: called")
 
         _showStartDatePickerDialog.value = true
 
