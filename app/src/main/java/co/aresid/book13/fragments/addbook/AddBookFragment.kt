@@ -249,7 +249,14 @@ class AddBookFragment : Fragment() {
 
         // Create and immediately show the dialog
         val datePickerFragment =
-            DatePickerDialog(requireContext(), startDatePickerListener, year, month, day)
+            DatePickerDialog(
+                requireContext(),
+                android.R.style.Theme_Material_Dialog_Alert,
+                startDatePickerListener,
+                year,
+                month,
+                day
+            )
         datePickerFragment.show()
 
         // Reset the LiveData
@@ -268,7 +275,13 @@ class AddBookFragment : Fragment() {
 
         // Create and immediately show the dialog
         val datePickerFragment =
-            DatePickerDialog(requireContext(), finishDatePickerListener, year, month, day)
+            DatePickerDialog(
+                requireContext(), android.R.style.Theme_Material_Dialog_Alert,
+                finishDatePickerListener,
+                year,
+                month,
+                day
+            )
         datePickerFragment.show()
 
         // Reset the LiveData

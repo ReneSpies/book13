@@ -4,7 +4,6 @@
 		<item name="colorPrimary">@color/primaryColor</item>
 		<item name="colorPrimaryVariant">@color/primaryLightColor</item>
 		<item name="colorPrimaryDark">@color/primaryDarkColor</item>
-		<item name="android:textColorPrimary">@color/primaryTextColor</item>
 		<item name="colorOnPrimary">@color/primaryTextColor</item>
 		<item name="fontFamily">@font/ibm_plex_serif_regular</item>
 		<item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>

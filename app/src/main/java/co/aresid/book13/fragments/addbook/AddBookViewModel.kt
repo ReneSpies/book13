@@ -144,7 +144,7 @@ class AddBookViewModel(application: Application) : AndroidViewModel(application)
 
     fun showFinishDatePickerDialog() {
 
-        Timber.d("finishDateButtonClicked: called")
+        Timber.d("showFinishDatePickerDialog: called")
 
         _showFinishDatePickerDialog.value = true
 
