@@ -42,6 +42,13 @@ class StartTrackingFragment: Fragment() {
 		// Define the ViewModel
 		startTrackingViewModel = ViewModelProvider(this).get(StartTrackingViewModel::class.java)
 		
+		startTrackingViewModel.booksAutoCompleteTextViewAdapter.observe(viewLifecycleOwner,
+		                                                                {
+			
+			                                                                binding.bookTitleAutoCompleteTextView.setAdapter(it)
+			
+		                                                                })
+		
 		// Return the inflated layout
 		return binding.root
 		

@@ -40,6 +40,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:imeActionId="100"
+				android:id="@+id/book_title_auto_complete_text_view"
 				android:imeOptions="actionNext"
 				android:inputType="text"
 				/>

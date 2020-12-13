@@ -18,6 +18,9 @@ interface BookDataDao {
 	@Query("SELECT * FROM book_data WHERE id = :bookId")
 	suspend fun get(bookId: Long): BookData?
 	
+	@Query("SELECT * FROM book_data")
+	suspend fun getAll(): List<BookData>
+	
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insert(data: BookData)
 	
