@@ -11,12 +11,12 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class StartTrackingViewModel(application: Application) : AndroidViewModel(application) {
-
-    init {
-
-        Timber.d("init: called")
-
-    }
-
+class StartTrackingViewModel(application: Application): AndroidViewModel(application) {
+	
+	init {
+		
+		Timber.d("init: called")
+		
+	}
+	
 }

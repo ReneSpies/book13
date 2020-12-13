@@ -8,7 +8,7 @@ package co.aresid.book13.recyclerview
  */
 
 class TrackingListClickListener(val clickListener: (position: Int) -> Unit) {
-
-    fun onClick(position: Int) = clickListener(position)
-
+	
+	fun onClick(position: Int) = clickListener(position)
+	
 }

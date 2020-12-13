@@ -11,36 +11,35 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListAdapter(val clickListener: TrackingListClickListener) :
-    RecyclerView.Adapter<TrackingListViewHolder>() {
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TrackingListViewHolder {
-
-        Timber.d("onCreateViewHolder: called")
-
-        return TrackingListViewHolder.from(parent)
-
-    }
-
-    override fun onBindViewHolder(
-        holder: TrackingListViewHolder,
-        position: Int
-    ) {
-
-        Timber.d("onBindViewHolder: called")
-
-        holder.binding.titleTextView.text = position.toString()
-
-        holder.bind(
-            clickListener,
-            position
-        )
-
-    }
-
-    override fun getItemCount(): Int = 100
-
+class TrackingListAdapter(val clickListener: TrackingListClickListener): RecyclerView.Adapter<TrackingListViewHolder>() {
+	
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): TrackingListViewHolder {
+		
+		Timber.d("onCreateViewHolder: called")
+		
+		return TrackingListViewHolder.from(parent)
+		
+	}
+	
+	override fun onBindViewHolder(
+		holder: TrackingListViewHolder,
+		position: Int
+	) {
+		
+		Timber.d("onBindViewHolder: called")
+		
+		holder.binding.titleTextView.text = position.toString()
+		
+		holder.bind(
+			clickListener,
+			position
+		)
+		
+	}
+	
+	override fun getItemCount(): Int = 100
+	
 }

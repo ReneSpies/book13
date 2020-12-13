@@ -15,60 +15,59 @@ import co.aresid.book13.database.trackingdata.TrackingDataDao
  */
 
 class Book13Repository private constructor(private val application: Application) {
-
-    // Database
-    private lateinit var book13Database: Book13Database
-
-    // BookDataDao
-    private val bookDataDao: BookDataDao by lazy {
-
-        if (!::book13Database.isInitialized) {
-
-            book13Database = Book13Database.getDatabase(application.applicationContext)
-
-        }
-
-        book13Database.getBookDataDao()
-
-    }
-
-    // TrackingDataDao
-    private val trackingDataDao: TrackingDataDao by lazy {
-
-        if (!::book13Database.isInitialized) {
-
-            book13Database = Book13Database.getDatabase(application.applicationContext)
-
-        }
-
-        book13Database.getTrackingDataDao()
-
-    }
-
-    suspend fun getBookDataById(id: Long) = bookDataDao.get(id)
-
-    suspend fun getTrackingDataById(id: Long) = trackingDataDao.get(id)
-
-    fun getAllTrackingData() = trackingDataDao.getAllLiveData()
-
-    suspend fun insertBookData(data: BookData) = bookDataDao.insert(data)
-
-    suspend fun insertTrackingData(data: TrackingData) = trackingDataDao.insert(data)
-
-    // Make it a singleton
-    companion object {
-
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var INSTANCE: Book13Repository? = null
-
-        fun getInstance(application: Application): Book13Repository =
-            INSTANCE ?: synchronized(this) {
-
-                INSTANCE ?: Book13Repository(application).also { INSTANCE = it }
-
-            }
-    }
-
+	
+	// Database
+	private lateinit var book13Database: Book13Database
+	
+	// BookDataDao
+	private val bookDataDao: BookDataDao by lazy {
+		
+		if (!::book13Database.isInitialized) {
+			
+			book13Database = Book13Database.getDatabase(application.applicationContext)
+			
+		}
+		
+		book13Database.getBookDataDao()
+		
+	}
+	
+	// TrackingDataDao
+	private val trackingDataDao: TrackingDataDao by lazy {
+		
+		if (!::book13Database.isInitialized) {
+			
+			book13Database = Book13Database.getDatabase(application.applicationContext)
+			
+		}
+		
+		book13Database.getTrackingDataDao()
+		
+	}
+	
+	suspend fun getBookDataById(id: Long) = bookDataDao.get(id)
+	
+	suspend fun getTrackingDataById(id: Long) = trackingDataDao.get(id)
+	
+	fun getAllTrackingData() = trackingDataDao.getAllLiveData()
+	
+	suspend fun insertBookData(data: BookData) = bookDataDao.insert(data)
+	
+	suspend fun insertTrackingData(data: TrackingData) = trackingDataDao.insert(data)
+	
+	// Make it a singleton
+	companion object {
+		
+		// Singleton prevents multiple instances of database opening at the
+		// same time.
+		@Volatile
+		private var INSTANCE: Book13Repository? = null
+		
+		fun getInstance(application: Application): Book13Repository = INSTANCE ?: synchronized(this) {
+			
+			INSTANCE ?: Book13Repository(application).also { INSTANCE = it }
+			
+		}
+	}
+	
 }

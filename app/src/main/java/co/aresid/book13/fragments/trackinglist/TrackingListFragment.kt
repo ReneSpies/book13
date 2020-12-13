@@ -21,69 +21,69 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListFragment : Fragment() {
-
-    // Binding for the layout
-    private lateinit var binding: FragmentTrackingListBinding
-
-    // Corresponding ViewModel
-    private lateinit var trackingListViewModel: TrackingListViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        Timber.d("onCreateView: called")
-
-        super.onCreateView(
-            inflater,
-            container,
-            savedInstanceState
-        )
-
-        // Define the binding and inflate the layout
-        binding = FragmentTrackingListBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-
-        // Define the ViewModel
-        trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
-
-        // Initialize the RecyclerView
-        val recyclerViewLayoutManager = LinearLayoutManager(context)
-        val trackingListAdapter = TrackingListAdapter(TrackingListClickListener { position ->
-
-            Timber.d("item number $position clicked")
-
-            val arguments = Bundle()
-            arguments.putInt(
-                "position",
-                position
-            )
-
-            findNavController().navigate(R.id.to_trackingDetailsFragment)
-
-        })
-
-        binding.trackingListRecyclerView.apply {
-
-            // I know that the items do not change in size
-            // so I can set this for improved performance
-            setHasFixedSize(true)
-
-            layoutManager = recyclerViewLayoutManager
-
-            adapter = trackingListAdapter
-
-        }
-
-        // Return the inflated layout
-        return binding.root
-
-    }
-
+class TrackingListFragment: Fragment() {
+	
+	// Binding for the layout
+	private lateinit var binding: FragmentTrackingListBinding
+	
+	// Corresponding ViewModel
+	private lateinit var trackingListViewModel: TrackingListViewModel
+	
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		
+		Timber.d("onCreateView: called")
+		
+		super.onCreateView(
+			inflater,
+			container,
+			savedInstanceState
+		)
+		
+		// Define the binding and inflate the layout
+		binding = FragmentTrackingListBinding.inflate(
+			inflater,
+			container,
+			false
+		)
+		
+		// Define the ViewModel
+		trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
+		
+		// Construct the RecyclerView
+		val recyclerViewLayoutManager = LinearLayoutManager(context)
+		val trackingListAdapter = TrackingListAdapter(TrackingListClickListener { position ->
+			
+			Timber.d("item number $position clicked")
+			
+			val arguments = Bundle()
+			arguments.putInt(
+				"position",
+				position
+			)
+			
+			findNavController().navigate(R.id.to_trackingDetailsFragment)
+			
+		})
+		
+		binding.trackingListRecyclerView.apply {
+			
+			// I know that the items do not change in size
+			// so I can set this for improved performance
+			setHasFixedSize(true)
+			
+			layoutManager = recyclerViewLayoutManager
+			
+			adapter = trackingListAdapter
+			
+		}
+		
+		// Return the inflated layout
+		return binding.root
+		
+	}
+	
 }

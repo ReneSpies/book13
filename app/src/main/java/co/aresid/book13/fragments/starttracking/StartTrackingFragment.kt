@@ -16,35 +16,35 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class StartTrackingFragment : Fragment() {
-
-    // Binding for the layout
-    private lateinit var binding: FragmentStartTrackingBinding
-
-    // Corresponding ViewModel
-    private lateinit var startTrackingViewModel: StartTrackingViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        Timber.d("onCreateView: called")
-
-        // Define the binding and inflate the layout
-        binding = FragmentStartTrackingBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-
-        // Define the ViewModel
-        startTrackingViewModel = ViewModelProvider(this).get(StartTrackingViewModel::class.java)
-
-        // Return the inflated layout
-        return binding.root
-
-    }
-
+class StartTrackingFragment: Fragment() {
+	
+	// Binding for the layout
+	private lateinit var binding: FragmentStartTrackingBinding
+	
+	// Corresponding ViewModel
+	private lateinit var startTrackingViewModel: StartTrackingViewModel
+	
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		
+		Timber.d("onCreateView: called")
+		
+		// Define the binding and inflate the layout
+		binding = FragmentStartTrackingBinding.inflate(
+			inflater,
+			container,
+			false
+		)
+		
+		// Define the ViewModel
+		startTrackingViewModel = ViewModelProvider(this).get(StartTrackingViewModel::class.java)
+		
+		// Return the inflated layout
+		return binding.root
+		
+	}
+	
 }

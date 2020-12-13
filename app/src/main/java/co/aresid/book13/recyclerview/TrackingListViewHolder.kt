@@ -13,39 +13,38 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListViewHolder private constructor(val binding: ItemTrackingListBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(
-        clickListener: TrackingListClickListener,
-        position: Int
-    ) {
-
-        Timber.d("bind: called")
-
-        binding.clickListener = clickListener
-
-        binding.position = position
-
-    }
-
-    companion object {
-
-        fun from(parent: ViewGroup): TrackingListViewHolder {
-
-            Timber.d("from: called")
-
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemTrackingListBinding.inflate(
-                layoutInflater,
-                parent,
-                false
-            )
-
-            return TrackingListViewHolder(binding)
-
-        }
-
-    }
-
+class TrackingListViewHolder private constructor(val binding: ItemTrackingListBinding): RecyclerView.ViewHolder(binding.root) {
+	
+	fun bind(
+		clickListener: TrackingListClickListener,
+		position: Int
+	) {
+		
+		Timber.d("bind: called")
+		
+		binding.clickListener = clickListener
+		
+		binding.position = position
+		
+	}
+	
+	companion object {
+		
+		fun from(parent: ViewGroup): TrackingListViewHolder {
+			
+			Timber.d("from: called")
+			
+			val layoutInflater = LayoutInflater.from(parent.context)
+			val binding = ItemTrackingListBinding.inflate(
+				layoutInflater,
+				parent,
+				false
+			)
+			
+			return TrackingListViewHolder(binding)
+			
+		}
+		
+	}
+	
 }

@@ -14,11 +14,11 @@ import androidx.room.Query
 
 @Dao
 interface BookDataDao {
-
-    @Query("SELECT * FROM book_data WHERE id = :bookId")
-    suspend fun get(bookId: Long): BookData?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(data: BookData)
-
+	
+	@Query("SELECT * FROM book_data WHERE id = :bookId")
+	suspend fun get(bookId: Long): BookData?
+	
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun insert(data: BookData)
+	
 }

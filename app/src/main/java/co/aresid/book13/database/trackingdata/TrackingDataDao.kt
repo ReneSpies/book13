@@ -15,14 +15,14 @@ import androidx.room.Query
 
 @Dao
 interface TrackingDataDao {
-
-    @Query("SELECT * FROM tracking_data")
-    fun getAllLiveData(): LiveData<List<TrackingData>>
-
-    @Query("SELECT * FROM tracking_data WHERE id = :trackingId")
-    suspend fun get(trackingId: Long): TrackingData?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(data: TrackingData)
-
+	
+	@Query("SELECT * FROM tracking_data")
+	fun getAllLiveData(): LiveData<List<TrackingData>>
+	
+	@Query("SELECT * FROM tracking_data WHERE id = :trackingId")
+	suspend fun get(trackingId: Long): TrackingData?
+	
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun insert(data: TrackingData)
+	
 }
