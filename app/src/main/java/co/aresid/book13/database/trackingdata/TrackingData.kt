@@ -2,8 +2,10 @@ package co.aresid.book13.database.trackingdata
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import co.aresid.book13.database.DatabaseNames
+import co.aresid.book13.database.bookdata.BookData
 
 /**
  *    Created on: 02.09.2020
@@ -12,12 +14,18 @@ import co.aresid.book13.database.DatabaseNames
  *    Copyright: © 2020 ARES ID
  */
 
-@Entity(tableName = DatabaseNames.Table.TrackingData.NAME)
+@Entity(
+	tableName = DatabaseNames.Table.TrackingData.NAME,
+	foreignKeys = [ForeignKey(
+		entity = BookData::class,
+		parentColumns = [DatabaseNames.Table.BookData.Column.TITLE],
+		childColumns = [DatabaseNames.Table.TrackingData.Column.BOOK_TITLE],
+		onDelete = ForeignKey.CASCADE
+	)]
+)
 data class TrackingData(
 	
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.ID) val id: Long = 0,
-	
-	@ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.BOOK_ID) val bookId: Long,
 	
 	@ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.BOOK_TITLE) val bookTitle: String,
 	

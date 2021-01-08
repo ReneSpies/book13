@@ -33,8 +33,8 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	var bookTitle = ""
 	var bookAuthor = ""
 	var bookPages = ""
-	var bookStartDate = -1L
-	var bookFinishDate = -1L
+	var bookStartDateInMilliseconds = -1L
+	var bookFinishDateInMilliseconds = -1L
 	
 	private val _showStartDatePickerDialog = MutableLiveData<Boolean>()
 	val showStartDatePickerDialog: LiveData<Boolean>
@@ -43,14 +43,6 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	private val _showFinishDatePickerDialog = MutableLiveData<Boolean>()
 	val showFinishDatePickerDialog: LiveData<Boolean>
 		get() = _showFinishDatePickerDialog
-	
-	private val _showStartDateView = MutableLiveData<Boolean>()
-	val showStartDateView: LiveData<Boolean>
-		get() = _showStartDateView
-	
-	private val _showFinishDateView = MutableLiveData<Boolean>()
-	val showFinishDateView: LiveData<Boolean>
-		get() = _showFinishDateView
 	
 	private val _editTextErrors = MutableLiveData<EditTextErrors>()
 	val editTextErrors: LiveData<EditTextErrors>
@@ -61,9 +53,6 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		Timber.d("init: called")
 		
 		initializeShowStartDatePickerDialogValue()
-		
-		_showStartDateView.value = false
-		_showFinishDateView.value = false
 		
 		initializeEditTextErrorValue()
 		
@@ -106,8 +95,8 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 			title = bookTitle,
 			author = bookAuthor,
 			numberOfPages = bookPages.toInt(),
-			startDate = bookStartDate,
-			finishDate = bookFinishDate
+			startDate = bookStartDateInMilliseconds,
+			finishDate = bookFinishDateInMilliseconds
 		
 		)
 		
@@ -190,22 +179,6 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		Timber.d("finishDatePickerDialogShown: called")
 		
 		initializeShowFinishDatePickerDialogValue()
-		
-	}
-	
-	fun showStartDateView() {
-		
-		Timber.d("showStartDateView: called")
-		
-		_showStartDateView.value = true
-		
-	}
-	
-	fun showFinishDateView() {
-		
-		Timber.d("showFinishDateView: called")
-		
-		_showFinishDateView.value = true
 		
 	}
 	

@@ -75,30 +75,6 @@ class AddBookFragment: Fragment() {
 			
 		                                                    })
 		
-		// Observe the showStartDateView LiveData
-		addBookViewModel.showStartDateView.observe(viewLifecycleOwner,
-		                                           { shouldShow ->
-			
-			                                           if (shouldShow) {
-				
-				                                           showStartDateView()
-				
-			                                           }
-			
-		                                           })
-		
-		// Observe the showFinishDateView LiveData
-		addBookViewModel.showFinishDateView.observe(viewLifecycleOwner,
-		                                            { shouldShow ->
-			
-			                                            if (shouldShow) {
-				
-				                                            showFinishDateView()
-				
-			                                            }
-			
-		                                            })
-		
 		// Observe the editTextErrors LiveData
 		addBookViewModel.editTextErrors.observe(viewLifecycleOwner,
 		                                        { state ->
@@ -157,62 +133,7 @@ class AddBookFragment: Fragment() {
 		
 	}
 	
-	private fun showStartDateView() {
-		
-		Timber.d("showStartDateView: called")
-		
-		binding.startDateTextView.text = getLocallyFormattedStartDateAsString()
-		binding.addStartDateButtonGroup.visibility = View.INVISIBLE
-		binding.startDateGroup.visibility = View.VISIBLE
-		
-	}
-	
-	private fun showFinishDateView() {
-		
-		Timber.d("showFinishDateView: called")
-		
-		binding.finishDateTextView.text = getLocallyFormattedFinishDateAsString()
-		binding.addFinishDateButtonGroup.visibility = View.INVISIBLE
-		binding.finishDateGroup.visibility = View.VISIBLE
-		
-	}
-	
-	private fun getLocallyFormattedDateAsString(date: Date): String {
-		
-		Timber.d("getLocallyFormattedDateAsString: called")
-		
-		return DateFormat.getDateInstance(DateFormat.SHORT).format(date)
-		
-	}
-	
-	private fun getLocallyFormattedStartDateAsString(): String {
-		
-		Timber.d("getLocallyFormattedStartDateAsString: called")
-		
-		val localCalendar = Calendar.getInstance()
-		localCalendar.timeInMillis = addBookViewModel.bookStartDate
-		val startDate = localCalendar.time
-		
-		return getLocallyFormattedDateAsString(startDate)
-		
-	}
-	
-	private fun getLocallyFormattedFinishDateAsString(): String {
-		
-		Timber.d("getLocallyFormattedFinishDateAsString: called")
-		
-		val localCalendar = Calendar.getInstance()
-		localCalendar.timeInMillis = addBookViewModel.bookFinishDate
-		val startDate = localCalendar.time
-		
-		return getLocallyFormattedDateAsString(startDate)
-		
-	}
-	
 	private val startDatePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-		
-		Timber.d("onDateSet: called")
-		Timber.d("date = $day.$month.$year")
 		
 		val calendar = Calendar.getInstance()
 		calendar.set(
@@ -221,16 +142,14 @@ class AddBookFragment: Fragment() {
 			day
 		)
 		
-		addBookViewModel.bookStartDate = calendar.timeInMillis
-		addBookViewModel.showStartDateView()
+		binding.startDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time)
+		
+		addBookViewModel.bookStartDateInMilliseconds = calendar.timeInMillis
 		
 	}
 	
 	private val finishDatePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
 		
-		Timber.d("onDateSet: called")
-		Timber.d("date = $day.$month.$year")
-		
 		val calendar = Calendar.getInstance()
 		calendar.set(
 			year,
@@ -238,8 +157,9 @@ class AddBookFragment: Fragment() {
 			day
 		)
 		
-		addBookViewModel.bookFinishDate = calendar.timeInMillis
-		addBookViewModel.showFinishDateView()
+		binding.finishDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time)
+		
+		addBookViewModel.bookFinishDateInMilliseconds = calendar.timeInMillis
 		
 	}
 	

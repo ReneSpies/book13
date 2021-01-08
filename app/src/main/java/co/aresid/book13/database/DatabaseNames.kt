@@ -47,8 +47,6 @@ class DatabaseNames {
 				
 				const val ID = "id"
 				
-				const val BOOK_ID = "book_id"
-				
 				const val BOOK_TITLE = "book_title"
 				
 				const val START_PAGE_COUNT = "start_page_count"

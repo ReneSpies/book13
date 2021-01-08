@@ -2,21 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "00dadcf8c9a68e1422cf4ab413cfc5aa",
+    "identityHash": "3bfe8fc7d64f5acd641fbb4fe2e4efd8",
     "entities": [
       {
         "tableName": "tracking_data",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book_id` INTEGER NOT NULL, `book_title` TEXT NOT NULL, `start_page_count` INTEGER NOT NULL, `finish_page_count` INTEGER NOT NULL, `start_date` INTEGER NOT NULL, `finish_date` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book_title` TEXT NOT NULL, `start_page_count` INTEGER NOT NULL, `finish_page_count` INTEGER NOT NULL, `start_date` INTEGER NOT NULL, `finish_date` INTEGER NOT NULL, FOREIGN KEY(`book_title`) REFERENCES `book_data`(`title`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "bookId",
-            "columnName": "book_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -58,7 +52,19 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "book_data",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "book_title"
+            ],
+            "referencedColumns": [
+              "title"
+            ]
+          }
+        ]
       },
       {
         "tableName": "book_data",
@@ -107,14 +113,23 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_book_data_title",
+            "unique": true,
+            "columnNames": [
+              "title"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_book_data_title` ON `${TABLE_NAME}` (`title`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '00dadcf8c9a68e1422cf4ab413cfc5aa')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3bfe8fc7d64f5acd641fbb4fe2e4efd8')"
     ]
   }
 }

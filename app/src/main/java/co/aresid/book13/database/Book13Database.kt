@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import co.aresid.book13.database.bookdata.BookData
 import co.aresid.book13.database.bookdata.BookDataDao
 import co.aresid.book13.database.trackingdata.TrackingData
@@ -18,7 +20,7 @@ import co.aresid.book13.database.trackingdata.TrackingDataDao
 
 @Database(
 	entities = [TrackingData::class, BookData::class],
-	version = 1,
+	version = 2,
 	exportSchema = true
 )
 abstract class Book13Database: RoomDatabase() {
@@ -58,7 +60,7 @@ abstract class Book13Database: RoomDatabase() {
 					Book13Database::class.java,
 					DatabaseNames.Database.NAME
 				
-				).build()
+				).addMigrations(MIGRATION_1_2).build()
 				
 				INSTANCE = instance
 				
@@ -67,6 +69,20 @@ abstract class Book13Database: RoomDatabase() {
 			}
 			
 		}
+		
+	}
+	
+}
+
+val MIGRATION_1_2: Migration = object: Migration(
+	1,
+	2
+) {
+	
+	override fun migrate(database: SupportSQLiteDatabase) {
+		
+		database.execSQL("CREATE TABLE IF NOT EXISTS `tracking_data` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book_title` TEXT NOT NULL, `start_page_count` INTEGER NOT NULL, `finish_page_count` INTEGER NOT NULL, `start_date` INTEGER NOT NULL, `finish_date` INTEGER NOT NULL, FOREIGN KEY(`book_title`) REFERENCES `book_data`(`title`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+		database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_book_data_title` ON `book_data` (`title`)")
 		
 	}
 	

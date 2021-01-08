@@ -5,7 +5,11 @@
 	>
 	
 	<data>
-	
+		
+		<variable
+			name="viewModel"
+			type="co.aresid.book13.fragments.starttracking.StartTrackingViewModel"
+			/>
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -37,12 +41,13 @@
 			>
 			
 			<com.google.android.material.textfield.MaterialAutoCompleteTextView
+				android:id="@+id/book_title_auto_complete_text_view"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:imeActionId="100"
-				android:id="@+id/book_title_auto_complete_text_view"
 				android:imeOptions="actionNext"
 				android:inputType="text"
+				android:text="@{viewModel.book}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
@@ -64,6 +69,7 @@
 				android:imeActionId="101"
 				android:imeOptions="actionNext"
 				android:inputType="numberDecimal"
+				android:text="@{viewModel.startPageCount}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
@@ -84,6 +90,7 @@
 				android:layout_height="match_parent"
 				android:imeActionId="102"
 				android:imeOptions="actionDone"
+				android:text="@{viewModel.finishPageCount}"
 				android:inputType="numberDecimal"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
@@ -119,6 +126,7 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
+			android:onClick="@{() -> viewModel.addBook()}"
 			android:text="@string/start_tracking"
 			app:layout_constraintEnd_toEndOf="@id/guideline_end"
 			app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -152,6 +160,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
 			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:onClick="@{() -> viewModel.showStartDatePickerDialog()}"
 			android:padding="5dp"
 			android:src="@drawable/ic_sharp_edit_24"
 			app:layout_constraintBottom_toBottomOf="@id/add_start_date_button"
@@ -187,6 +196,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
 			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:onClick="@{() -> viewModel.showFinishDatePickerDialog()}"
 			android:padding="5dp"
 			android:src="@drawable/ic_sharp_edit_24"
 			app:layout_constraintBottom_toBottomOf="@id/add_finish_date_button"

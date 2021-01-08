@@ -2,6 +2,7 @@ package co.aresid.book13.database.bookdata
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import co.aresid.book13.database.DatabaseNames
 
@@ -12,7 +13,13 @@ import co.aresid.book13.database.DatabaseNames
  *    Copyright: © 2020 ARES ID
  */
 
-@Entity(tableName = DatabaseNames.Table.BookData.NAME)
+@Entity(
+	tableName = DatabaseNames.Table.BookData.NAME,
+	indices = [Index(
+		value = [DatabaseNames.Table.BookData.Column.TITLE],
+		unique = true
+	)]
+)
 data class BookData(
 	
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = DatabaseNames.Table.BookData.Column.ID) val id: Long = 0,
@@ -27,4 +34,10 @@ data class BookData(
 	
 	@ColumnInfo(name = DatabaseNames.Table.BookData.Column.FINISH_DATE) val finishDate: Long
 
-)
+) {
+	
+	override fun toString(): String {
+		return title
+	}
+	
+}

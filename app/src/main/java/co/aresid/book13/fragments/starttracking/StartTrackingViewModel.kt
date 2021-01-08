@@ -27,6 +27,26 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 	val booksAutoCompleteTextViewAdapter: LiveData<ArrayAdapter<String>>
 		get() = _booksAutoCompleteTextViewAdapter
 	
+	val book = String()
+	var startPageCount = -1
+	var finishPageCount = -1
+	
+	private val _showStartDatePickerDialog = MutableLiveData<Boolean>()
+	val showStartDatePickerDialog: LiveData<Boolean>
+		get() = _showStartDatePickerDialog
+	
+	private val _showFinishDatePickerDialog = MutableLiveData<Boolean>()
+	val showFinishDatePickerDialog: LiveData<Boolean>
+		get() = _showFinishDatePickerDialog
+	
+	private val _showEditTextErrors = MutableLiveData<EditTextErrors>()
+	val showEditTextErrors: LiveData<EditTextErrors>
+		get() = _showEditTextErrors
+	
+	var trackingStartDateInMilliseconds = -1L
+	var trackingFinishDateInMilliseconds = -1L
+	private val allBooks = mutableListOf<String>()
+	
 	init {
 		
 		Timber.d("init: called")
@@ -39,6 +59,59 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		populateAutoCompleteTextViewAdapterFromDatabase()
 		
+		initializeShowStartDatePickerValue()
+		initializeShowFinishDatePickerDialog()
+		
+		_showEditTextErrors.value = EditTextErrors.INIT
+		
+	}
+	
+	private fun initializeShowStartDatePickerValue() {
+		
+		Timber.d("initializeShowStartDatePickerValue: called")
+		
+		_showStartDatePickerDialog.value = false
+		
+	}
+	
+	private fun initializeShowFinishDatePickerDialog() {
+		
+		Timber.d("initializeShowFinishDatePickerDialog: called")
+		
+		_showFinishDatePickerDialog.value = false
+		
+	}
+	
+	fun showStartDatePickerDialog() {
+		
+		Timber.d("showStartDatePickerDialog: called")
+		
+		_showStartDatePickerDialog.value = true
+		
+	}
+	
+	fun showFinishDatePickerDialog() {
+		
+		Timber.d("showFinishDatePickerDialog: called")
+		
+		_showFinishDatePickerDialog.value = true
+		
+	}
+	
+	fun startDatePickerDialogShown() {
+		
+		Timber.d("startDatePickerDialogShown: called")
+		
+		initializeShowStartDatePickerValue()
+		
+	}
+	
+	fun finishDatePickerDialogShown() {
+		
+		Timber.d("finishDatePickerDialogShown: called")
+		
+		initializeShowFinishDatePickerDialog()
+		
 	}
 	
 	private fun populateAutoCompleteTextViewAdapterFromDatabase() = viewModelScope.launch {
@@ -47,17 +120,13 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		val repository = Book13Repository.getInstance(getApplication())
 		
-		val bookTitles = mutableListOf<String>()
-		
 		try {
 			
 			withContext(Dispatchers.IO) {
 				
-				val books = repository.getAllBookData()
-				
-				books.forEach {
+				repository.getAllBookData().forEach { book ->
 					
-					bookTitles.add("${it.title} - ${it.id}")
+					allBooks.add(book.toString())
 					
 				}
 				
@@ -76,9 +145,53 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<String>(
 			getApplication(),
 			android.R.layout.simple_spinner_dropdown_item,
-			bookTitles
+			allBooks
 		)
 		
 	}
+	
+	fun addBook() {
+		
+		Timber.d("addBook: called")
+		
+		if (!allBooks.contains(book)) {
+			
+			_showEditTextErrors.value = EditTextErrors.NO_BOOK_FOUND
+			
+		}
+		
+		if (book.isBlank()) {
+			
+			_showEditTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
+			
+		}
+		
+		if (startPageCount == -1) {
+			
+			_showEditTextErrors.value = EditTextErrors.START_PAGE_COUNT_MISSING
+			
+		}
+		
+		if (finishPageCount == -1) {
+			
+			_showEditTextErrors.value = EditTextErrors.FINISH_PAGE_COUNT_MISSING
+			
+		}
+		
+	}
+	
+}
+
+enum class EditTextErrors {
+	
+	INIT,
+	
+	NO_BOOK_FOUND,
+	
+	BOOK_TITLE_MISSING,
+	
+	START_PAGE_COUNT_MISSING,
+	
+	FINISH_PAGE_COUNT_MISSING,
 	
 }
