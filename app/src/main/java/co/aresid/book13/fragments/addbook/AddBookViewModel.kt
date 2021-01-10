@@ -10,6 +10,7 @@ import co.aresid.book13.R
 import co.aresid.book13.Util.disableAndShowLoadingSpinner
 import co.aresid.book13.Util.enableAndResetCompoundDrawablesWithIntrinsicBounds
 import co.aresid.book13.Util.enableAndShowCheckFor500Millis
+import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.showErrorSnackbar
 import co.aresid.book13.database.bookdata.BookData
 import co.aresid.book13.repository.Book13Repository
@@ -36,13 +37,9 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	var bookStartDateInMilliseconds = -1L
 	var bookFinishDateInMilliseconds = -1L
 	
-	private val _showStartDatePickerDialog = MutableLiveData<Boolean>()
-	val showStartDatePickerDialog: LiveData<Boolean>
-		get() = _showStartDatePickerDialog
-	
-	private val _showFinishDatePickerDialog = MutableLiveData<Boolean>()
-	val showFinishDatePickerDialog: LiveData<Boolean>
-		get() = _showFinishDatePickerDialog
+	private val _renderDatePickerDialog = MutableLiveData<DatePickerVariant>()
+	val renderDatePickerDialog: LiveData<DatePickerVariant>
+		get() = _renderDatePickerDialog
 	
 	private val _editTextErrors = MutableLiveData<EditTextErrors>()
 	val editTextErrors: LiveData<EditTextErrors>
@@ -52,7 +49,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 		Timber.d("init: called")
 		
-		initializeShowStartDatePickerDialogValue()
+		initializeRenderDatePickerDialogValue()
 		
 		initializeEditTextErrorValue()
 		
@@ -126,27 +123,17 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 	}
 	
-	fun showStartDatePickerDialog() {
+	fun renderDatePickerDialog(variant: DatePickerVariant) {
 		
-		Timber.d("showStartDatePickerDialog: called")
+		Timber.d("renderDatePickerDialog: called")
 		
-		_showStartDatePickerDialog.value = true
+		if (!variant.isValidAndNotInit()) {
+			
+			return
+			
+		}
 		
-	}
-	
-	fun showFinishDatePickerDialog() {
-		
-		Timber.d("showFinishDatePickerDialog: called")
-		
-		_showFinishDatePickerDialog.value = true
-		
-	}
-	
-	private fun initializeShowStartDatePickerDialogValue() {
-		
-		Timber.d("initializeShowStartDatePickerDialogValue: called")
-		
-		_showStartDatePickerDialog.value = false
+		_renderDatePickerDialog.value = variant
 		
 	}
 	
@@ -158,27 +145,19 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 	}
 	
-	private fun initializeShowFinishDatePickerDialogValue() {
+	private fun initializeRenderDatePickerDialogValue() {
 		
-		Timber.d("initializeShowFinishDatePickerDialogValue: called")
+		Timber.d("initializeRenderDatePickerDialogValue: called")
 		
-		_showFinishDatePickerDialog.value = false
-		
-	}
-	
-	fun startDatePickerDialogShown() {
-		
-		Timber.d("startDatePickerDialogShown: called")
-		
-		initializeShowStartDatePickerDialogValue()
+		_renderDatePickerDialog.value = DatePickerVariant.INIT
 		
 	}
 	
-	fun finishDatePickerDialogShown() {
+	fun datePickerDialogShown() {
 		
-		Timber.d("finishDatePickerDialogShown: called")
+		Timber.d("datePickerDialogShown: called")
 		
-		initializeShowFinishDatePickerDialogValue()
+		initializeRenderDatePickerDialogValue()
 		
 	}
 	
@@ -193,5 +172,15 @@ enum class EditTextErrors {
 	BOOK_AUTHOR_MISSING,
 	
 	BOOK_PAGE_COUNT_MISSING
+	
+}
+
+enum class DatePickerVariant {
+	
+	INIT,
+	
+	START,
+	
+	FINISH
 	
 }

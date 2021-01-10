@@ -15,6 +15,7 @@ import co.aresid.book13.database.DatabaseNames
 
 @Entity(
 	tableName = DatabaseNames.Table.BookData.NAME,
+	// Make the title column be unique
 	indices = [Index(
 		value = [DatabaseNames.Table.BookData.Column.TITLE],
 		unique = true

@@ -19,22 +19,23 @@ import co.aresid.book13.database.trackingdata.TrackingDataDao
  */
 
 @Database(
-	entities = [TrackingData::class, BookData::class],
+	entities = [TrackingData::class, BookData::class], // List all tables here
 	version = 2,
-	exportSchema = true
+	exportSchema = true // Export the database schema to an external file (NOT IN VCS) for future references or rollbacks
 )
 abstract class Book13Database: RoomDatabase() {
 	
 	/**
-	 * Returns [BookDataDao].
+	 * @return [BookDataDao].
 	 */
 	abstract fun getBookDataDao(): BookDataDao
 	
 	/**
-	 * Returns [TrackingData].
+	 * @return [TrackingData].
 	 */
 	abstract fun getTrackingDataDao(): TrackingDataDao
 	
+	// Singleton
 	companion object {
 		
 		// Singleton prevents multiple instances of database opening at the
@@ -42,18 +43,27 @@ abstract class Book13Database: RoomDatabase() {
 		@Volatile
 		private var INSTANCE: Book13Database? = null
 		
+		/**
+		 * Creates a new [Book13Database] if none exists.
+		 * Else, returns the existing instance.
+		 *
+		 * @return [Book13Database].
+		 */
 		fun getDatabase(context: Context): Book13Database {
 			
-			val tempInstance = INSTANCE
+			val temporaryInstance = INSTANCE // Create a immutable val from var INSTANCE
 			
-			if (tempInstance != null) {
+			// Return the instance if it is not null
+			if (temporaryInstance != null) {
 				
-				return tempInstance
+				return temporaryInstance
 				
 			}
 			
+			// Synchronize this over all threads to prevent ghost database instances and bad errors
 			synchronized(this) {
 				
+				// Build a new database instance
 				val instance = Room.databaseBuilder(
 					
 					context.applicationContext,
@@ -62,7 +72,7 @@ abstract class Book13Database: RoomDatabase() {
 				
 				).addMigrations(MIGRATION_1_2).build()
 				
-				INSTANCE = instance
+				INSTANCE = instance // Reset the INSTANCE to prevent creating multiple instances
 				
 				return instance
 				
@@ -74,6 +84,7 @@ abstract class Book13Database: RoomDatabase() {
 	
 }
 
+// Migrate to a new version of the database
 val MIGRATION_1_2: Migration = object: Migration(
 	1,
 	2

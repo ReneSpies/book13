@@ -20,7 +20,7 @@ class Book13Application: Application() {
 		
 		super.onCreate()
 		
-		Timber.plant(Timber.DebugTree())
+		Timber.plant(Timber.DebugTree()) // Launch Timber for logging
 		
 	}
 }

@@ -4,6 +4,7 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import co.aresid.book13.fragments.addbook.DatePickerVariant
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -19,6 +20,34 @@ import java.util.concurrent.TimeUnit
  */
 
 object Util {
+	
+	/**
+	 * Checks if [this] is either [DatePickerVariant.INIT], [DatePickerVariant.START] or
+	 * [DatePickerVariant.FINISH].
+	 *
+	 * @return True if above expression is correct.
+	 */
+	fun DatePickerVariant.isValid(): Boolean {
+		
+		Timber.d("datePickerVariantValid: called")
+		
+		return (this == DatePickerVariant.INIT || this == DatePickerVariant.START || this == DatePickerVariant.FINISH)
+		
+	}
+	
+	/**
+	 * Checks if [this] is either [DatePickerVariant.START] or
+	 * [DatePickerVariant.FINISH].
+	 *
+	 * @return True if above expression is correct.
+	 */
+	fun DatePickerVariant.isValidAndNotInit(): Boolean {
+		
+		Timber.d("isValidAndNotInit: called")
+		
+		return (this == DatePickerVariant.START || this == DatePickerVariant.FINISH)
+		
+	}
 	
 	fun TextInputLayout.showErrorMessage(message: String) {
 		

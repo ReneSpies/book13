@@ -16,11 +16,12 @@ import co.aresid.book13.database.bookdata.BookData
 
 @Entity(
 	tableName = DatabaseNames.Table.TrackingData.NAME,
+	// Create a ForeignKey relation to the BookData class' table
 	foreignKeys = [ForeignKey(
-		entity = BookData::class,
-		parentColumns = [DatabaseNames.Table.BookData.Column.TITLE],
-		childColumns = [DatabaseNames.Table.TrackingData.Column.BOOK_TITLE],
-		onDelete = ForeignKey.CASCADE
+		entity = BookData::class, // Relating table
+		parentColumns = [DatabaseNames.Table.BookData.Column.TITLE], // Relating column from the relating table
+		childColumns = [DatabaseNames.Table.TrackingData.Column.BOOK_TITLE], // Relating column from this table
+		onDelete = ForeignKey.CASCADE // Deletes the parent's row if this one is deleted
 	)]
 )
 data class TrackingData(

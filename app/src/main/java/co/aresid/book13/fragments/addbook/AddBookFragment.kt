@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
+import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.showErrorMessage
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -24,11 +25,9 @@ import java.util.*
 
 class AddBookFragment: Fragment() {
 	
-	// Binding for the layout
-	private lateinit var binding: FragmentAddBookBinding
+	private lateinit var binding: FragmentAddBookBinding // Binding for the layout
 	
-	// Corresponding ViewModel
-	private lateinit var addBookViewModel: AddBookViewModel
+	private lateinit var addBookViewModel: AddBookViewModel // Corresponding ViewModel
 	
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -45,35 +44,17 @@ class AddBookFragment: Fragment() {
 			false
 		)
 		
-		// Define the ViewModel
-		addBookViewModel = ViewModelProvider(this).get(AddBookViewModel::class.java)
+		addBookViewModel = ViewModelProvider(this).get(AddBookViewModel::class.java) // Define the ViewModel
 		
-		// Tell the layout about the ViewModel
-		binding.viewModel = addBookViewModel
+		binding.viewModel = addBookViewModel // Tell the binding about the ViewModel to use its methods in XML
 		
 		// Observe the showStartDatePickerDialog LiveData
-		addBookViewModel.showStartDatePickerDialog.observe(viewLifecycleOwner,
-		                                                   { shouldShow ->
+		addBookViewModel.renderDatePickerDialog.observe(viewLifecycleOwner,
+		                                                { variant ->
 			
-			                                                   if (shouldShow) {
-				
-				                                                   showStartDatePickerDialog()
-				
-			                                                   }
+			                                                renderDatePickerDialog(variant)
 			
-		                                                   })
-		
-		// Observe the showFinishDatePickerDialog LiveData
-		addBookViewModel.showFinishDatePickerDialog.observe(viewLifecycleOwner,
-		                                                    { shouldShow ->
-			
-			                                                    if (shouldShow) {
-				
-				                                                    showFinishDatePickerDialog()
-				
-			                                                    }
-			
-		                                                    })
+		                                                })
 		
 		// Observe the editTextErrors LiveData
 		addBookViewModel.editTextErrors.observe(viewLifecycleOwner,
@@ -108,11 +89,13 @@ class AddBookFragment: Fragment() {
 			
 		                                        })
 		
-		// Return the inflated layout
-		return binding.root
+		return binding.root // Return the inflated layout to have it rendered
 		
 	}
 	
+	/**
+	 * Iterates over all Views in the layout and removes its error if it is of type [TextInputLayout].
+	 */
 	private fun removeAllEditTextErrors() {
 		
 		Timber.d("removeAllEditTextErrors: called")
@@ -123,9 +106,9 @@ class AddBookFragment: Fragment() {
 			
 			if (view is TextInputLayout) {
 				
-				view.error = null
+				view.error = null // Reset the error
 				
-				view.isErrorEnabled = false
+				view.isErrorEnabled = false // Disable the error to remove the space where it is rendered
 				
 			}
 			
@@ -133,8 +116,11 @@ class AddBookFragment: Fragment() {
 		
 	}
 	
+	// Format the selected date to the users local format and render it on the screen as well as
+	// pass the date in milliseconds to the ViewModel
 	private val startDatePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
 		
+		// Create a Calendar instance from the selected year, month and day
 		val calendar = Calendar.getInstance()
 		calendar.set(
 			year,
@@ -142,14 +128,17 @@ class AddBookFragment: Fragment() {
 			day
 		)
 		
-		binding.startDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time)
+		binding.startDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time) // Format date to local format and render it on the screen
 		
-		addBookViewModel.bookStartDateInMilliseconds = calendar.timeInMillis
+		addBookViewModel.bookStartDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
 		
 	}
 	
+	// Format the selected date to the users local format and render it on the screen as well as
+	// pass the date in milliseconds to the ViewModel
 	private val finishDatePickerListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
 		
+		// Create a Calendar instance from the selected year, month and day
 		val calendar = Calendar.getInstance()
 		calendar.set(
 			year,
@@ -157,59 +146,47 @@ class AddBookFragment: Fragment() {
 			day
 		)
 		
-		binding.finishDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time)
+		binding.finishDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time) // Format date to local format and render it on the screen
 		
-		addBookViewModel.bookFinishDateInMilliseconds = calendar.timeInMillis
+		addBookViewModel.bookFinishDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
 		
 	}
 	
-	private fun showStartDatePickerDialog() {
+	/**
+	 * Gets the current date, creates a [DatePickerDialog] object from the current date,
+	 * renders it ana resets the LiveData that initiated the render.
+	 */
+	private fun renderDatePickerDialog(variant: DatePickerVariant) {
 		
-		Timber.d("showStartDatePickerDialog: called")
+		Timber.d("renderDatePickerDialog: called")
 		
+		// Check if the given parameter is invalid
+		if (!variant.isValidAndNotInit()) {
+			
+			return
+			
+		}
+		
+		val datePickerListener = if (variant == DatePickerVariant.START) startDatePickerListener else finishDatePickerListener
+		
+		// Get the current year, month and day from a Calendar instance
 		val calendar = Calendar.getInstance()
 		val year = calendar.get(Calendar.YEAR)
 		val month = calendar.get(Calendar.MONTH)
 		val day = calendar.get(Calendar.DAY_OF_MONTH)
 		
-		// Create and immediately show the dialog
+		// Create the dialog
 		val datePickerFragment = DatePickerDialog(
 			requireContext(),
 			android.R.style.Theme_Material_Dialog_Alert,
-			startDatePickerListener,
+			datePickerListener,
 			year,
 			month,
 			day
 		)
-		datePickerFragment.show()
+		datePickerFragment.show() // Render the dialog
 		
-		// Reset the LiveData
-		addBookViewModel.startDatePickerDialogShown()
-		
-	}
-	
-	private fun showFinishDatePickerDialog() {
-		
-		Timber.d("showFinishDatePickerDialog: called")
-		
-		val calendar = Calendar.getInstance()
-		val year = calendar.get(Calendar.YEAR)
-		val month = calendar.get(Calendar.MONTH)
-		val day = calendar.get(Calendar.DAY_OF_MONTH)
-		
-		// Create and immediately show the dialog
-		val datePickerFragment = DatePickerDialog(
-			requireContext(),
-			android.R.style.Theme_Material_Dialog_Alert,
-			finishDatePickerListener,
-			year,
-			month,
-			day
-		)
-		datePickerFragment.show()
-		
-		// Reset the LiveData
-		addBookViewModel.finishDatePickerDialogShown()
+		addBookViewModel.datePickerDialogShown() // Reset the LiveData
 		
 	}
 	
