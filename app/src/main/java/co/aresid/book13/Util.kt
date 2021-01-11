@@ -2,6 +2,7 @@ package co.aresid.book13
 
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import co.aresid.book13.fragments.addbook.DatePickerVariant
@@ -20,6 +21,29 @@ import java.util.concurrent.TimeUnit
  */
 
 object Util {
+	
+	/**
+	 * Iterates over all of its Views and resets the view's error if the View is of type [TextInputLayout].
+	 */
+	fun ViewGroup.resetAllTextInputLayoutErrors() {
+		
+		Timber.d("resetAllEditTextErrors: called")
+		
+		for (position in 0 .. childCount) {
+			
+			val view = getChildAt(position)
+			
+			if (view is TextInputLayout) {
+				
+				view.error = null // Reset the error
+				
+				view.isErrorEnabled = false // Disable the error to remove the space where it is rendered
+				
+			}
+			
+		}
+		
+	}
 	
 	/**
 	 * Checks if [this] is either [DatePickerVariant.INIT], [DatePickerVariant.START] or
@@ -57,7 +81,7 @@ object Util {
 		
 	}
 	
-	fun MaterialButton.disableAndShowLoadingSpinner() {
+	fun MaterialButton.disableButtonAndRenderLoadingSpinner() {
 		
 		Timber.d("showLoadingSpinnerAndDisable: called")
 		
@@ -84,7 +108,7 @@ object Util {
 		
 	}
 	
-	fun MaterialButton.enableAndShowCheckFor500Millis() {
+	fun MaterialButton.enableButtonAndShowCheckSignFor500Millis() {
 		
 		Timber.d("enableAndShowCheckFor500Millis: called")
 		
@@ -109,7 +133,7 @@ object Util {
 		// Reset the compound drawables after 500 milliseconds
 		Executors.newSingleThreadScheduledExecutor().schedule(
 			{
-				enableAndResetCompoundDrawablesWithIntrinsicBounds()
+				enableButtonAndResetCompoundDrawablesWithIntrinsicBounds()
 			},
 			500,
 			TimeUnit.MILLISECONDS
@@ -117,7 +141,7 @@ object Util {
 		
 	}
 	
-	fun MaterialButton.enableAndResetCompoundDrawablesWithIntrinsicBounds() {
+	fun MaterialButton.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds() {
 		
 		Timber.d("resetCompoundDrawablesWithIntrinsicBounds: called")
 		
@@ -134,7 +158,7 @@ object Util {
 		
 	}
 	
-	fun View.showErrorSnackbar(message: String) {
+	fun View.renderErrorSnackbar(message: String) {
 		
 		Timber.d("showErrorSnackbar: called")
 		

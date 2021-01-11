@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
 import co.aresid.book13.Util.isValidAndNotInit
+import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.Util.showErrorMessage
 import co.aresid.book13.databinding.FragmentAddBookBinding
-import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
@@ -62,25 +62,13 @@ class AddBookFragment: Fragment() {
 			
 			                                        when (state) {
 				
-				                                        EditTextErrors.INIT -> removeAllEditTextErrors()
+				                                        EditTextErrors.INIT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
-				                                        EditTextErrors.BOOK_TITLE_MISSING -> {
-					
-					                                        binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
-					
-				                                        }
+				                                        EditTextErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
 				
-				                                        EditTextErrors.BOOK_AUTHOR_MISSING -> {
-					
-					                                        binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
-					
-				                                        }
+				                                        EditTextErrors.BOOK_AUTHOR_MISSING -> binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
 				
-				                                        EditTextErrors.BOOK_PAGE_COUNT_MISSING -> {
-					
-					                                        binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
-					
-				                                        }
+				                                        EditTextErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
 				
 				                                        else -> {
 				                                        }
@@ -90,29 +78,6 @@ class AddBookFragment: Fragment() {
 		                                        })
 		
 		return binding.root // Return the inflated layout to have it rendered
-		
-	}
-	
-	/**
-	 * Iterates over all Views in the layout and removes its error if it is of type [TextInputLayout].
-	 */
-	private fun removeAllEditTextErrors() {
-		
-		Timber.d("removeAllEditTextErrors: called")
-		
-		for (position in 0 .. binding.constraintLayout.childCount) {
-			
-			val view = binding.constraintLayout.getChildAt(position)
-			
-			if (view is TextInputLayout) {
-				
-				view.error = null // Reset the error
-				
-				view.isErrorEnabled = false // Disable the error to remove the space where it is rendered
-				
-			}
-			
-		}
 		
 	}
 	
@@ -154,7 +119,7 @@ class AddBookFragment: Fragment() {
 	
 	/**
 	 * Gets the current date, creates a [DatePickerDialog] object from the current date,
-	 * renders it ana resets the LiveData that initiated the render.
+	 * renders it and resets the LiveData that initiated the render.
 	 */
 	private fun renderDatePickerDialog(variant: DatePickerVariant) {
 		

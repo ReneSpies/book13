@@ -10,9 +10,12 @@
 			name="viewModel"
 			type="co.aresid.book13.fragments.starttracking.StartTrackingViewModel"
 			/>
+		
+		<import type="co.aresid.book13.fragments.addbook.DatePickerVariant"/>
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/constraint_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		>
@@ -47,7 +50,6 @@
 				android:imeActionId="100"
 				android:imeOptions="actionNext"
 				android:inputType="text"
-				android:text="@{viewModel.book}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
@@ -90,8 +92,8 @@
 				android:layout_height="match_parent"
 				android:imeActionId="102"
 				android:imeOptions="actionDone"
-				android:text="@{viewModel.finishPageCount}"
 				android:inputType="numberDecimal"
+				android:text="@{viewModel.finishPageCount}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
@@ -160,7 +162,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
 			android:background="?android:attr/selectableItemBackgroundBorderless"
-			android:onClick="@{() -> viewModel.showStartDatePickerDialog()}"
+			android:onClick="@{() -> viewModel.renderDatePickerDialog(DatePickerVariant.START)}"
 			android:padding="5dp"
 			android:src="@drawable/ic_sharp_edit_24"
 			app:layout_constraintBottom_toBottomOf="@id/add_start_date_button"
@@ -196,7 +198,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
 			android:background="?android:attr/selectableItemBackgroundBorderless"
-			android:onClick="@{() -> viewModel.showFinishDatePickerDialog()}"
+			android:onClick="@{() -> viewModel.renderDatePickerDialog(DatePickerVariant.FINISH)}"
 			android:padding="5dp"
 			android:src="@drawable/ic_sharp_edit_24"
 			app:layout_constraintBottom_toBottomOf="@id/add_finish_date_button"

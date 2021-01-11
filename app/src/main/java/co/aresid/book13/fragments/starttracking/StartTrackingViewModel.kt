@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import co.aresid.book13.fragments.addbook.DatePickerVariant
 import co.aresid.book13.repository.Book13Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,21 +28,17 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 	val booksAutoCompleteTextViewAdapter: LiveData<ArrayAdapter<String>>
 		get() = _booksAutoCompleteTextViewAdapter
 	
-	val book = String()
-	var startPageCount = -1
-	var finishPageCount = -1
+	var book = ""
+	var startPageCount = ""
+	var finishPageCount = ""
 	
-	private val _showStartDatePickerDialog = MutableLiveData<Boolean>()
-	val showStartDatePickerDialog: LiveData<Boolean>
-		get() = _showStartDatePickerDialog
+	private val _renderDatePickerDialog = MutableLiveData<DatePickerVariant>()
+	val renderDatePickerDialog: LiveData<DatePickerVariant>
+		get() = _renderDatePickerDialog
 	
-	private val _showFinishDatePickerDialog = MutableLiveData<Boolean>()
-	val showFinishDatePickerDialog: LiveData<Boolean>
-		get() = _showFinishDatePickerDialog
-	
-	private val _showEditTextErrors = MutableLiveData<EditTextErrors>()
-	val showEditTextErrors: LiveData<EditTextErrors>
-		get() = _showEditTextErrors
+	private val _renderEditTextErrors = MutableLiveData<EditTextErrors>()
+	val renderEditTextErrors: LiveData<EditTextErrors>
+		get() = _renderEditTextErrors
 	
 	var trackingStartDateInMilliseconds = -1L
 	var trackingFinishDateInMilliseconds = -1L
@@ -59,58 +56,33 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		populateAutoCompleteTextViewAdapterFromDatabase()
 		
-		initializeShowStartDatePickerValue()
-		initializeShowFinishDatePickerDialog()
+		initializeRenderDatePickerValue()
 		
-		_showEditTextErrors.value = EditTextErrors.INIT
-		
-	}
-	
-	private fun initializeShowStartDatePickerValue() {
-		
-		Timber.d("initializeShowStartDatePickerValue: called")
-		
-		_showStartDatePickerDialog.value = false
+		_renderEditTextErrors.value = EditTextErrors.INIT
 		
 	}
 	
-	private fun initializeShowFinishDatePickerDialog() {
+	private fun initializeRenderDatePickerValue() {
 		
-		Timber.d("initializeShowFinishDatePickerDialog: called")
+		Timber.d("initializeRenderDatePickerValue: called")
 		
-		_showFinishDatePickerDialog.value = false
-		
-	}
-	
-	fun showStartDatePickerDialog() {
-		
-		Timber.d("showStartDatePickerDialog: called")
-		
-		_showStartDatePickerDialog.value = true
+		_renderDatePickerDialog.value = DatePickerVariant.INIT
 		
 	}
 	
-	fun showFinishDatePickerDialog() {
+	fun renderDatePickerDialog(variant: DatePickerVariant) {
 		
-		Timber.d("showFinishDatePickerDialog: called")
+		Timber.d("renderDatePickerDialog: called")
 		
-		_showFinishDatePickerDialog.value = true
-		
-	}
-	
-	fun startDatePickerDialogShown() {
-		
-		Timber.d("startDatePickerDialogShown: called")
-		
-		initializeShowStartDatePickerValue()
+		_renderDatePickerDialog.value = variant
 		
 	}
 	
-	fun finishDatePickerDialogShown() {
+	fun datePickerDialogShown() {
 		
-		Timber.d("finishDatePickerDialogShown: called")
+		Timber.d("datePickerDialogShown: called")
 		
-		initializeShowFinishDatePickerDialog()
+		initializeRenderDatePickerValue()
 		
 	}
 	
@@ -156,25 +128,25 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		if (!allBooks.contains(book)) {
 			
-			_showEditTextErrors.value = EditTextErrors.NO_BOOK_FOUND
+			_renderEditTextErrors.value = EditTextErrors.NO_BOOK_FOUND
 			
 		}
 		
 		if (book.isBlank()) {
 			
-			_showEditTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
+			_renderEditTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
 			
 		}
 		
-		if (startPageCount == -1) {
+		if (startPageCount == "") {
 			
-			_showEditTextErrors.value = EditTextErrors.START_PAGE_COUNT_MISSING
+			_renderEditTextErrors.value = EditTextErrors.START_PAGE_COUNT_MISSING
 			
 		}
 		
-		if (finishPageCount == -1) {
+		if (finishPageCount == "") {
 			
-			_showEditTextErrors.value = EditTextErrors.FINISH_PAGE_COUNT_MISSING
+			_renderEditTextErrors.value = EditTextErrors.FINISH_PAGE_COUNT_MISSING
 			
 		}
 		
