@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
+import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.Util.showErrorMessage
@@ -62,7 +63,7 @@ class AddBookFragment: Fragment() {
 			
 			                                        when (state) {
 				
-				                                        EditTextErrors.INIT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
+				                                        EditTextErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
 				                                        EditTextErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
 				

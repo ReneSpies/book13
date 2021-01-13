@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import co.aresid.book13.fragments.addbook.DatePickerVariant
+import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.repository.Book13Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,28 +48,59 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		Timber.d("init: called")
 		
+		populateAutoCompleteTextViewAdapterFromDatabase() // Retrieve all book data from the database and load it into the adapter
+		
+		// Initialize all LiveData
+		loadDefaultAutoCompleteTextViewValue()
+		loadDefaultRenderDatePickerValue()
+		loadDefaultRenderEditTextErrorsValue()
+		
+	}
+	
+	/**
+	 * Loads the default value for [_booksAutoCompleteTextViewAdapter].
+	 * The default value is an [ArrayAdapter].
+	 */
+	private fun loadDefaultAutoCompleteTextViewValue() {
+		
+		Timber.d("loadDefaultAutoCompleteTextViewValue: called")
+		
 		// Initialize the AutoCompleteTextView's adapter value
 		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<String>(
-			application.baseContext,
+			getApplication<Application>().baseContext,
 			android.R.layout.simple_spinner_dropdown_item
 		)
 		
-		populateAutoCompleteTextViewAdapterFromDatabase()
+	}
+	
+	/**
+	 * Loads the default value for [_renderEditTextErrors].
+	 * The default value is [EditTextErrors.DEFAULT].
+	 */
+	private fun loadDefaultRenderEditTextErrorsValue() {
 		
-		initializeRenderDatePickerValue()
+		Timber.d("loadDefaultRenderEditTextErrorsValue: called")
 		
-		_renderEditTextErrors.value = EditTextErrors.INIT
+		_renderEditTextErrors.value = EditTextErrors.DEFAULT
 		
 	}
 	
-	private fun initializeRenderDatePickerValue() {
+	/**
+	 * Loads the default value for [_renderDatePickerDialog].
+	 * The default value is [DatePickerVariant.DEFAULT].
+	 */
+	private fun loadDefaultRenderDatePickerValue() {
 		
-		Timber.d("initializeRenderDatePickerValue: called")
+		Timber.d("loadDefaultRenderDatePickerValue: called")
 		
-		_renderDatePickerDialog.value = DatePickerVariant.INIT
+		_renderDatePickerDialog.value = DatePickerVariant.DEFAULT
 		
 	}
 	
+	/**
+	 * Changes the [_renderDatePickerDialog] value according to
+	 * the given in [variant].
+	 */
 	fun renderDatePickerDialog(variant: DatePickerVariant) {
 		
 		Timber.d("renderDatePickerDialog: called")
@@ -78,11 +109,16 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 	}
 	
+	/**
+	 * Resets the [_renderDatePickerDialog] value via calling
+	 * [loadDefaultRenderDatePickerValue] to ensure it wont be
+	 * re-rendered after the dialog has been acknowledged.
+	 */
 	fun datePickerDialogShown() {
 		
 		Timber.d("datePickerDialogShown: called")
 		
-		initializeRenderDatePickerValue()
+		loadDefaultRenderDatePickerValue()
 		
 	}
 	
@@ -156,7 +192,7 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 
 enum class EditTextErrors {
 	
-	INIT,
+	DEFAULT,
 	
 	NO_BOOK_FOUND,
 	

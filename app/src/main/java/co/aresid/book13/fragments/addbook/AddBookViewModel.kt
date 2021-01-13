@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.aresid.book13.R
+import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.disableButtonAndRenderLoadingSpinner
 import co.aresid.book13.Util.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds
 import co.aresid.book13.Util.enableButtonAndShowCheckSignFor500Millis
@@ -167,24 +168,24 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	}
 	
 	/**
-	 * Sets the [_editTextErrors] value to [EditTextErrors.INIT].
+	 * Sets the [_editTextErrors] value to [EditTextErrors.DEFAULT].
 	 */
 	private fun initializeEditTextErrorValue() {
 		
 		Timber.d("initializeEditTextErrorValue: called")
 		
-		_editTextErrors.value = EditTextErrors.INIT
+		_editTextErrors.value = EditTextErrors.DEFAULT
 		
 	}
 	
 	/**
-	 * Sets the [_renderDatePickerDialog] value to [DatePickerVariant.INIT].
+	 * Sets the [_renderDatePickerDialog] value to [DatePickerVariant.DEFAULT].
 	 */
 	private fun initializeRenderDatePickerDialogValue() {
 		
 		Timber.d("initializeRenderDatePickerDialogValue: called")
 		
-		_renderDatePickerDialog.value = DatePickerVariant.INIT
+		_renderDatePickerDialog.value = DatePickerVariant.DEFAULT
 		
 	}
 	
@@ -203,22 +204,12 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 
 enum class EditTextErrors {
 	
-	INIT,
+	DEFAULT,
 	
 	BOOK_TITLE_MISSING,
 	
 	BOOK_AUTHOR_MISSING,
 	
 	BOOK_PAGE_COUNT_MISSING
-	
-}
-
-enum class DatePickerVariant {
-	
-	INIT,
-	
-	START,
-	
-	FINISH
 	
 }

@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.databinding.FragmentStartTrackingBinding
-import co.aresid.book13.fragments.addbook.DatePickerVariant
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
@@ -69,7 +69,7 @@ class StartTrackingFragment: Fragment() {
 			
 			                                                    when (error) {
 				
-				                                                    EditTextErrors.INIT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
+				                                                    EditTextErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
 				                                                    EditTextErrors.NO_BOOK_FOUND -> binding.bookTitleLayout.error = "No book found" // TODO: Extract string resource
 				

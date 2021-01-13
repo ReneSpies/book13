@@ -11,7 +11,7 @@
 			type="co.aresid.book13.fragments.addbook.AddBookViewModel"
 			/>
 		
-		<import type="co.aresid.book13.fragments.addbook.DatePickerVariant"/>
+		<import type="co.aresid.book13.Util.DatePickerVariant"/>
 	</data>
 	
 	<androidx.core.widget.NestedScrollView
