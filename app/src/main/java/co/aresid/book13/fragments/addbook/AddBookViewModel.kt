@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
+import co.aresid.book13.Util.TextInputLayoutErrors
 import co.aresid.book13.Util.disableButtonAndRenderLoadingSpinner
 import co.aresid.book13.Util.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds
 import co.aresid.book13.Util.enableButtonAndShowCheckSignFor500Millis
@@ -43,17 +44,23 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	val renderDatePickerDialog: LiveData<DatePickerVariant>
 		get() = _renderDatePickerDialog
 	
-	private val _editTextErrors = MutableLiveData<EditTextErrors>()
-	val editTextErrors: LiveData<EditTextErrors>
+	private val _editTextErrors = MutableLiveData<TextInputLayoutErrors>()
+	val editTextErrors: LiveData<TextInputLayoutErrors>
 		get() = _editTextErrors
+	
+	private val _clearAllEditTextFields = MutableLiveData<Boolean>()
+	val clearAllEditTextFields: LiveData<Boolean>
+		get() = _clearAllEditTextFields
 	
 	init {
 		
 		Timber.d("init: called")
 		
-		initializeRenderDatePickerDialogValue() // Initialize LiveData
+		loadDefaultRenderDatePickerDialogValue() // Initialize LiveData
 		
-		initializeEditTextErrorValue() // Initialize LiveData
+		loadDefaultEditTextErrorValue() // Initialize LiveData
+		
+		loadDefaultClearAllEditTextFieldsValue() // Initialize LiveData
 		
 	}
 	
@@ -70,7 +77,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		// Check the bookTitle and set errors accordingly
 		if (bookTitle.isEmpty()) {
 			
-			_editTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
+			_editTextErrors.value = TextInputLayoutErrors.BOOK_TITLE_MISSING
 			
 			return false
 			
@@ -79,7 +86,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		// Check the bookAuthor and set errors accordingly
 		if (bookAuthor.isEmpty()) {
 			
-			_editTextErrors.value = EditTextErrors.BOOK_AUTHOR_MISSING
+			_editTextErrors.value = TextInputLayoutErrors.BOOK_AUTHOR_MISSING
 			
 			return false
 			
@@ -88,7 +95,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		// Check bookPages and set errors accordingly
 		if (bookPages.isEmpty()) {
 			
-			_editTextErrors.value = EditTextErrors.BOOK_PAGE_COUNT_MISSING
+			_editTextErrors.value = TextInputLayoutErrors.BOOK_PAGE_COUNT_MISSING
 			
 			return false
 			
@@ -102,7 +109,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 		Timber.d("addBook: called")
 		
-		initializeEditTextErrorValue() // Reset all errors
+		loadDefaultEditTextErrorValue() // Reset all errors
 		
 		// Checks if the given book data is invalid and returns if so
 		if (!isBookDataValid()) {
@@ -137,6 +144,8 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 				
 			}
 			
+			clearAllEditTextFields()
+			
 			button.enableButtonAndShowCheckSignFor500Millis() // Re-enable the button and show a check sign
 			
 		}
@@ -146,6 +155,30 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 			button.renderErrorSnackbar(button.context.getString(R.string.standard_error_message)) // Render an error Snackbar on the screen
 			
 		}
+		
+	}
+	
+	private fun clearAllEditTextFields() {
+		
+		Timber.d("clearAllEditTextFields: called")
+		
+		_clearAllEditTextFields.value = true
+		
+	}
+	
+	fun allEditTextFieldsCleared() {
+		
+		Timber.d("allEditTextFieldsCleared: called")
+		
+		loadDefaultClearAllEditTextFieldsValue()
+		
+	}
+	
+	private fun loadDefaultClearAllEditTextFieldsValue() {
+		
+		Timber.d("loadDefaultClearAllEditTextFieldsValue: called")
+		
+		_clearAllEditTextFields.value = false
 		
 	}
 	
@@ -168,48 +201,36 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 	}
 	
 	/**
-	 * Sets the [_editTextErrors] value to [EditTextErrors.DEFAULT].
+	 * Sets the [_editTextErrors] value to [TextInputLayoutErrors.DEFAULT].
 	 */
-	private fun initializeEditTextErrorValue() {
+	private fun loadDefaultEditTextErrorValue() {
 		
-		Timber.d("initializeEditTextErrorValue: called")
+		Timber.d("loadDefaultEditTextErrorValue: called")
 		
-		_editTextErrors.value = EditTextErrors.DEFAULT
+		_editTextErrors.value = TextInputLayoutErrors.DEFAULT
 		
 	}
 	
 	/**
 	 * Sets the [_renderDatePickerDialog] value to [DatePickerVariant.DEFAULT].
 	 */
-	private fun initializeRenderDatePickerDialogValue() {
+	private fun loadDefaultRenderDatePickerDialogValue() {
 		
-		Timber.d("initializeRenderDatePickerDialogValue: called")
+		Timber.d("loadDefaultRenderDatePickerDialogValue: called")
 		
 		_renderDatePickerDialog.value = DatePickerVariant.DEFAULT
 		
 	}
 	
 	/**
-	 * Resets the [_renderDatePickerDialog] value via a call to [initializeRenderDatePickerDialogValue].
+	 * Resets the [_renderDatePickerDialog] value via a call to [loadDefaultRenderDatePickerDialogValue].
 	 */
 	fun datePickerDialogShown() {
 		
 		Timber.d("datePickerDialogShown: called")
 		
-		initializeRenderDatePickerDialogValue()
+		loadDefaultRenderDatePickerDialogValue()
 		
 	}
-	
-}
-
-enum class EditTextErrors {
-	
-	DEFAULT,
-	
-	BOOK_TITLE_MISSING,
-	
-	BOOK_AUTHOR_MISSING,
-	
-	BOOK_PAGE_COUNT_MISSING
 	
 }

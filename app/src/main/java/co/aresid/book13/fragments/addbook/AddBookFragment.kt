@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
+import co.aresid.book13.Util.TextInputLayoutErrors
 import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.Util.showErrorMessage
@@ -63,13 +64,13 @@ class AddBookFragment: Fragment() {
 			
 			                                        when (state) {
 				
-				                                        EditTextErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
+				                                        TextInputLayoutErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
-				                                        EditTextErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
+				                                        TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
 				
-				                                        EditTextErrors.BOOK_AUTHOR_MISSING -> binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
+				                                        TextInputLayoutErrors.BOOK_AUTHOR_MISSING -> binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
 				
-				                                        EditTextErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
+				                                        TextInputLayoutErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
 				
 				                                        else -> {
 				                                        }
@@ -78,7 +79,29 @@ class AddBookFragment: Fragment() {
 			
 		                                        })
 		
+		// Observe the  LiveData
+		addBookViewModel.clearAllEditTextFields.observe(viewLifecycleOwner,
+		                                                {
+				
+				                                                shouldClear ->
+			
+			                                                if (shouldClear) clearAllEditTextFields()
+			
+		                                                })
+		
 		return binding.root // Return the inflated layout to have it rendered
+		
+	}
+	
+	private fun clearAllEditTextFields() {
+		
+		Timber.d("clearAllEditTextFields: called")
+		
+		binding.bookTitleEditText.text = null
+		binding.bookAuthorEditText.text = null
+		binding.bookPageCountEditText.text = null
+		
+		addBookViewModel.allEditTextFieldsCleared() // Resets the LiveData
 		
 	}
 	

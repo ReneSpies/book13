@@ -49,6 +49,7 @@
 				>
 				
 				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/book_title_edit_text"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:imeActionId="100"
@@ -71,6 +72,7 @@
 				>
 				
 				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/book_author_edit_text"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:imeActionId="101"
@@ -93,6 +95,7 @@
 				>
 				
 				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/book_page_count_edit_text"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:imeActionId="102"

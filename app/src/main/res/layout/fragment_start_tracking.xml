@@ -128,7 +128,7 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
-			android:onClick="@{() -> viewModel.addBook()}"
+			android:onClick="@{() -> viewModel.addTrackingData()}"
 			android:text="@string/start_tracking"
 			app:layout_constraintEnd_toEndOf="@id/guideline_end"
 			app:layout_constraintStart_toStartOf="@id/guideline_start"

@@ -2,7 +2,6 @@ package co.aresid.book13.database.bookdata
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import co.aresid.book13.database.DatabaseNames
 
@@ -14,14 +13,11 @@ import co.aresid.book13.database.DatabaseNames
  */
 
 @Entity(
-	tableName = DatabaseNames.Table.BookData.NAME,
-	// Make the title column be unique
-	indices = [Index(
-		value = [DatabaseNames.Table.BookData.Column.TITLE],
-		unique = true
-	)]
+	tableName = DatabaseNames.Table.BookData.NAME
 )
 data class BookData(
+	
+	// TODO: 1/15/2021 Either constraint the whole row to be unique in itself or leave it without constraints
 	
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = DatabaseNames.Table.BookData.Column.ID) val id: Long = 0,
 	
@@ -38,7 +34,7 @@ data class BookData(
 ) {
 	
 	override fun toString(): String {
-		return title
+		return "$id - $title by $author" // TODO: 1/14/2021 toString: extract string resource
 	}
 	
 }

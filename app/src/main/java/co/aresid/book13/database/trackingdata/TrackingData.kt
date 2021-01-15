@@ -19,14 +19,16 @@ import co.aresid.book13.database.bookdata.BookData
 	// Create a ForeignKey relation to the BookData class' table
 	foreignKeys = [ForeignKey(
 		entity = BookData::class, // Relating table
-		parentColumns = [DatabaseNames.Table.BookData.Column.TITLE], // Relating column from the relating table
-		childColumns = [DatabaseNames.Table.TrackingData.Column.BOOK_TITLE], // Relating column from this table
+		parentColumns = [DatabaseNames.Table.BookData.Column.ID], // Relating column from the relating table
+		childColumns = [DatabaseNames.Table.TrackingData.Column.BOOK_ID], // Relating column from this table
 		onDelete = ForeignKey.CASCADE // Deletes the parent's row if this one is deleted
 	)]
 )
 data class TrackingData(
 	
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.ID) val id: Long = 0,
+	
+	@ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.BOOK_ID) val bookId: Long,
 	
 	@ColumnInfo(name = DatabaseNames.Table.TrackingData.Column.BOOK_TITLE) val bookTitle: String,
 	

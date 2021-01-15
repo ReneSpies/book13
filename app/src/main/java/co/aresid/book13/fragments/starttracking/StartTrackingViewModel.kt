@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.aresid.book13.Util.DatePickerVariant
+import co.aresid.book13.Util.TextInputLayoutErrors
+import co.aresid.book13.database.bookdata.BookData
 import co.aresid.book13.repository.Book13Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,25 +26,23 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 	
 	// This adapter holds the information from the database to show on the AutoCompleteTextView
 	// It is a LiveData so that it can be observed and the View be updated when the data has changed
-	private val _booksAutoCompleteTextViewAdapter = MutableLiveData<ArrayAdapter<String>>()
-	val booksAutoCompleteTextViewAdapter: LiveData<ArrayAdapter<String>>
+	private val _booksAutoCompleteTextViewAdapter = MutableLiveData<ArrayAdapter<BookData>>()
+	val booksAutoCompleteTextViewAdapter: LiveData<ArrayAdapter<BookData>>
 		get() = _booksAutoCompleteTextViewAdapter
 	
 	var book = ""
 	var startPageCount = ""
 	var finishPageCount = ""
+	var trackingStartDateInMilliseconds = -1L
+	var trackingFinishDateInMilliseconds = -1L
 	
 	private val _renderDatePickerDialog = MutableLiveData<DatePickerVariant>()
 	val renderDatePickerDialog: LiveData<DatePickerVariant>
 		get() = _renderDatePickerDialog
 	
-	private val _renderEditTextErrors = MutableLiveData<EditTextErrors>()
-	val renderEditTextErrors: LiveData<EditTextErrors>
+	private val _renderEditTextErrors = MutableLiveData<TextInputLayoutErrors>()
+	val renderEditTextErrors: LiveData<TextInputLayoutErrors>
 		get() = _renderEditTextErrors
-	
-	var trackingStartDateInMilliseconds = -1L
-	var trackingFinishDateInMilliseconds = -1L
-	private val allBooks = mutableListOf<String>()
 	
 	init {
 		
@@ -66,22 +66,53 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		Timber.d("loadDefaultAutoCompleteTextViewValue: called")
 		
 		// Initialize the AutoCompleteTextView's adapter value
-		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<String>(
+		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<BookData>(
 			getApplication<Application>().baseContext,
 			android.R.layout.simple_spinner_dropdown_item
 		)
 		
 	}
 	
+	private suspend fun getAllBookData(): List<BookData> {
+		
+		Timber.d("getAllBookData: called")
+		
+		var allBooks = listOf<BookData>()
+		
+		withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+			
+			val repository = Book13Repository.getInstance(getApplication())
+			
+			try {
+				
+				// Get all books from the database and iterate over it
+				allBooks = repository.getAllBookData()
+				
+			}
+			catch (exception: Exception) {
+				
+				Timber.e(
+					exception,
+					"Cannot get all book data from database"
+				)
+				
+			}
+			
+		}
+		
+		return allBooks
+		
+	}
+	
 	/**
 	 * Loads the default value for [_renderEditTextErrors].
-	 * The default value is [EditTextErrors.DEFAULT].
+	 * The default value is [TextInputLayoutErrors.DEFAULT].
 	 */
 	private fun loadDefaultRenderEditTextErrorsValue() {
 		
 		Timber.d("loadDefaultRenderEditTextErrorsValue: called")
 		
-		_renderEditTextErrors.value = EditTextErrors.DEFAULT
+		_renderEditTextErrors.value = TextInputLayoutErrors.DEFAULT
 		
 	}
 	
@@ -122,35 +153,18 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 	}
 	
+	/**
+	 * Retrieves all books from the database and inserts them into an [ArrayAdapter]
+	 * and updates the [_booksAutoCompleteTextViewAdapter] value with the new ArrayAdapter.
+	 */
 	private fun populateAutoCompleteTextViewAdapterFromDatabase() = viewModelScope.launch {
 		
 		Timber.d("populateAutoCompleteTextViewAdapterFromDatabase: called")
 		
-		val repository = Book13Repository.getInstance(getApplication())
+		val allBooks = getAllBookData()
 		
-		try {
-			
-			withContext(Dispatchers.IO) {
-				
-				repository.getAllBookData().forEach { book ->
-					
-					allBooks.add(book.toString())
-					
-				}
-				
-			}
-			
-		}
-		catch (exception: Exception) {
-			
-			Timber.e(
-				exception,
-				"Cannot get all book data from database"
-			)
-			
-		}
-		
-		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<String>(
+		// Create a new ArrayAdapter with the list of all books in the database
+		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<BookData>(
 			getApplication(),
 			android.R.layout.simple_spinner_dropdown_item,
 			allBooks
@@ -158,48 +172,38 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 	}
 	
-	fun addBook() {
+	/**
+	 * Validates all given data and if it succeeds, it will create a new
+	 * TrackingData object and inserts it into the database.
+	 */
+	fun addTrackingData() {
 		
-		Timber.d("addBook: called")
+		Timber.d("addTrackingData: called")
 		
-		if (!allBooks.contains(book)) {
-			
-			_renderEditTextErrors.value = EditTextErrors.NO_BOOK_FOUND
-			
-		}
+		//		if (!allBooks.contains(book)) {
+		//
+		//			_renderEditTextErrors.value = TextInputLayoutErrors.NO_BOOK_FOUND
+		//
+		//		}
 		
 		if (book.isBlank()) {
 			
-			_renderEditTextErrors.value = EditTextErrors.BOOK_TITLE_MISSING
+			_renderEditTextErrors.value = TextInputLayoutErrors.BOOK_TITLE_MISSING
 			
 		}
 		
 		if (startPageCount == "") {
 			
-			_renderEditTextErrors.value = EditTextErrors.START_PAGE_COUNT_MISSING
+			_renderEditTextErrors.value = TextInputLayoutErrors.START_PAGE_COUNT_MISSING
 			
 		}
 		
 		if (finishPageCount == "") {
 			
-			_renderEditTextErrors.value = EditTextErrors.FINISH_PAGE_COUNT_MISSING
+			_renderEditTextErrors.value = TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING
 			
 		}
 		
 	}
-	
-}
-
-enum class EditTextErrors {
-	
-	DEFAULT,
-	
-	NO_BOOK_FOUND,
-	
-	BOOK_TITLE_MISSING,
-	
-	START_PAGE_COUNT_MISSING,
-	
-	FINISH_PAGE_COUNT_MISSING,
 	
 }

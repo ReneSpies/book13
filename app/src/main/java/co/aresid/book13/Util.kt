@@ -21,12 +21,60 @@ import java.util.concurrent.TimeUnit
 
 object Util {
 	
-	enum class DatePickerVariant {
+	enum class TextInputLayoutErrors {
 		
+		/**
+		 * This is used to initialize and reset the value.
+		 */
 		DEFAULT,
 		
+		/**
+		 * This is used to render an error indicating that the book title's TextInputEditText value is missing.
+		 */
+		BOOK_TITLE_MISSING,
+		
+		/**
+		 * This is used to render an error indicating that the book author's TextInputEditText value is missing.
+		 */
+		BOOK_AUTHOR_MISSING,
+		
+		/**
+		 * This is used to render an error indicating that the book page count's TextInputEditText value is missing.
+		 */
+		BOOK_PAGE_COUNT_MISSING,
+		
+		/**
+		 * This is used to render an error indicating that the book's TextInputEditText value is not found in the database.
+		 */
+		NO_BOOK_FOUND,
+		
+		/**
+		 * This is used to render an error indicating that the tracking's start page count TextInputEditText value is missing.
+		 */
+		START_PAGE_COUNT_MISSING,
+		
+		/**
+		 * This is used to render an error indicating that the tracking's finish page count TextInputEditText value is missing.
+		 */
+		FINISH_PAGE_COUNT_MISSING,
+		
+	}
+	
+	enum class DatePickerVariant {
+		
+		/**
+		 * This is used to initialize and reset the value.
+		 */
+		DEFAULT,
+		
+		/**
+		 * This is used to indicate the StartDatePicker variant.
+		 */
 		START,
 		
+		/**
+		 * This is used to indicate the FinishDatePicker variant.
+		 */
 		FINISH
 		
 	}

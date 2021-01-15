@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.Util.DatePickerVariant
+import co.aresid.book13.Util.TextInputLayoutErrors
 import co.aresid.book13.Util.isValidAndNotInit
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.databinding.FragmentStartTrackingBinding
@@ -69,15 +70,15 @@ class StartTrackingFragment: Fragment() {
 			
 			                                                    when (error) {
 				
-				                                                    EditTextErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
+				                                                    TextInputLayoutErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
-				                                                    EditTextErrors.NO_BOOK_FOUND -> binding.bookTitleLayout.error = "No book found" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.NO_BOOK_FOUND -> binding.bookTitleLayout.error = "No book found" // TODO: Extract string resource
 				
-				                                                    EditTextErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.error = "Book title missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.error = "Book title missing" // TODO: Extract string resource
 				
-				                                                    EditTextErrors.START_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Starting page count missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.START_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Starting page count missing" // TODO: Extract string resource
 				
-				                                                    EditTextErrors.FINISH_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Finishing page count missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Finishing page count missing" // TODO: Extract string resource
 				
 				                                                    else -> {
 				                                                    }
