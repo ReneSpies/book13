@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.TextInputLayoutErrors
-import co.aresid.book13.Util.isValidAndNotInit
+import co.aresid.book13.Util.isValidAndNotDefault
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.Util.showErrorMessage
 import co.aresid.book13.databinding.FragmentAddBookBinding
@@ -49,6 +49,7 @@ class AddBookFragment: Fragment() {
 		addBookViewModel = ViewModelProvider(this).get(AddBookViewModel::class.java) // Define the ViewModel
 		
 		binding.viewModel = addBookViewModel // Tell the binding about the ViewModel to use its methods in XML
+		binding.lifecycleOwner = viewLifecycleOwner
 		
 		// Observe the showStartDatePickerDialog LiveData
 		addBookViewModel.renderDatePickerDialog.observe(viewLifecycleOwner,
@@ -72,36 +73,15 @@ class AddBookFragment: Fragment() {
 				
 				                                        TextInputLayoutErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
 				
+				                                        TextInputLayoutErrors.BOOK_ALREADY_EXISTS -> binding.bookTitleLayout.showErrorMessage(getString(R.string.book_already_exists))
+				
 				                                        else -> {
 				                                        }
-				
 			                                        }
 			
 		                                        })
 		
-		// Observe the  LiveData
-		addBookViewModel.clearAllEditTextFields.observe(viewLifecycleOwner,
-		                                                {
-				
-				                                                shouldClear ->
-			
-			                                                if (shouldClear) clearAllEditTextFields()
-			
-		                                                })
-		
 		return binding.root // Return the inflated layout to have it rendered
-		
-	}
-	
-	private fun clearAllEditTextFields() {
-		
-		Timber.d("clearAllEditTextFields: called")
-		
-		binding.bookTitleEditText.text = null
-		binding.bookAuthorEditText.text = null
-		binding.bookPageCountEditText.text = null
-		
-		addBookViewModel.allEditTextFieldsCleared() // Resets the LiveData
 		
 	}
 	
@@ -150,7 +130,7 @@ class AddBookFragment: Fragment() {
 		Timber.d("renderDatePickerDialog: called")
 		
 		// Check if the given parameter is invalid
-		if (!variant.isValidAndNotInit()) {
+		if (!variant.isValidAndNotDefault()) {
 			
 			return
 			

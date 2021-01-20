@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.TextInputLayoutErrors
-import co.aresid.book13.Util.isValidAndNotInit
+import co.aresid.book13.Util.isValidAndNotDefault
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
 import co.aresid.book13.databinding.FragmentStartTrackingBinding
 import timber.log.Timber
@@ -72,13 +73,13 @@ class StartTrackingFragment: Fragment() {
 				
 				                                                    TextInputLayoutErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
-				                                                    TextInputLayoutErrors.NO_BOOK_FOUND -> binding.bookTitleLayout.error = "No book found" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.NO_BOOK_FOUND -> binding.bookTitleLayout.error = getString(R.string.no_book_found)
 				
-				                                                    TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.error = "Book title missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.error = getString(R.string.book_title_missing)
 				
-				                                                    TextInputLayoutErrors.START_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Starting page count missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.START_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = getString(R.string.starting_page_count_missing)
 				
-				                                                    TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = "Finishing page count missing" // TODO: Extract string resource
+				                                                    TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = getString(R.string.finishing_page_count_missing)
 				
 				                                                    else -> {
 				                                                    }
@@ -136,7 +137,7 @@ class StartTrackingFragment: Fragment() {
 		Timber.d("renderDatePickerDialog: called")
 		
 		// Check if the given parameter is invalid
-		if (!variant.isValidAndNotInit()) {
+		if (!variant.isValidAndNotDefault()) {
 			
 			return
 			

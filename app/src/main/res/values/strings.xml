@@ -18,8 +18,12 @@
 	<string name="pages_colon">Pages&#58;</string>
 	<string name="pages_read_colon">Pages read&#58;</string>
 	<string name="by_placeholder">by %1s</string>
-	<string name="book_title_missing">Book title missing</string>
-	<string name="book_author_missing">Book author missing</string>
-	<string name="book_page_count_missing">Book page count missing</string>
+	<string name="book_title_missing">Book title missing.</string>
+	<string name="book_author_missing">Book author missing.</string>
+	<string name="book_page_count_missing">Book page count missing.</string>
 	<string name="standard_error_message">Unknown error, please try again.</string>
+	<string name="no_book_found">No book found</string>
+	<string name="starting_page_count_missing">Starting page count missing.</string>
+	<string name="finishing_page_count_missing">Finishing page count missing.</string>
+	<string name="book_already_exists">Book already exists. Change title, author, page count or use the existing one.</string>
 </resources>

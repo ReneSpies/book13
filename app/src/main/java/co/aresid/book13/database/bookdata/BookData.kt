@@ -17,8 +17,6 @@ import co.aresid.book13.database.DatabaseNames
 )
 data class BookData(
 	
-	// TODO: 1/15/2021 Either constraint the whole row to be unique in itself or leave it without constraints
-	
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = DatabaseNames.Table.BookData.Column.ID) val id: Long = 0,
 	
 	@ColumnInfo(name = DatabaseNames.Table.BookData.Column.TITLE) val title: String,
@@ -34,7 +32,9 @@ data class BookData(
 ) {
 	
 	override fun toString(): String {
-		return "$id - $title by $author" // TODO: 1/14/2021 toString: extract string resource
+		
+		return "$id - $title by $author with $numberOfPages pages"
+		
 	}
 	
 }

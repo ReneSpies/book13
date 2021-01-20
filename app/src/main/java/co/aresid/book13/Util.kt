@@ -3,11 +3,15 @@ package co.aresid.book13
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.BindingAdapter
+import co.aresid.book13.database.bookdata.BookData
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import org.jetbrains.annotations.NotNull
 import timber.log.Timber
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -20,6 +24,44 @@ import java.util.concurrent.TimeUnit
  */
 
 object Util {
+	
+	/**
+	 * Checks if its list contains the [book]. Checks the fields
+	 * [BookData.title], [BookData.author] and [BookData.numberOfPages].
+	 *
+	 * @return True if above fields are matching, false otherwise.
+	 */
+	fun List<BookData>.containsBook(book: BookData): Boolean {
+		
+		Timber.d("containsBook: called")
+		
+		for (storedBook in this) {
+			
+			if (book.title == storedBook.title && book.author == storedBook.author && book.numberOfPages == storedBook.numberOfPages) {
+				
+				return true
+				
+			}
+			
+		}
+		
+		return false
+		
+	}
+	
+	/**
+	 * Uses the BindingAdapter annotation to make it available in the XML.
+	 * Used to clear the text of multiple [EditText] views at once.
+	 */
+	@JvmStatic
+	@BindingAdapter("clearText")
+	fun EditText.clearText(@NotNull shouldClear: Boolean) {
+		
+		Timber.d("clearText: called")
+		
+		if (shouldClear) text = null
+		
+	}
 	
 	enum class TextInputLayoutErrors {
 		
@@ -57,6 +99,11 @@ object Util {
 		 * This is used to render an error indicating that the tracking's finish page count TextInputEditText value is missing.
 		 */
 		FINISH_PAGE_COUNT_MISSING,
+		
+		/**
+		 * This is used to render an error indicating that the given book already exists in the database.
+		 */
+		BOOK_ALREADY_EXISTS,
 		
 	}
 	
@@ -122,9 +169,9 @@ object Util {
 	 *
 	 * @return True if above expression is correct.
 	 */
-	fun DatePickerVariant.isValidAndNotInit(): Boolean {
+	fun DatePickerVariant.isValidAndNotDefault(): Boolean {
 		
-		Timber.d("isValidAndNotInit: called")
+		Timber.d("isValidAndNotDefault: called")
 		
 		return (this == DatePickerVariant.START || this == DatePickerVariant.FINISH)
 		

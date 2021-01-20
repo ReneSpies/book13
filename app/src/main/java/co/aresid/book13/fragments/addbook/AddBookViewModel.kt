@@ -9,15 +9,16 @@ import androidx.lifecycle.viewModelScope
 import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.TextInputLayoutErrors
+import co.aresid.book13.Util.containsBook
 import co.aresid.book13.Util.disableButtonAndRenderLoadingSpinner
 import co.aresid.book13.Util.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds
 import co.aresid.book13.Util.enableButtonAndShowCheckSignFor500Millis
-import co.aresid.book13.Util.isValidAndNotInit
+import co.aresid.book13.Util.isValidAndNotDefault
 import co.aresid.book13.Util.renderErrorSnackbar
 import co.aresid.book13.database.bookdata.BookData
+import co.aresid.book13.exceptions.BookAlreadyExistsException
 import co.aresid.book13.repository.Book13Repository
 import com.google.android.material.button.MaterialButton
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.annotations.NotNull
@@ -31,8 +32,6 @@ import timber.log.Timber
  */
 
 class AddBookViewModel(application: Application): AndroidViewModel(application) {
-	
-	// TODO: 11/23/2020 Clear all fields when the book is successfully stored
 	
 	var bookTitle = ""
 	var bookAuthor = ""
@@ -59,8 +58,6 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		loadDefaultRenderDatePickerDialogValue() // Initialize LiveData
 		
 		loadDefaultEditTextErrorValue() // Initialize LiveData
-		
-		loadDefaultClearAllEditTextFieldsValue() // Initialize LiveData
 		
 	}
 	
@@ -118,6 +115,9 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 			
 		}
 		
+		val button = view as MaterialButton // Cast the given View as a MaterialButton
+		button.disableButtonAndRenderLoadingSpinner() // Disable the button and render a loading animation
+		
 		val repository = Book13Repository.getInstance(getApplication()) // Get a Book13Repository instance
 		
 		// Create a BookData object from the given book data LiveData via two-way data binding
@@ -131,14 +131,22 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 		)
 		
-		val button = view as MaterialButton // Cast the given View as a MaterialButton
-		button.disableButtonAndRenderLoadingSpinner() // Disable the button and render a loading animation
-		
 		// Try to insert the bookData into the table and if it fails, show an error Snackbar
 		// and reset the drawables on the button
 		try {
 			
-			withContext(Dispatchers.IO) {
+			withContext(coroutineContext) {
+				
+				val allBooks = repository.getAllBookData() // Retrieve all books to check for a possible duplicate
+				
+				// Check if a book with matching title, author and page count already exists and exit
+				if (allBooks.containsBook(bookData)) {
+					
+					_editTextErrors.value = TextInputLayoutErrors.BOOK_ALREADY_EXISTS // Render the appropriate error message
+					
+					throw BookAlreadyExistsException() // Throw this exception to skip ahead
+					
+				}
 				
 				repository.insertBookData(bookData) // Insert bookData into table
 				
@@ -149,10 +157,17 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 			button.enableButtonAndShowCheckSignFor500Millis() // Re-enable the button and show a check sign
 			
 		}
-		catch (e: Exception) {
+		catch (exception: Exception) {
+			
+			Timber.e(exception)
+			
+			if (exception !is BookAlreadyExistsException) {
+				
+				button.renderErrorSnackbar(button.context.getString(R.string.standard_error_message)) // Render an error Snackbar on the screen
+				
+			}
 			
 			button.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds() // Re-enable the button and reset the loading animation
-			button.renderErrorSnackbar(button.context.getString(R.string.standard_error_message)) // Render an error Snackbar on the screen
 			
 		}
 		
@@ -162,23 +177,8 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 		Timber.d("clearAllEditTextFields: called")
 		
-		_clearAllEditTextFields.value = true
-		
-	}
-	
-	fun allEditTextFieldsCleared() {
-		
-		Timber.d("allEditTextFieldsCleared: called")
-		
-		loadDefaultClearAllEditTextFieldsValue()
-		
-	}
-	
-	private fun loadDefaultClearAllEditTextFieldsValue() {
-		
-		Timber.d("loadDefaultClearAllEditTextFieldsValue: called")
-		
-		_clearAllEditTextFields.value = false
+		_clearAllEditTextFields.value = true // Clear all EditText fields
+		_clearAllEditTextFields.value = false // Reset the LiveData to prevent errors
 		
 	}
 	
@@ -190,7 +190,7 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		
 		Timber.d("renderDatePickerDialog: called")
 		
-		if (!variant.isValidAndNotInit()) {
+		if (!variant.isValidAndNotDefault()) {
 			
 			return
 			
