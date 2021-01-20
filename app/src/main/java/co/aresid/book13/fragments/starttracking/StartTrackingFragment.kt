@@ -48,6 +48,7 @@ class StartTrackingFragment: Fragment() {
 		startTrackingViewModel = ViewModelProvider(this).get(StartTrackingViewModel::class.java) // Define the ViewModel
 		
 		binding.viewModel = startTrackingViewModel // Tell the layout about the ViewModel
+		binding.lifecycleOwner = viewLifecycleOwner
 		
 		// Observe the booksAutoCompleteTextViewAdapter LiveData
 		startTrackingViewModel.booksAutoCompleteTextViewAdapter.observe(viewLifecycleOwner,
@@ -77,9 +78,9 @@ class StartTrackingFragment: Fragment() {
 				
 				                                                    TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.error = getString(R.string.book_title_missing)
 				
-				                                                    TextInputLayoutErrors.START_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = getString(R.string.starting_page_count_missing)
+				                                                    TextInputLayoutErrors.START_PAGE_COUNT_MISSING -> binding.startingPageCountLayout.error = getString(R.string.starting_page_count_missing)
 				
-				                                                    TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING -> binding.bookTitleLayout.error = getString(R.string.finishing_page_count_missing)
+				                                                    TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING -> binding.finishingPageCountLayout.error = getString(R.string.finishing_page_count_missing)
 				
 				                                                    else -> {
 				                                                    }
@@ -106,7 +107,7 @@ class StartTrackingFragment: Fragment() {
 		
 		binding.startDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time) // Format date to local format and render it on the screen
 		
-		startTrackingViewModel.trackingStartDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
+		startTrackingViewModel.startDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
 		
 	}
 	
@@ -124,7 +125,7 @@ class StartTrackingFragment: Fragment() {
 		
 		binding.finishDateTextView.text = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.time) // Format date to local format and render it on the screen
 		
-		startTrackingViewModel.trackingFinishDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
+		startTrackingViewModel.finishDateInMilliseconds = calendar.timeInMillis // Pass the date in milliseconds to the ViewModel
 		
 	}
 	

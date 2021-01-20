@@ -11,8 +11,8 @@ import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.TextInputLayoutErrors
 import co.aresid.book13.Util.isValidAndNotDefault
+import co.aresid.book13.Util.renderErrorMessage
 import co.aresid.book13.Util.resetAllTextInputLayoutErrors
-import co.aresid.book13.Util.showErrorMessage
 import co.aresid.book13.databinding.FragmentAddBookBinding
 import timber.log.Timber
 import java.text.DateFormat
@@ -67,13 +67,13 @@ class AddBookFragment: Fragment() {
 				
 				                                        TextInputLayoutErrors.DEFAULT -> binding.constraintLayout.resetAllTextInputLayoutErrors()
 				
-				                                        TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.showErrorMessage(requireContext().getString(R.string.book_title_missing))
+				                                        TextInputLayoutErrors.BOOK_TITLE_MISSING -> binding.bookTitleLayout.renderErrorMessage(requireContext().getString(R.string.book_title_missing))
 				
-				                                        TextInputLayoutErrors.BOOK_AUTHOR_MISSING -> binding.bookAuthorLayout.showErrorMessage(requireContext().getString(R.string.book_author_missing))
+				                                        TextInputLayoutErrors.BOOK_AUTHOR_MISSING -> binding.bookAuthorLayout.renderErrorMessage(requireContext().getString(R.string.book_author_missing))
 				
-				                                        TextInputLayoutErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.showErrorMessage(requireContext().getString(R.string.book_page_count_missing))
+				                                        TextInputLayoutErrors.BOOK_PAGE_COUNT_MISSING -> binding.bookPageCountLayout.renderErrorMessage(requireContext().getString(R.string.book_page_count_missing))
 				
-				                                        TextInputLayoutErrors.BOOK_ALREADY_EXISTS -> binding.bookTitleLayout.showErrorMessage(getString(R.string.book_already_exists))
+				                                        TextInputLayoutErrors.BOOK_ALREADY_EXISTS -> binding.bookTitleLayout.renderErrorMessage(getString(R.string.book_already_exists))
 				
 				                                        else -> {
 				                                        }

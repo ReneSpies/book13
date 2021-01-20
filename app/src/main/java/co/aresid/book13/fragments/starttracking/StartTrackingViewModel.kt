@@ -1,16 +1,23 @@
 package co.aresid.book13.fragments.starttracking
 
 import android.app.Application
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import co.aresid.book13.R
 import co.aresid.book13.Util.DatePickerVariant
 import co.aresid.book13.Util.TextInputLayoutErrors
+import co.aresid.book13.Util.disableButtonAndRenderLoadingSpinner
+import co.aresid.book13.Util.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds
+import co.aresid.book13.Util.enableButtonAndShowCheckSignFor500Millis
+import co.aresid.book13.Util.renderErrorSnackbar
 import co.aresid.book13.database.bookdata.BookData
+import co.aresid.book13.database.trackingdata.TrackingData
 import co.aresid.book13.repository.Book13Repository
-import kotlinx.coroutines.Dispatchers
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -33,13 +40,20 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 	var book = ""
 	var startPageCount = ""
 	var finishPageCount = ""
-	var trackingStartDateInMilliseconds = -1L
-	var trackingFinishDateInMilliseconds = -1L
+	var startDateInMilliseconds = -1L
+	var finishDateInMilliseconds = -1L
 	
+	// Triggers Util.clearText when the value is true via data binding
+	private val _clearAllEditTextFields = MutableLiveData<Boolean>()
+	val clearAllEditTextFields: LiveData<Boolean>
+		get() = _clearAllEditTextFields
+	
+	// Controls whether to render the DatePickerDialog or not and which variant of it
 	private val _renderDatePickerDialog = MutableLiveData<DatePickerVariant>()
 	val renderDatePickerDialog: LiveData<DatePickerVariant>
 		get() = _renderDatePickerDialog
 	
+	// Controls whether to render EditText errors or not and which errors
 	private val _renderEditTextErrors = MutableLiveData<TextInputLayoutErrors>()
 	val renderEditTextErrors: LiveData<TextInputLayoutErrors>
 		get() = _renderEditTextErrors
@@ -70,37 +84,6 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 			getApplication<Application>().baseContext,
 			android.R.layout.simple_spinner_dropdown_item
 		)
-		
-	}
-	
-	private suspend fun getAllBookData(): List<BookData> {
-		
-		Timber.d("getAllBookData: called")
-		
-		var allBooks = listOf<BookData>()
-		
-		withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
-			
-			val repository = Book13Repository.getInstance(getApplication())
-			
-			try {
-				
-				// Get all books from the database and iterate over it
-				allBooks = repository.getAllBookData()
-				
-			}
-			catch (exception: Exception) {
-				
-				Timber.e(
-					exception,
-					"Cannot get all book data from database"
-				)
-				
-			}
-			
-		}
-		
-		return allBooks
 		
 	}
 	
@@ -161,7 +144,8 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		
 		Timber.d("populateAutoCompleteTextViewAdapterFromDatabase: called")
 		
-		val allBooks = getAllBookData()
+		val repository = Book13Repository.getInstance(getApplication())
+		val allBooks = repository.getAllBookData()
 		
 		// Create a new ArrayAdapter with the list of all books in the database
 		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<BookData>(
@@ -176,31 +160,91 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 	 * Validates all given data and if it succeeds, it will create a new
 	 * TrackingData object and inserts it into the database.
 	 */
-	fun addTrackingData() {
+	fun addTrackingData(view: View) = viewModelScope.launch {
 		
 		Timber.d("addTrackingData: called")
 		
-		//		if (!allBooks.contains(book)) {
-		//
-		//			_renderEditTextErrors.value = TextInputLayoutErrors.NO_BOOK_FOUND
-		//
-		//		}
+		loadDefaultRenderEditTextErrorsValue() // Reset all errors
 		
+		// Check if the EditText field is blank and render the appropriate error message
 		if (book.isBlank()) {
 			
 			_renderEditTextErrors.value = TextInputLayoutErrors.BOOK_TITLE_MISSING
 			
+			return@launch
+			
 		}
 		
+		val repository = Book13Repository.getInstance(getApplication()) // Get a repository instance
+		
+		// The first index of book is the books ID. This extracts the ID from the String
+		// Therefore the BookData's toString function must have it's ID at index 0
+		val bookId = book[0].toString().toLongOrNull()
+		
+		// Checks whether the bookId is valid and a book exists and renders the appropriate
+		// error message if not
+		if (!(bookId != null && repository.getBookDataById(bookId) != null)) {
+			
+			_renderEditTextErrors.value = TextInputLayoutErrors.NO_BOOK_FOUND
+			
+			return@launch
+			
+		}
+		
+		// Checks if the startPageCount is given and renders the appropriate error message if not
 		if (startPageCount == "") {
 			
 			_renderEditTextErrors.value = TextInputLayoutErrors.START_PAGE_COUNT_MISSING
 			
+			return@launch
+			
 		}
 		
+		// Checks if the finishPageCount is given and renders the appropriate error message if not
 		if (finishPageCount == "") {
 			
 			_renderEditTextErrors.value = TextInputLayoutErrors.FINISH_PAGE_COUNT_MISSING
+			
+			return@launch
+			
+		}
+		
+		val bookData = repository.getBookDataById(bookId)!! // Extract the BookData matching the given ID
+		
+		// Create a new TrackingData object from the given book, startPageCount & finishPageCount
+		val trackingData = TrackingData(
+			
+			bookId = bookData.id,
+			bookTitle = bookData.title,
+			startPageCount = startPageCount.toInt(), // I can assume it to be an int because the XML field is restricted to only allow integer input
+			finishPageCount = finishPageCount.toInt(), // I can assume it to be an int because the XML field is restricted to only allow integer input
+			startDate = startDateInMilliseconds,
+			finishDate = finishDateInMilliseconds
+		
+		)
+		
+		val button = view as MaterialButton
+		button.disableButtonAndRenderLoadingSpinner()
+		
+		try {
+			
+			withContext(coroutineContext) {
+				
+				repository.insertTrackingData(trackingData) // Insert the newly created TrackingData into the table
+				
+			}
+			
+			_clearAllEditTextFields.value = true // Clear all EditText fields
+			
+			button.enableButtonAndShowCheckSignFor500Millis()
+			
+		}
+		catch (exception: Exception) {
+			
+			Timber.e(exception)
+			
+			button.renderErrorSnackbar(button.context.getString(R.string.standard_error_message))
+			button.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds()
 			
 		}
 		

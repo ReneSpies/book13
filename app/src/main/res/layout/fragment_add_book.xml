@@ -54,7 +54,7 @@
 					android:layout_height="match_parent"
 					android:imeActionId="100"
 					android:imeOptions="actionNext"
-					android:inputType="text"
+					android:inputType="textCapSentences"
 					android:text="@={viewModel.bookTitle}"
 					app:clearText="@{viewModel.clearAllEditTextFields}"
 					/>

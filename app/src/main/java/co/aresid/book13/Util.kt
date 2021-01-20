@@ -58,6 +58,7 @@ object Util {
 	fun EditText.clearText(@NotNull shouldClear: Boolean) {
 		
 		Timber.d("clearText: called")
+		Timber.d("shouldClear = $shouldClear")
 		
 		if (shouldClear) text = null
 		
@@ -131,7 +132,7 @@ object Util {
 	 */
 	fun ViewGroup.resetAllTextInputLayoutErrors() {
 		
-		Timber.d("resetAllEditTextErrors: called")
+		Timber.d("resetAllTextInputLayoutErrors: called")
 		
 		for (position in 0 .. childCount) {
 			
@@ -150,20 +151,6 @@ object Util {
 	}
 	
 	/**
-	 * Checks if [this] is either [DatePickerVariant.DEFAULT], [DatePickerVariant.START] or
-	 * [DatePickerVariant.FINISH].
-	 *
-	 * @return True if above expression is correct.
-	 */
-	fun DatePickerVariant.isValid(): Boolean {
-		
-		Timber.d("datePickerVariantValid: called")
-		
-		return (this == DatePickerVariant.DEFAULT || this == DatePickerVariant.START || this == DatePickerVariant.FINISH)
-		
-	}
-	
-	/**
 	 * Checks if [this] is either [DatePickerVariant.START] or
 	 * [DatePickerVariant.FINISH].
 	 *
@@ -177,9 +164,9 @@ object Util {
 		
 	}
 	
-	fun TextInputLayout.showErrorMessage(message: String) {
+	fun TextInputLayout.renderErrorMessage(message: String) {
 		
-		Timber.d("showErrorMessage: called")
+		Timber.d("renderErrorMessage: called")
 		
 		error = message
 		
@@ -187,7 +174,7 @@ object Util {
 	
 	fun MaterialButton.disableButtonAndRenderLoadingSpinner() {
 		
-		Timber.d("showLoadingSpinnerAndDisable: called")
+		Timber.d("disableButtonAndRenderLoadingSpinner: called")
 		
 		// First, disable the button
 		isEnabled = false
@@ -214,7 +201,7 @@ object Util {
 	
 	fun MaterialButton.enableButtonAndShowCheckSignFor500Millis() {
 		
-		Timber.d("enableAndShowCheckFor500Millis: called")
+		Timber.d("enableButtonAndShowCheckSignFor500Millis: called")
 		
 		// First, enable the button
 		isEnabled = true
@@ -247,7 +234,7 @@ object Util {
 	
 	fun MaterialButton.enableButtonAndResetCompoundDrawablesWithIntrinsicBounds() {
 		
-		Timber.d("resetCompoundDrawablesWithIntrinsicBounds: called")
+		Timber.d("enableButtonAndResetCompoundDrawablesWithIntrinsicBounds: called")
 		
 		// First, enable the button
 		isEnabled = true
@@ -264,7 +251,7 @@ object Util {
 	
 	fun View.renderErrorSnackbar(message: String) {
 		
-		Timber.d("showErrorSnackbar: called")
+		Timber.d("renderErrorSnackbar: called")
 		
 		Snackbar.make(
 			this,

@@ -178,7 +178,6 @@ class AddBookViewModel(application: Application): AndroidViewModel(application) 
 		Timber.d("clearAllEditTextFields: called")
 		
 		_clearAllEditTextFields.value = true // Clear all EditText fields
-		_clearAllEditTextFields.value = false // Reset the LiveData to prevent errors
 		
 	}
 	

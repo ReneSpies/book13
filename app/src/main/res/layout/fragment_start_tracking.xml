@@ -49,12 +49,14 @@
 				android:layout_height="match_parent"
 				android:imeActionId="100"
 				android:imeOptions="actionNext"
-				android:inputType="text"
+				android:inputType="none"
+				android:text="@={viewModel.book}"
+				app:clearText="@{viewModel.clearAllEditTextFields}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
 		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/book_author_layout"
+			android:id="@+id/starting_page_count_layout"
 			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -71,12 +73,13 @@
 				android:imeActionId="101"
 				android:imeOptions="actionNext"
 				android:inputType="numberDecimal"
-				android:text="@{viewModel.startPageCount}"
+				android:text="@={viewModel.startPageCount}"
+				app:clearText="@{viewModel.clearAllEditTextFields}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
 		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/book_page_count_layout"
+			android:id="@+id/finishing_page_count_layout"
 			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -84,7 +87,7 @@
 			android:hint="@string/finish_page_count"
 			app:layout_constraintEnd_toEndOf="@id/guideline_end"
 			app:layout_constraintStart_toStartOf="@id/guideline_start"
-			app:layout_constraintTop_toBottomOf="@id/book_author_layout"
+			app:layout_constraintTop_toBottomOf="@id/starting_page_count_layout"
 			>
 			
 			<com.google.android.material.textfield.TextInputEditText
@@ -93,7 +96,8 @@
 				android:imeActionId="102"
 				android:imeOptions="actionDone"
 				android:inputType="numberDecimal"
-				android:text="@{viewModel.finishPageCount}"
+				android:text="@={viewModel.finishPageCount}"
+				app:clearText="@{viewModel.clearAllEditTextFields}"
 				/>
 		</com.google.android.material.textfield.TextInputLayout>
 		
@@ -107,7 +111,7 @@
 			app:icon="@drawable/ic_sharp_add_24"
 			app:layout_constraintEnd_toEndOf="@id/guideline_end"
 			app:layout_constraintStart_toStartOf="@id/guideline_start"
-			app:layout_constraintTop_toBottomOf="@id/book_page_count_layout"
+			app:layout_constraintTop_toBottomOf="@id/finishing_page_count_layout"
 			/>
 		
 		<com.google.android.material.button.MaterialButton
@@ -128,7 +132,7 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2.5dp"
-			android:onClick="@{() -> viewModel.addTrackingData()}"
+			android:onClick="@{(view) -> viewModel.addTrackingData(view)}"
 			android:text="@string/start_tracking"
 			app:layout_constraintEnd_toEndOf="@id/guideline_end"
 			app:layout_constraintStart_toStartOf="@id/guideline_start"

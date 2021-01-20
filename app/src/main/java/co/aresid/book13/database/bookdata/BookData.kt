@@ -33,6 +33,8 @@ data class BookData(
 	
 	override fun toString(): String {
 		
+		// Don't change the schema here. The books ID must stay at index 0!
+		
 		return "$id - $title by $author with $numberOfPages pages"
 		
 	}
