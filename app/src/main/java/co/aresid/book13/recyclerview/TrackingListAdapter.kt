@@ -2,7 +2,9 @@ package co.aresid.book13.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import co.aresid.book13.database.trackingdata.TrackingData
 import timber.log.Timber
+import java.text.DateFormat
 
 /**
  *    Created on: 8/14/20
@@ -11,7 +13,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListAdapter(val clickListener: TrackingListClickListener): RecyclerView.Adapter<TrackingListViewHolder>() {
+class TrackingListAdapter(private val trackingList: List<TrackingData>): RecyclerView.Adapter<TrackingListViewHolder>() {
 	
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
@@ -31,15 +33,13 @@ class TrackingListAdapter(val clickListener: TrackingListClickListener): Recycle
 		
 		Timber.d("onBindViewHolder: called")
 		
-		holder.binding.titleTextView.text = position.toString()
+		holder.binding.trackingEntry = trackingList[position]
 		
-		holder.bind(
-			clickListener,
-			position
-		)
+		holder.binding.startDate = DateFormat.getDateInstance(DateFormat.SHORT).format(trackingList[position].startDate)
+		holder.binding.finishDate = DateFormat.getDateInstance(DateFormat.SHORT).format(trackingList[position].finishDate)
 		
 	}
 	
-	override fun getItemCount(): Int = 100
+	override fun getItemCount(): Int = trackingList.size
 	
 }

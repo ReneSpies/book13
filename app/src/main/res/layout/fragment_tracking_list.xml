@@ -5,14 +5,30 @@
 	>
 	
 	<data>
-	
-	
+		
+		<import type="android.view.View"/>
+		
+		<variable
+			name="viewModel"
+			type="co.aresid.book13.fragments.trackinglist.TrackingListViewModel"
+			/>
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		>
+		
+		<ProgressBar
+			android:id="@+id/progress_circular"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:indeterminateDrawable="@drawable/animated_loading_spinner"
+			app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+			app:layout_constraintEnd_toEndOf="@id/guideline_end"
+			app:layout_constraintStart_toStartOf="@id/guideline_start"
+			app:layout_constraintTop_toTopOf="@id/guideline_top"
+			/>
 		
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/tracking_list_recycler_view"
@@ -37,7 +53,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:orientation="vertical"
-			app:layout_constraintGuide_end="@dimen/guideline_margin_large"
+			app:layout_constraintGuide_end="@dimen/guideline_margin_small"
 			/>
 		
 		<androidx.constraintlayout.widget.Guideline
@@ -53,7 +69,23 @@
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:orientation="vertical"
-			app:layout_constraintGuide_begin="@dimen/guideline_margin_large"
+			app:layout_constraintGuide_begin="@dimen/guideline_margin_small"
+			/>
+		
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/content_group"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:visibility="@{viewModel.hideLoadingAndShowContent ? View.VISIBLE : View.GONE, default=gone}"
+			app:constraint_referenced_ids="tracking_list_recycler_view"
+			/>
+		
+		<androidx.constraintlayout.widget.Group
+			android:id="@+id/loading_group"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:visibility="@{viewModel.hideLoadingAndShowContent ? View.GONE : View.VISIBLE, default=visible}"
+			app:constraint_referenced_ids="progress_circular"
 			/>
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>

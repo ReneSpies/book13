@@ -7,116 +7,133 @@
 	<data>
 		
 		<variable
-			name="clickListener"
-			type="co.aresid.book13.recyclerview.TrackingListClickListener"
-			/>
-		
-		<variable
 			name="position"
 			type="Integer"
 			/>
+		
+		<variable
+			name="trackingEntry"
+			type="co.aresid.book13.database.trackingdata.TrackingData"
+			/>
+		
+		<variable
+			name="startDate"
+			type="String"
+			/>
+		
+		<variable
+			name="finishDate"
+			type="String"
+			/>
+		
+		<import type="android.view.View"/>
 	</data>
 	
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.cardview.widget.CardView
+		android:id="@+id/card_view"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="?android:attr/selectableItemBackground"
-		android:onClick="@{() -> clickListener.onClick(position)}"
+		android:layout_margin="4dp"
 		>
 		
-		<TextView
-			android:id="@+id/title_text_view"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:text="book title"
-			app:layout_constraintEnd_toEndOf="@id/guideline_vertical_85"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@id/guideline_top"
-			/>
-		
-		<TextView
-			android:id="@+id/start_date_text_view"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:text="start date"
-			app:layout_constraintEnd_toStartOf="@id/finish_date_text_view"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/title_text_view"
-			/>
-		
-		<TextView
-			android:id="@+id/finish_date_text_view"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="4dp"
-			android:layout_marginLeft="4dp"
-			android:text="end date"
-			app:layout_constraintEnd_toEndOf="@id/guideline_vertical_85"
-			app:layout_constraintStart_toEndOf="@id/start_date_text_view"
-			app:layout_constraintTop_toTopOf="@id/start_date_text_view"
-			/>
-		
-		
-		<TextView
-			android:id="@+id/pages_to_read_text_view"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:text="pages to read"
-			app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-			app:layout_constraintEnd_toStartOf="@id/pages_read_text_view"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/start_date_text_view"
-			/>
-		
-		<TextView
-			android:id="@+id/pages_read_text_view"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="4dp"
-			android:layout_marginLeft="4dp"
-			android:text="pages read"
-			app:layout_constraintBottom_toBottomOf="@id/pages_to_read_text_view"
-			app:layout_constraintEnd_toEndOf="@id/guideline_vertical_85"
-			app:layout_constraintStart_toEndOf="@id/pages_to_read_text_view"
-			/>
-		
-		<androidx.constraintlayout.widget.Guideline
-			android:id="@+id/guideline_vertical_85"
-			android:layout_width="wrap_content"
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical"
-			app:layout_constraintGuide_percent=".85"
-			/>
+			>
+			
+			<TextView
+				android:id="@+id/book_title_text_view"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@{String.format(@string/id_and_title_placeholder, trackingEntry.bookId, trackingEntry.bookTitle)}"
+				app:layout_constraintEnd_toEndOf="@id/guideline_end"
+				app:layout_constraintStart_toStartOf="@id/guideline_start"
+				app:layout_constraintTop_toTopOf="@id/guideline_top"
+				/>
+			
+			<TextView
+				android:id="@+id/start_date_text_view"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@{trackingEntry.startDate == -1 ? @text/no_start_date : String.format(@string/started_placeholder, startDate)}"
+				app:layout_constraintEnd_toEndOf="@id/guideline_vertical_50"
+				app:layout_constraintStart_toStartOf="@id/guideline_start"
+				app:layout_constraintTop_toBottomOf="@id/book_title_text_view"
+				/>
+			
+			<TextView
+				android:id="@+id/finish_date_text_view"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@{trackingEntry.finishDate == -1 ? @text/no_finish_date : String.format(@string/finished_placeholder, finishDate)}"
+				app:layout_constraintEnd_toEndOf="@id/guideline_end"
+				app:layout_constraintStart_toStartOf="@id/guideline_vertical_50"
+				app:layout_constraintTop_toBottomOf="@id/book_title_text_view"
+				/>
+			
+			
+			<TextView
+				android:id="@+id/pages_to_read_text_view"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@{String.format(@string/pages_read_placeholder, trackingEntry.finishPageCount - trackingEntry.startPageCount)}"
+				app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+				app:layout_constraintEnd_toEndOf="@id/guideline_vertical_50"
+				app:layout_constraintStart_toStartOf="@id/guideline_start"
+				app:layout_constraintTop_toBottomOf="@id/start_date_text_view"
+				/>
+			
+			<TextView
+				android:id="@+id/pages_read_text_view"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@{String.format(@string/from_to_placeholder, trackingEntry.startPageCount, trackingEntry.finishPageCount)}"
+				app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+				app:layout_constraintEnd_toEndOf="@id/guideline_end"
+				app:layout_constraintStart_toStartOf="@id/guideline_vertical_50"
+				app:layout_constraintTop_toBottomOf="@id/finish_date_text_view"
+				/>
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guideline_vertical_50"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				app:layout_constraintGuide_percent=".5"
+				/>
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guideline_top"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				app:layout_constraintGuide_begin="@dimen/guideline_margin_small"
+				/>
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guideline_end"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				app:layout_constraintGuide_end="@dimen/guideline_margin_small"
+				/>
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guideline_bottom"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				app:layout_constraintGuide_end="@dimen/guideline_margin_small"
+				/>
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guideline_start"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				app:layout_constraintGuide_begin="@dimen/guideline_margin_small"
+				/>
 		
-		<ImageButton
-			android:id="@+id/finish_tracking_button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:background="?android:attr/selectableItemBackgroundBorderless"
-			android:padding="5dp"
-			android:src="@drawable/ic_sharp_check_24"
-			app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="@id/guideline_vertical_85"
-			app:layout_constraintTop_toTopOf="@id/guideline_top"
-			/>
-		
-		<androidx.constraintlayout.widget.Guideline
-			android:id="@+id/guideline_top"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			app:layout_constraintGuide_begin="@dimen/guideline_margin_small"
-			/>
-		
-		<androidx.constraintlayout.widget.Guideline
-			android:id="@+id/guideline_bottom"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			app:layout_constraintGuide_end="@dimen/guideline_margin_small"
-			/>
-	
-	
-	</androidx.constraintlayout.widget.ConstraintLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.cardview.widget.CardView>
 </layout>

@@ -15,19 +15,6 @@ import timber.log.Timber
 
 class TrackingListViewHolder private constructor(val binding: ItemTrackingListBinding): RecyclerView.ViewHolder(binding.root) {
 	
-	fun bind(
-		clickListener: TrackingListClickListener,
-		position: Int
-	) {
-		
-		Timber.d("bind: called")
-		
-		binding.clickListener = clickListener
-		
-		binding.position = position
-		
-	}
-	
 	companion object {
 		
 		fun from(parent: ViewGroup): TrackingListViewHolder {

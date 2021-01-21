@@ -51,7 +51,7 @@ class Book13Repository private constructor(private val application: Application)
 	
 	suspend fun getTrackingDataById(id: Long) = trackingDataDao.getById(id)
 	
-	fun getAllTrackingData() = trackingDataDao.getAllLiveData()
+	suspend fun getAllTrackingData() = trackingDataDao.getAll()
 	
 	suspend fun insertBookData(data: BookData) = bookDataDao.insert(data)
 	

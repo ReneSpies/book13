@@ -22,7 +22,7 @@ interface TrackingDataDao {
 	 * @return [LiveData] with type [List] with type [TrackingData].
 	 */
 	@Query("SELECT * FROM tracking_data")
-	fun getAllLiveData(): LiveData<List<TrackingData>>
+	suspend fun getAll(): List<TrackingData>
 	
 	/**
 	 * Retrieves a row from the table in the form of [TrackingData] where [trackingId] is found.

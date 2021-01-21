@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.aresid.book13.R
 import co.aresid.book13.databinding.FragmentTrackingListBinding
 import co.aresid.book13.recyclerview.TrackingListAdapter
-import co.aresid.book13.recyclerview.TrackingListClickListener
 import timber.log.Timber
 
 /**
@@ -33,7 +30,7 @@ class TrackingListFragment: Fragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		
 		Timber.d("onCreateView: called")
 		
@@ -50,29 +47,27 @@ class TrackingListFragment: Fragment() {
 			false
 		)
 		
+		binding.lifecycleOwner = viewLifecycleOwner
+		
 		// Define the ViewModel
 		trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
 		
+		binding.viewModel = trackingListViewModel
+		
+		trackingListViewModel.trackingListAdapter.observe(viewLifecycleOwner,
+		                                                  {
+			
+			                                                  binding.trackingListRecyclerView.adapter = it
+			
+		                                                  })
+		
 		// Construct the RecyclerView
 		val recyclerViewLayoutManager = LinearLayoutManager(context)
-		val trackingListAdapter = TrackingListAdapter(TrackingListClickListener { position ->
-			
-			Timber.d("item number $position clicked")
-			
-			val arguments = Bundle()
-			arguments.putInt(
-				"position",
-				position
-			)
-			
-			findNavController().navigate(R.id.to_trackingDetailsFragment)
-			
-		})
+		val trackingListAdapter = TrackingListAdapter(listOf())
 		
 		binding.trackingListRecyclerView.apply {
 			
-			// I know that the items do not change in size
-			// so I can set this for improved performance
+			// The views size does not change
 			setHasFixedSize(true)
 			
 			layoutManager = recyclerViewLayoutManager
