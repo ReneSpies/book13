@@ -150,7 +150,7 @@ class StartTrackingViewModel(application: Application): AndroidViewModel(applica
 		// Create a new ArrayAdapter with the list of all books in the database
 		_booksAutoCompleteTextViewAdapter.value = ArrayAdapter<BookData>(
 			getApplication(),
-			android.R.layout.simple_spinner_dropdown_item,
+			R.layout.item_drop_down_text_view,
 			allBooks
 		)
 		

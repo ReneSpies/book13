@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
@@ -87,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="@{viewModel.hideLoadingAndShowContent ? View.VISIBLE : View.GONE, default=gone}"
-            app:constraint_referenced_ids="tracking_list_recycler_view" />
+            app:constraint_referenced_ids="swipe_refresh_layout" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/loading_group"
