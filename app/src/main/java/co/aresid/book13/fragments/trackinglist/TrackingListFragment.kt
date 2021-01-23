@@ -18,67 +18,67 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListFragment: Fragment() {
-	
-	// Binding for the layout
-	private lateinit var binding: FragmentTrackingListBinding
-	
-	// Corresponding ViewModel
-	private lateinit var trackingListViewModel: TrackingListViewModel
-	
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		
-		Timber.d("onCreateView: called")
-		
-		super.onCreateView(
-			inflater,
-			container,
-			savedInstanceState
-		)
-		
-		// Define the binding and inflate the layout
-		binding = FragmentTrackingListBinding.inflate(
-			inflater,
-			container,
-			false
-		)
-		
-		binding.lifecycleOwner = viewLifecycleOwner
-		
-		// Define the ViewModel
-		trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
-		
-		binding.viewModel = trackingListViewModel
-		
-		trackingListViewModel.trackingListAdapter.observe(viewLifecycleOwner,
-		                                                  {
-			
-			                                                  binding.trackingListRecyclerView.adapter = it
-			
-		                                                  })
-		
-		// Construct the RecyclerView
-		val recyclerViewLayoutManager = LinearLayoutManager(context)
-		val trackingListAdapter = TrackingListAdapter(listOf())
-		
-		binding.trackingListRecyclerView.apply {
-			
-			// The views size does not change
-			setHasFixedSize(true)
-			
-			layoutManager = recyclerViewLayoutManager
-			
-			adapter = trackingListAdapter
-			
-		}
-		
-		// Return the inflated layout
-		return binding.root
-		
-	}
-	
+class TrackingListFragment : Fragment() {
+
+    // Binding for the layout
+    private lateinit var binding: FragmentTrackingListBinding
+
+    // Corresponding ViewModel
+    private lateinit var trackingListViewModel: TrackingListViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        Timber.d("onCreateView: called")
+
+        super.onCreateView(
+            inflater,
+            container,
+            savedInstanceState
+        )
+
+        // Define the binding and inflate the layout
+        binding = FragmentTrackingListBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        // Define the ViewModel
+        trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
+
+        binding.viewModel = trackingListViewModel
+
+        trackingListViewModel.trackingListAdapter.observe(viewLifecycleOwner,
+            {
+
+                binding.trackingListRecyclerView.adapter = it
+
+            })
+
+        // Construct the RecyclerView
+        val recyclerViewLayoutManager = LinearLayoutManager(context)
+        val trackingListAdapter = TrackingListAdapter(listOf())
+
+        binding.trackingListRecyclerView.apply {
+
+            // The views size does not change
+            setHasFixedSize(true)
+
+            layoutManager = recyclerViewLayoutManager
+
+            adapter = trackingListAdapter
+
+        }
+
+        // Return the inflated layout
+        return binding.root
+
+    }
+
 }

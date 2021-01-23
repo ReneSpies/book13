@@ -7,4 +7,4 @@ package co.aresid.book13.exceptions
  *    Copyright: © 2021 René Jörg Spies
  */
 
-class BookAlreadyExistsException: Exception()
+class BookAlreadyExistsException : Exception()

@@ -10,17 +10,17 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class Book13Application: Application() {
-	
-	/*
-	ONLY EDIT IF NECESSARY!
-	 */
-	
-	override fun onCreate() {
-		
-		super.onCreate()
-		
-		Timber.plant(Timber.DebugTree()) // Launch Timber for logging
-		
-	}
+class Book13Application : Application() {
+
+    /*
+    ONLY EDIT IF NECESSARY!
+     */
+
+    override fun onCreate() {
+
+        super.onCreate()
+
+        Timber.plant(Timber.DebugTree()) // Launch Timber for logging
+
+    }
 }

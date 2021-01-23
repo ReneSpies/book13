@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/navigation_graph"
-	app:startDestination="@id/trackingListFragment"
-	>
-	
+	app:startDestination="@id/trackingListFragment">
+
 	<fragment
 		android:id="@+id/addBookFragment"
 		android:name="co.aresid.book13.fragments.addbook.AddBookFragment"
 		android:label="AddBookFragment"
-		tools:layout="@layout/fragment_add_book"
-		/>
+		tools:layout="@layout/fragment_add_book" />
 	<fragment
 		android:id="@+id/trackingListFragment"
 		android:name="co.aresid.book13.fragments.trackinglist.TrackingListFragment"
@@ -22,6 +19,5 @@
 		android:id="@+id/startTrackingFragment"
 		android:name="co.aresid.book13.fragments.starttracking.StartTrackingFragment"
 		android:label="StartTrackingFragment"
-		tools:layout="@layout/fragment_start_tracking"
-		/>
+		tools:layout="@layout/fragment_start_tracking" />
 </navigation>

@@ -1,27 +1,27 @@
 <resources>
-	
-	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-		<item name="colorPrimary">@color/primaryColor</item>
-		<item name="colorPrimaryVariant">@color/primaryLightColor</item>
-		<item name="colorPrimaryDark">@color/primaryDarkColor</item>
-		<item name="colorOnPrimary">@color/primaryTextColor</item>
-		<item name="android:textColorPrimary">@color/primaryTextColor</item>
-		<item name="fontFamily">@font/ibm_plex_serif_regular</item>
-		<item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
-		<item name="materialButtonStyle">@style/AppTheme.Widget.MaterialButton</item>
-	</style>
 
-	<style name="AppTheme.Widget.TextView" parent="Widget.MaterialComponents.TextView">
-		<item name="android:padding">@dimen/text_view_padding</item>
-	</style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="fontFamily">@font/ibm_plex_serif_regular</item>
+        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+        <item name="materialButtonStyle">@style/AppTheme.Widget.MaterialButton</item>
+    </style>
 
-	<style name="AppTheme.Widget.MaterialButton" parent="Widget.MaterialComponents.Button">
-		<item name="android:textColor">@color/primaryButtonTextColor</item>
-	</style>
+    <style name="AppTheme.Widget.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:padding">@dimen/text_view_padding</item>
+    </style>
 
-	<style name="AppTheme.Widget.TextView.FragmentHeaderTextView" parent="AppTheme.Widget.TextView">
-		<item name="android:textSize">40sp</item>
-		<item name="android:textColor">?attr/colorOnBackground</item>
-	</style>
+    <style name="AppTheme.Widget.MaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryButtonTextColor</item>
+    </style>
+
+    <style name="AppTheme.Widget.TextView.FragmentHeaderTextView" parent="AppTheme.Widget.TextView">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
 
 </resources>

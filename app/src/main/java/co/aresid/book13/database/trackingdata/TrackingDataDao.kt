@@ -15,28 +15,28 @@ import androidx.room.Query
 
 @Dao
 interface TrackingDataDao {
-	
-	/**
-	 * Retrieves all [TrackingData] in the form of a [LiveData] with type [List].
-	 *
-	 * @return [LiveData] with type [List] with type [TrackingData].
-	 */
-	@Query("SELECT * FROM tracking_data")
-	suspend fun getAll(): List<TrackingData>
-	
-	/**
-	 * Retrieves a row from the table in the form of [TrackingData] where [trackingId] is found.
-	 *
-	 * @return [TrackingData] representing a row in the table.
-	 */
-	@Query("SELECT * FROM tracking_data WHERE id = :trackingId")
-	suspend fun getById(trackingId: Long): TrackingData?
-	
-	/**
-	 * Inserts a new row into the table from the [data].
-	 * Replaces all old data if a [TrackingData] with this primary key ([TrackingData.id]) already exists.
-	 */
-	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun insert(data: TrackingData)
-	
+
+    /**
+     * Retrieves all [TrackingData] in the form of a [LiveData] with type [List].
+     *
+     * @return [LiveData] with type [List] with type [TrackingData].
+     */
+    @Query("SELECT * FROM tracking_data")
+    suspend fun getAll(): List<TrackingData>
+
+    /**
+     * Retrieves a row from the table in the form of [TrackingData] where [trackingId] is found.
+     *
+     * @return [TrackingData] representing a row in the table.
+     */
+    @Query("SELECT * FROM tracking_data WHERE id = :trackingId")
+    suspend fun getById(trackingId: Long): TrackingData?
+
+    /**
+     * Inserts a new row into the table from the [data].
+     * Replaces all old data if a [TrackingData] with this primary key ([TrackingData.id]) already exists.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(data: TrackingData)
+
 }

@@ -17,62 +17,61 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListViewModel(application: Application): AndroidViewModel(application) {
+class TrackingListViewModel(application: Application) : AndroidViewModel(application) {
 
-	private val _trackingListAdapter = MutableLiveData<TrackingListAdapter>()
-	val trackingListAdapter: LiveData<TrackingListAdapter>
-		get() = _trackingListAdapter
+    private val _trackingListAdapter = MutableLiveData<TrackingListAdapter>()
+    val trackingListAdapter: LiveData<TrackingListAdapter>
+        get() = _trackingListAdapter
 
-	private val _hideLoadingAndShowContent = MutableLiveData<Boolean>()
-	val hideLoadingAndShowContent: LiveData<Boolean>
-		get() = _hideLoadingAndShowContent
+    private val _hideLoadingAndShowContent = MutableLiveData<Boolean>()
+    val hideLoadingAndShowContent: LiveData<Boolean>
+        get() = _hideLoadingAndShowContent
 
-	private val _swipeRefreshLayoutRefreshing = MutableLiveData<Boolean>()
-	val swipeRefreshLayoutRefreshing: LiveData<Boolean>
-		get() = _swipeRefreshLayoutRefreshing
+    private val _swipeRefreshLayoutRefreshing = MutableLiveData<Boolean>()
+    val swipeRefreshLayoutRefreshing: LiveData<Boolean>
+        get() = _swipeRefreshLayoutRefreshing
 
-	init {
+    init {
 
-		Timber.d("init: called")
+        Timber.d("init: called")
 
-		loadDefaultHideLoadingAndShowContentValue()
+        loadDefaultHideLoadingAndShowContentValue()
 
-		loadTrackingListAdapter()
+        loadTrackingListAdapter()
 
-	}
+    }
 
-	private fun loadDefaultHideLoadingAndShowContentValue() {
+    private fun loadDefaultHideLoadingAndShowContentValue() {
 
-		Timber.d("loadDefaultHideLoadingAndShowContentValue: called")
+        Timber.d("loadDefaultHideLoadingAndShowContentValue: called")
 
-		_hideLoadingAndShowContent.value = false
+        _hideLoadingAndShowContent.value = false
 
-	}
+    }
 
-	fun loadTrackingListAdapter() = viewModelScope.launch {
+    fun loadTrackingListAdapter() = viewModelScope.launch {
 
-		Timber.d("loadTrackingListAdapter: called")
+        Timber.d("loadTrackingListAdapter: called")
 
-		_swipeRefreshLayoutRefreshing.value = false
-		_hideLoadingAndShowContent.value = false
+        _swipeRefreshLayoutRefreshing.value = false
+        _hideLoadingAndShowContent.value = false
 
-		val repository = Book13Repository.getInstance(getApplication())
+        val repository = Book13Repository.getInstance(getApplication())
 
-		try {
+        try {
 
-			val allTrackingData = repository.getAllTrackingData()
+            val allTrackingData = repository.getAllTrackingData()
 
-			_trackingListAdapter.value = TrackingListAdapter(allTrackingData.reversed())
+            _trackingListAdapter.value = TrackingListAdapter(allTrackingData.reversed())
 
-			_hideLoadingAndShowContent.value = true
-			
-		}
-		catch (exception: Exception) {
-			
-			Timber.e(exception)
-			
-		}
-		
-	}
-	
+            _hideLoadingAndShowContent.value = true
+
+        } catch (exception: Exception) {
+
+            Timber.e(exception)
+
+        }
+
+    }
+
 }
