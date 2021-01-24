@@ -11,6 +11,10 @@
         <item name="materialButtonStyle">@style/AppTheme.Widget.MaterialButton</item>
     </style>
 
+    <style name="AppTheme.Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <style name="AppTheme.Widget.TextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:padding">@dimen/text_view_padding</item>
     </style>
