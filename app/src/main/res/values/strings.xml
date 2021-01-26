@@ -27,4 +27,6 @@
     <string name="no_trackings_yet">No trackings yet!</string>
     <string name="no_start_date"><i>No start date.</i></string>
     <string name="no_finish_date"><i>No finish date.</i></string>
+    <string name="finish_date_edit_button">Finish date edit button</string>
+    <string name="start_date_edit_button">Start date edit button</string>
 </resources>

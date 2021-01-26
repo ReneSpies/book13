@@ -25,4 +25,6 @@
     <string name="start_tracking">Eintrag anlegen</string>
     <string name="no_start_date"><i>Kein Anfangsdatum.</i></string>
     <string name="no_finish_date"><i>Kein Enddatum.</i></string>
+    <string name="finish_date_edit_button">Enddatum bearbeiten Knopf</string>
+    <string name="start_date_edit_button">Anfangsbutton bearbeiten Knopf</string>
 </resources>
