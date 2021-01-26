@@ -25,7 +25,7 @@ import java.util.*
  *    Copyright: © 2020 ARES ID
  */
 
-class AddBookFragment : Fragment() {
+class AddBookFragment: Fragment() {
 
     private lateinit var binding: FragmentAddBookBinding // Binding for the layout
 

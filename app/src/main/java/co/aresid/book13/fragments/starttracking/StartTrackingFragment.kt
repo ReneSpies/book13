@@ -24,7 +24,7 @@ import java.util.*
  *    Copyright: © 2020 ARES ID
  */
 
-class StartTrackingFragment : Fragment() {
+class StartTrackingFragment: Fragment() {
 
     private lateinit var binding: FragmentStartTrackingBinding // Binding for the layout
 

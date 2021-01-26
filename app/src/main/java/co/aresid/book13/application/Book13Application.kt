@@ -10,7 +10,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class Book13Application : Application() {
+class Book13Application: Application() {
 
     /*
     ONLY EDIT IF NECESSARY!

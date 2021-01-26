@@ -13,7 +13,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListViewHolder private constructor(val binding: ItemTrackingListBinding) :
+class TrackingListViewHolder private constructor(val binding: ItemTrackingListBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {

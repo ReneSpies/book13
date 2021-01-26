@@ -31,7 +31,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class AddBookViewModel(application: Application) : AndroidViewModel(application) {
+class AddBookViewModel(application: Application): AndroidViewModel(application) {
 
     var bookTitle = ""
     var bookAuthor = ""

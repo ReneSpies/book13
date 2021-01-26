@@ -13,7 +13,7 @@ import java.text.DateFormat
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListAdapter(private val trackingList: List<TrackingData>) :
+class TrackingListAdapter(private val trackingList: List<TrackingData>):
     RecyclerView.Adapter<TrackingListViewHolder>() {
 
     override fun onCreateViewHolder(

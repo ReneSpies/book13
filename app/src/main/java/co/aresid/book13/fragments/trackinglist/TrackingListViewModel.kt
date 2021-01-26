@@ -17,7 +17,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListViewModel(application: Application) : AndroidViewModel(application) {
+class TrackingListViewModel(application: Application): AndroidViewModel(application) {
 
     private val _trackingListAdapter = MutableLiveData<TrackingListAdapter>()
     val trackingListAdapter: LiveData<TrackingListAdapter>

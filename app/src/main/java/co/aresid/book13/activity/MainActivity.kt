@@ -11,7 +11,7 @@ import co.aresid.book13.databinding.ActivityMainBinding
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding // Binding for the layout
 

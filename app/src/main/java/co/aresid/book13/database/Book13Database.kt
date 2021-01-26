@@ -23,7 +23,7 @@ import co.aresid.book13.database.trackingdata.TrackingDataDao
     version = 2,
     exportSchema = true // Export the database schema to an external file (NOT IN VCS) for future references or rollbacks
 )
-abstract class Book13Database : RoomDatabase() {
+abstract class Book13Database: RoomDatabase() {
 
     /**
      * @return [BookDataDao].
@@ -85,7 +85,7 @@ abstract class Book13Database : RoomDatabase() {
 }
 
 // Migrate to a new version of the database
-val MIGRATION_1_2: Migration = object : Migration(
+val MIGRATION_1_2: Migration = object: Migration(
     1,
     2
 ) {

@@ -18,7 +18,7 @@ import timber.log.Timber
  *    Copyright: © 2020 ARES ID
  */
 
-class TrackingListFragment : Fragment() {
+class TrackingListFragment: Fragment() {
 
     // Binding for the layout
     private lateinit var binding: FragmentTrackingListBinding
@@ -47,11 +47,10 @@ class TrackingListFragment : Fragment() {
             false
         )
 
-        binding.lifecycleOwner = viewLifecycleOwner
-
         // Define the ViewModel
         trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
 
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = trackingListViewModel
 
         trackingListViewModel.trackingListAdapter.observe(viewLifecycleOwner,
