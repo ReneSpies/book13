@@ -20,4 +20,5 @@ The app is currently on the open testing track undergoing Google's review before
 
 ![](https://i.imgur.com/B22MiFAl.png) ![](https://i.imgur.com/000sbcAl.png) ![](https://i.imgur.com/KMa7DnLl.png)
 
-![](https://youtu.be/Rs1cmq3iVpM)
+#### Video presentation
+[![](http://img.youtube.com/vi/Rs1cmq3iVpM/0.jpg)](https://youtu.be/Rs1cmq3iVpM)
