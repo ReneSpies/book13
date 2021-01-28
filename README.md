@@ -19,3 +19,5 @@ The app is currently on the open testing track undergoing Google's review before
 ## Screenshots & presentation
 
 ![](https://i.imgur.com/B22MiFAl.png) ![](https://i.imgur.com/000sbcAl.png) ![](https://i.imgur.com/KMa7DnLl.png)
+
+[![book13_presentation.md.gif](https://s2.gifyu.com/images/book13_presentation.md.gif)](https://gifyu.com/image/Unyw)
