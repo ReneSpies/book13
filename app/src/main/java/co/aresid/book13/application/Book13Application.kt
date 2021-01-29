@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package co.aresid.book13.application
 
 import android.app.Application

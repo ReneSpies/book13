@@ -138,7 +138,6 @@
         <TextView
             android:id="@+id/finish_text_view"
             android:layout_width="0dp"
-            android:contentDescription="@string/finish_date_edit_button"
             android:layout_height="wrap_content"
             android:text="@string/finish_colon"
             app:layout_constraintBottom_toBottomOf="@id/finish_date_edit_image_button"
@@ -160,6 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2.5dp"
+            android:contentDescription="@string/finish_date_edit_button"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:onClick="@{() -> viewModel.renderDatePickerDialog(DatePickerVariant.FINISH)}"
             android:padding="5dp"

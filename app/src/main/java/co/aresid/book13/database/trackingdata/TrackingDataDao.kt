@@ -1,10 +1,7 @@
 package co.aresid.book13.database.trackingdata
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 /**
  *    Created on: 02.09.2020
@@ -38,5 +35,8 @@ interface TrackingDataDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(data: TrackingData)
+
+    @Delete
+    suspend fun delete(data: TrackingData)
 
 }

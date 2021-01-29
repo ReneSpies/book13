@@ -34,12 +34,17 @@ class TrackingListAdapter(private val trackingList: List<TrackingData>):
 
         Timber.d("onBindViewHolder: called")
 
-        holder.binding.trackingEntry = trackingList[position]
+        val shortDateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
+        val trackingData = trackingList[position]
 
-        holder.binding.startDate =
-            DateFormat.getDateInstance(DateFormat.SHORT).format(trackingList[position].startDate)
-        holder.binding.finishDate =
-            DateFormat.getDateInstance(DateFormat.SHORT).format(trackingList[position].finishDate)
+        holder.binding.apply {
+
+            this.trackingData = trackingData
+
+            startDate = shortDateFormatter.format(trackingData.startDate)
+            finishDate = shortDateFormatter.format(trackingData.finishDate)
+
+        }
 
     }
 

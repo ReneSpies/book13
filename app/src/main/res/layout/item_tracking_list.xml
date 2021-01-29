@@ -9,7 +9,7 @@
             type="Integer" />
 
         <variable
-            name="trackingEntry"
+            name="trackingData"
             type="co.aresid.book13.database.trackingdata.TrackingData" />
 
         <variable
@@ -37,7 +37,7 @@
                 android:id="@+id/book_title_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.format(@string/id_and_title_placeholder, trackingEntry.bookId, trackingEntry.bookTitle)}"
+                android:text="@{String.format(@string/id_and_title_placeholder, trackingData.bookId, trackingData.bookTitle)}"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toTopOf="@id/guideline_top" />
@@ -46,7 +46,7 @@
                 android:id="@+id/start_date_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{trackingEntry.startDate == -1 ? @text/no_start_date : String.format(@string/started_placeholder, startDate)}"
+                android:text="@{trackingData.startDate == -1 ? @text/no_start_date : String.format(@string/started_placeholder, startDate)}"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_50"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/book_title_text_view" />
@@ -55,7 +55,7 @@
                 android:id="@+id/finish_date_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{trackingEntry.finishDate == -1 ? @text/no_finish_date : String.format(@string/finished_placeholder, finishDate)}"
+                android:text="@{trackingData.finishDate == -1 ? @text/no_finish_date : String.format(@string/finished_placeholder, finishDate)}"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_vertical_50"
                 app:layout_constraintTop_toBottomOf="@id/book_title_text_view" />
@@ -65,7 +65,7 @@
                 android:id="@+id/pages_to_read_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.format(@string/pages_read_placeholder, trackingEntry.finishPageCount - trackingEntry.startPageCount)}"
+                android:text="@{String.format(@string/pages_read_placeholder, trackingData.finishPageCount - trackingData.startPageCount)}"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_50"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -75,7 +75,7 @@
                 android:id="@+id/pages_read_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.format(@string/from_to_placeholder, trackingEntry.startPageCount, trackingEntry.finishPageCount)}"
+                android:text="@{String.format(@string/from_to_placeholder, trackingData.startPageCount, trackingData.finishPageCount)}"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_vertical_50"

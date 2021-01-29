@@ -55,6 +55,8 @@ class Book13Repository private constructor(private val application: Application)
 
     suspend fun insertTrackingData(data: TrackingData) = trackingDataDao.insert(data)
 
+    suspend fun deleteTrackingData(data: TrackingData) = trackingDataDao.delete(data)
+
     // Make it a singleton
     companion object {
 
