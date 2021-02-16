@@ -14,7 +14,7 @@ You can clone the repository on Android Studio or whatever IDE you might use and
 
 ### Get the app from Google Play
 
-The app is currently on the open testing track undergoing Google's review before being available for download.
+The app is available on [Google Play](https://play.google.com/store/apps/details?id=co.aresid.book13.beta).
 <br><br>
 ## Screenshots & presentation
 
