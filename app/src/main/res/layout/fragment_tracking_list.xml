@@ -6,24 +6,22 @@
 
         <import type="android.view.View" />
 
+        <import type="co.aresid.book13.database.trackingdata.TrackingData" />
+
+        <import type="java.util.List" />
+
         <variable
             name="viewModel"
             type="co.aresid.book13.fragments.trackinglist.TrackingListViewModel" />
+
+        <variable
+            name="allTrackingData"
+            type="androidx.lifecycle.LiveData&lt;List&lt;TrackingData>>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/progress_circular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateDrawable="@drawable/animated_loading_spinner"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
         <TextView
             android:id="@+id/no_trackings_yet_text_view"
@@ -32,29 +30,23 @@
             android:text="@string/no_trackings_yet"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
-            android:visibility="@{viewModel.trackingListAdapter.itemCount == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{allTrackingData.size() == 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tracking_list_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:hasFixedSize="@{true}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top"
-            app:onRefreshListener="@{() -> viewModel.loadTrackingListAdapter()}"
-            app:refreshing="@{viewModel.swipeRefreshLayoutRefreshing}">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tracking_list_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            app:reverseLayout="true"
+            app:stackFromEnd="true" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
@@ -83,20 +75,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="@dimen/guideline_margin_small" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/content_group"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="@{viewModel.hideLoadingAndShowContent ? View.VISIBLE : View.GONE, default=gone}"
-            app:constraint_referenced_ids="swipe_refresh_layout" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/loading_group"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="@{viewModel.hideLoadingAndShowContent ? View.GONE : View.VISIBLE, default=visible}"
-            app:constraint_referenced_ids="progress_circular" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

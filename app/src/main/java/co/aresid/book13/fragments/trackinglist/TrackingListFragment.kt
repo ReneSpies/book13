@@ -52,13 +52,13 @@ class TrackingListFragment: Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = trackingListViewModel
+        binding.allTrackingData = trackingListViewModel.allTrackingData
 
-        trackingListViewModel.trackingListAdapter.observe(viewLifecycleOwner,
-            {
+        trackingListViewModel.allTrackingData.observe(viewLifecycleOwner) {
 
-                binding.trackingListRecyclerView.adapter = it
+            binding.trackingListRecyclerView.adapter = TrackingListAdapter(it)
 
-            })
+        }
 
         trackingListViewModel.itemTouchHelperCallback.observe(viewLifecycleOwner) {
 
@@ -67,18 +67,6 @@ class TrackingListFragment: Fragment() {
                 ItemTouchHelper(this).attachToRecyclerView(binding.trackingListRecyclerView)
 
             }
-
-        }
-
-        // Construct the RecyclerView
-        val trackingListAdapter = TrackingListAdapter(listOf())
-
-        binding.trackingListRecyclerView.apply {
-
-            // The views size does not change
-            setHasFixedSize(true)
-
-            adapter = trackingListAdapter
 
         }
 

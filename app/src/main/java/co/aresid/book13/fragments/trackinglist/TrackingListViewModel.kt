@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import co.aresid.book13.R
 import co.aresid.book13.Util.renderErrorSnackbar
 import co.aresid.book13.database.trackingdata.TrackingData
-import co.aresid.book13.recyclerview.TrackingListAdapter
 import co.aresid.book13.recyclerview.TrackingListViewHolder
 import co.aresid.book13.repository.Book13Repository
 import com.google.android.material.snackbar.Snackbar
@@ -27,35 +26,26 @@ import timber.log.Timber
 
 class TrackingListViewModel(application: Application): AndroidViewModel(application) {
 
-    // This LiveData carries the TrackingListAdapter information
-    private val _trackingListAdapter = MutableLiveData<TrackingListAdapter>()
-    val trackingListAdapter: LiveData<TrackingListAdapter>
-        get() = _trackingListAdapter
-
-    // This LiveData controls whether to show a loading animation or not
-    private val _hideLoadingAndShowContent = MutableLiveData<Boolean>()
-    val hideLoadingAndShowContent: LiveData<Boolean>
-        get() = _hideLoadingAndShowContent
-
-    // This LiveData controls whether to show the SwipeRefreshLayout loading animation or not
-    private val _swipeRefreshLayoutRefreshing = MutableLiveData<Boolean>()
-    val swipeRefreshLayoutRefreshing: LiveData<Boolean>
-        get() = _swipeRefreshLayoutRefreshing
-
     // This LiveData carries the ItemTouchHelper.SimpleCallback information
     private val _itemTouchHelperCallback = MutableLiveData<ItemTouchHelper.SimpleCallback>()
     val itemTouchHelperCallback: LiveData<ItemTouchHelper.SimpleCallback>
         get() = _itemTouchHelperCallback
+
+    val allTrackingData: LiveData<List<TrackingData>>
+        get() {
+
+            val repository = Book13Repository.getInstance(getApplication())
+
+            return repository.getAllTrackingDataLiveData()
+
+        }
 
     init {
 
         Timber.d("init: called")
 
         // Initialize LiveData
-        loadDefaultHideLoadingAndShowContentValue()
         loadDefaultItemTouchHelperCallbackValue()
-
-        loadTrackingListAdapter() // Retrieve all TrackingData from database and load it into the adapter
 
     }
 
@@ -141,14 +131,11 @@ class TrackingListViewModel(application: Application): AndroidViewModel(applicat
                 val cardView = viewHolder.binding.cardView // Extract the item's cardView. Needed for context
 
                 /**
-                 * Reloads the RecyclerView's adapter to update the UI via [loadTrackingListAdapter] and
-                 * renders an error Snackbar with the [R.string.standard_error_message] via [renderErrorSnackbar].
+                 * Renders an error Snackbar with the [R.string.standard_error_message] via [renderErrorSnackbar].
                  */
                 fun handleException() {
 
                     Timber.d("handleException: called")
-
-                    loadTrackingListAdapter() // Reload the adapter to update the UI
 
                     cardView.renderErrorSnackbar(cardView.context.getString(R.string.standard_error_message)) // Render an error snackbar with standard error message
 
@@ -162,8 +149,6 @@ class TrackingListViewModel(application: Application): AndroidViewModel(applicat
 
                         deleteTrackingData(trackingData) // Delete the trackingData
 
-                        loadTrackingListAdapter() // Reload the adapter to update the UI
-
                         // Render a Snackbar with an UNDO action
                         renderUndoSnackbar(cardView) {
 
@@ -171,8 +156,6 @@ class TrackingListViewModel(application: Application): AndroidViewModel(applicat
                             try {
 
                                 insertTrackingData(trackingData) // Re-insert the deleted trackingData
-
-                                loadTrackingListAdapter() // Reload the adapter to update the UI
 
                             } catch (exception: Exception) {
 
@@ -195,48 +178,6 @@ class TrackingListViewModel(application: Application): AndroidViewModel(applicat
                 }
 
             }
-
-        }
-
-    }
-
-    /**
-     * Loads the default value into [_hideLoadingAndShowContent].
-     * The default value is false.
-     */
-    private fun loadDefaultHideLoadingAndShowContentValue() {
-
-        Timber.d("loadDefaultHideLoadingAndShowContentValue: called")
-
-        _hideLoadingAndShowContent.value = false
-
-    }
-
-    /**
-     * Retrieves all [TrackingData] entries from the database and loads it into the
-     * [TrackingListAdapter] for the RecyclerView via [_trackingListAdapter] LiveData.
-     */
-    fun loadTrackingListAdapter() = viewModelScope.launch {
-
-        Timber.d("loadTrackingListAdapter: called")
-
-        _swipeRefreshLayoutRefreshing.value = false // Hide the SwipeRefreshLayout loading animation
-        _hideLoadingAndShowContent.value = false // Show the custom loading animation
-
-        val repository = Book13Repository.getInstance(getApplication()) // Get a repository instance
-
-        // Catch Exceptions thrown when retrieving all trackingData
-        try {
-
-            val allTrackingData = repository.getAllTrackingData() // Retrieve all trackingData
-
-            _trackingListAdapter.value = TrackingListAdapter(allTrackingData.reversed()) // Reverse the list and create a new TrackingListAdapter from the trackingData
-
-            _hideLoadingAndShowContent.value = true // Hide the custom loading animation
-
-        } catch (exception: Exception) {
-
-            Timber.e(exception)
 
         }
 

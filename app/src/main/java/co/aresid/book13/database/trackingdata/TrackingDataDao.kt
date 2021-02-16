@@ -14,12 +14,13 @@ import androidx.room.*
 interface TrackingDataDao {
 
     /**
-     * Retrieves all [TrackingData] in the form of a [LiveData] with type [List].
+     * Retrieves a [LiveData] instance with the type [List] with the type [TrackingData]
+     * which holds all currently stored [TrackingData].
      *
      * @return [LiveData] with type [List] with type [TrackingData].
      */
     @Query("SELECT * FROM tracking_data")
-    suspend fun getAll(): List<TrackingData>
+    fun getAllLiveData(): LiveData<List<TrackingData>>
 
     /**
      * Retrieves a row from the table in the form of [TrackingData] where [trackingId] is found.

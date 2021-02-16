@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import co.aresid.book13.database.bookdata.BookData
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +25,19 @@ import java.util.concurrent.TimeUnit
  */
 
 object Util {
+
+    /**
+     * Gives the [RecyclerView]'s items a fixed size depending on [has].
+     */
+    @JvmStatic
+    @BindingAdapter("hasFixedSize")
+    fun RecyclerView.hasFixedSize(@NotNull has: Boolean) {
+
+        Timber.d("hasFixedSize: called")
+
+        setHasFixedSize(has)
+
+    }
 
     /**
      * Checks if its list contains the [book]. Checks the fields
@@ -58,7 +72,6 @@ object Util {
     fun EditText.clearText(@NotNull shouldClear: Boolean) {
 
         Timber.d("clearText: called")
-        Timber.d("shouldClear = $shouldClear")
 
         if (shouldClear) text = null
 

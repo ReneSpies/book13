@@ -49,13 +49,13 @@ class Book13Repository private constructor(private val application: Application)
 
     suspend fun getAllBookData() = bookDataDao.getAll()
 
-    suspend fun getAllTrackingData() = trackingDataDao.getAll()
-
     suspend fun insertBookData(data: BookData) = bookDataDao.insert(data)
 
     suspend fun insertTrackingData(data: TrackingData) = trackingDataDao.insert(data)
 
     suspend fun deleteTrackingData(data: TrackingData) = trackingDataDao.delete(data)
+
+    fun getAllTrackingDataLiveData() = trackingDataDao.getAllLiveData()
 
     // Make it a singleton
     companion object {
