@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/trackingListFragment">
-
-    <fragment
-        android:id="@+id/addBookFragment"
-        android:name="co.aresid.book13.fragments.addbook.AddBookFragment"
-        android:label="AddBookFragment"
-        tools:layout="@layout/fragment_add_book" />
-    <fragment
-        android:id="@+id/trackingListFragment"
-        android:name="co.aresid.book13.fragments.trackinglist.TrackingListFragment"
-        android:label="TrackingListFragment"
-        tools:layout="@layout/fragment_tracking_list" />
-    <fragment
-        android:id="@+id/startTrackingFragment"
-        android:name="co.aresid.book13.fragments.starttracking.StartTrackingFragment"
-        android:label="StartTrackingFragment"
-        tools:layout="@layout/fragment_start_tracking" />
+<navigation
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	app:startDestination="@id/trackingListFragment"
+	>
+	
+	<fragment
+		android:id="@+id/addBookFragment"
+		android:name="co.aresid.book13.fragments.addbook.AddBookFragment"
+		android:label="AddBookFragment"
+		tools:layout="@layout/fragment_add_book"
+		/>
+	<fragment
+		android:id="@+id/trackingListFragment"
+		android:name="co.aresid.book13.fragments.trackinglist.TrackingListFragment"
+		android:label="TrackingListFragment"
+		tools:layout="@layout/fragment_tracking_list"
+		>
+		<action
+			android:id="@+id/to_editTrackingDataFragment"
+			app:destination="@id/editTrackingDataFragment"
+			app:enterAnim="@anim/fade_in"
+			app:exitAnim="@anim/fade_out"
+			app:popEnterAnim="@anim/fade_in"
+			app:popExitAnim="@anim/fade_out"
+			app:popUpTo="@id/trackingListFragment"
+			app:popUpToInclusive="false"
+			/>
+	</fragment>
+	<fragment
+		android:id="@+id/startTrackingFragment"
+		android:name="co.aresid.book13.fragments.starttracking.StartTrackingFragment"
+		android:label="StartTrackingFragment"
+		tools:layout="@layout/fragment_start_tracking"
+		/>
+	<fragment
+		android:id="@+id/editTrackingDataFragment"
+		android:name="co.aresid.book13.fragments.edittrackingdata.EditTrackingDataFragment"
+		android:label="EditTrackingDataFragment"
+		tools:layout="@layout/fragment_edit_tracking_data"
+		>
+		<argument
+			android:name="trackingData"
+			app:argType="co.aresid.book13.database.trackingdata.TrackingData"
+			/>
+	</fragment>
 </navigation>

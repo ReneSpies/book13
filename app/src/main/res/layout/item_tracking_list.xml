@@ -10,17 +10,25 @@
 
         <variable
             name="trackingData"
-            type="co.aresid.book13.database.trackingdata.TrackingData" />
-
+            type="co.aresid.book13.database.trackingdata.TrackingData"
+            />
+    
         <variable
             name="startDate"
-            type="String" />
-
+            type="String"
+            />
+    
         <variable
             name="finishDate"
-            type="String" />
-
-        <import type="android.view.View" />
+            type="String"
+            />
+    
+        <variable
+            name="viewHolder"
+            type="co.aresid.book13.recyclerview.TrackingListViewHolder"
+            />
+    
+        <import type="android.view.View"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,11 +36,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
-
+    
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{(view) -> viewHolder.itemClicked(view)}"
+            android:layout_height="match_parent"
+            >
+        
             <TextView
                 android:id="@+id/book_title_text_view"
                 android:layout_width="0dp"
@@ -40,7 +51,8 @@
                 android:text="@{String.format(@string/id_and_title_placeholder, trackingData.bookId, trackingData.bookTitle)}"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
-                app:layout_constraintTop_toTopOf="@id/guideline_top" />
+                app:layout_constraintTop_toTopOf="@id/guideline_top"
+                />
 
             <TextView
                 android:id="@+id/start_date_text_view"

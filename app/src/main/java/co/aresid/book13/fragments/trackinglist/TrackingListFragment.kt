@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import co.aresid.book13.databinding.FragmentTrackingListBinding
 import co.aresid.book13.recyclerview.TrackingListAdapter
 import timber.log.Timber
@@ -53,20 +52,11 @@ class TrackingListFragment: Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = trackingListViewModel
         binding.allTrackingData = trackingListViewModel.allTrackingData
+	    binding.trackingListRecyclerView.adapter = TrackingListAdapter(listOf())
 
         trackingListViewModel.allTrackingData.observe(viewLifecycleOwner) {
-
-            binding.trackingListRecyclerView.adapter = TrackingListAdapter(it)
-
-        }
-
-        trackingListViewModel.itemTouchHelperCallback.observe(viewLifecycleOwner) {
-
-            it?.apply {
-
-                ItemTouchHelper(this).attachToRecyclerView(binding.trackingListRecyclerView)
-
-            }
+	
+	        (binding.trackingListRecyclerView.adapter as TrackingListAdapter).setTrackingList(it)
 
         }
 
