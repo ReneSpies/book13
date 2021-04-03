@@ -14,37 +14,37 @@ import androidx.room.Query
 
 @Dao
 interface BookDataDao {
-
-    /**
-     * Retrieves a book from the database where [bookId] is found.
-     *
-     * @return [BookData] object representing a row from the table.
-     */
-    @Query("SELECT * FROM book_data WHERE id = :bookId")
-    suspend fun getById(bookId: Long): BookData?
-
-    /**
-     * Retrieves a book from the database where [bookTitle] is found.
-     * Is possible due to [bookTitle] being unique.
-     *
-     * @return [BookData] object representing a row from the table.
-     */
-    @Query("SELECT * FROM book_data WHERE title = :bookTitle")
-    suspend fun getByTitle(bookTitle: String): BookData?
-
-    /**
-     * Retrieves a list of all books found in the table.
-     *
-     * @return [List] with type [BookData] representing all rows from the table.
-     */
-    @Query("SELECT * FROM book_data")
-    suspend fun getAll(): List<BookData>
-
-    /**
-     * Inserts a new book from [data] into the table.
-     * Replaces all old data if a book with the primary key ([BookData.id]) already exists.
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(data: BookData)
-
+	
+	/**
+	 * Retrieves a book from the database where [bookId] is found.
+	 *
+	 * @return [BookData] object representing a row from the table.
+	 */
+	@Query("SELECT * FROM book_data WHERE id = :bookId")
+	suspend fun getById(bookId: Long): BookData?
+	
+	/**
+	 * Retrieves a book from the database where [bookTitle] is found.
+	 * Is possible due to [bookTitle] being unique.
+	 *
+	 * @return [BookData] object representing a row from the table.
+	 */
+	@Query("SELECT * FROM book_data WHERE title = :bookTitle")
+	suspend fun getByTitle(bookTitle: String): BookData?
+	
+	/**
+	 * Retrieves a list of all books found in the table.
+	 *
+	 * @return [List] with type [BookData] representing all rows from the table.
+	 */
+	@Query("SELECT * FROM book_data")
+	suspend fun getAll(): List<BookData>
+	
+	/**
+	 * Inserts a new book from [data] into the table.
+	 * Replaces all old data if a book with the primary key ([BookData.id]) already exists.
+	 */
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun insert(data: BookData)
+	
 }

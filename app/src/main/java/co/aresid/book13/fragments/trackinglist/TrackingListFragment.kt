@@ -18,51 +18,51 @@ import timber.log.Timber
  */
 
 class TrackingListFragment: Fragment() {
-
-    // Binding for the layout
-    private lateinit var binding: FragmentTrackingListBinding
-
-    // Corresponding ViewModel
-    private lateinit var trackingListViewModel: TrackingListViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        Timber.d("onCreateView: called")
-
-        super.onCreateView(
-            inflater,
-            container,
-            savedInstanceState
-        )
-
-        // Define the binding and inflate the layout
-        binding = FragmentTrackingListBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-
-        // Define the ViewModel
-        trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
-
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = trackingListViewModel
-        binding.allTrackingData = trackingListViewModel.allTrackingData
-	    binding.trackingListRecyclerView.adapter = TrackingListAdapter(listOf())
-
-        trackingListViewModel.allTrackingData.observe(viewLifecycleOwner) {
 	
-	        (binding.trackingListRecyclerView.adapter as TrackingListAdapter).setTrackingList(it)
-
-        }
-
-        // Return the inflated layout
-        return binding.root
-
-    }
-
+	// Binding for the layout
+	private lateinit var binding: FragmentTrackingListBinding
+	
+	// Corresponding ViewModel
+	private lateinit var trackingListViewModel: TrackingListViewModel
+	
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		
+		Timber.d("onCreateView: called")
+		
+		super.onCreateView(
+			inflater,
+			container,
+			savedInstanceState
+		)
+		
+		// Define the binding and inflate the layout
+		binding = FragmentTrackingListBinding.inflate(
+			inflater,
+			container,
+			false
+		)
+		
+		// Define the ViewModel
+		trackingListViewModel = ViewModelProvider(this).get(TrackingListViewModel::class.java)
+		
+		binding.lifecycleOwner = viewLifecycleOwner
+		binding.viewModel = trackingListViewModel
+		binding.allTrackingData = trackingListViewModel.allTrackingData
+		binding.trackingListRecyclerView.adapter = TrackingListAdapter(listOf())
+		
+		trackingListViewModel.allTrackingData.observe(viewLifecycleOwner) {
+			
+			(binding.trackingListRecyclerView.adapter as TrackingListAdapter).setTrackingList(it)
+			
+		}
+		
+		// Return the inflated layout
+		return binding.root
+		
+	}
+	
 }

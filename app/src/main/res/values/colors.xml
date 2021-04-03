@@ -1,9 +1,9 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="primaryColor">#263238</color>
-    <color name="primaryLightColor">#4f5b62</color>
-    <color name="primaryDarkColor">#000a12</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="errorColor">#B00020</color>
-    <color name="primaryButtonTextColor">#ffffff</color>
+	<color name="primaryColor">#263238</color>
+	<color name="primaryLightColor">#4f5b62</color>
+	<color name="primaryDarkColor">#000a12</color>
+	<color name="primaryTextColor">#000000</color>
+	<color name="errorColor">#B00020</color>
+	<color name="primaryButtonTextColor">#ffffff</color>
 </resources>

@@ -41,7 +41,7 @@ class TrackingListViewHolder private constructor(val binding: ItemTrackingListBi
 		
 		Timber.d("itemClicked: called")
 		
-		val action = TrackingListFragmentDirections.toEditTrackingDataFragment(binding.trackingData ?: return)
+		val action = TrackingListFragmentDirections.toStartTrackingFragment(binding.trackingData ?: return)
 		
 		view.findNavController().navigate(action)
 		

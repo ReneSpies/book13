@@ -1,34 +1,39 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">book13</string>
-    <string name="start_tracking">Save Tracking</string>
-    <string name="add_a_book">Add A Book</string>
-    <string name="title">Title</string>
-    <string name="author">Author</string>
-    <string name="number_of_pages">Number of pages</string>
-    <string name="add_the_book">Add the book</string>
-    <string name="start_colon" translatable="false">Start&#58;</string>
-    <string name="finish_colon">Finish&#58;</string>
-    <string name="book">Book</string>
-    <string name="start_page_count">Start page count</string>
-    <string name="finish_page_count">Finish page count</string>
-    <string name="book_title_missing">Book title missing.</string>
-    <string name="book_author_missing">Book author missing.</string>
-    <string name="book_page_count_missing">Book page count missing.</string>
-    <string name="standard_error_message">Unknown error, please try again.</string>
-    <string name="no_book_found">No matching book found.</string>
-    <string name="starting_page_count_missing">Starting page count missing.</string>
-    <string name="finishing_page_count_missing">Finishing page count missing.</string>
-    <string name="book_already_exists">Book already exists. Change title, author, page count or use the existing one.</string>
-    <string name="id_and_title_placeholder" translatable="false">%1d - %2s</string>
-    <string name="started_placeholder">Started&#58; %1s</string>
-    <string name="finished_placeholder">Finished&#58; %1s</string>
-    <string name="pages_read_placeholder">Pages read&#58; %1d</string>
-    <string name="from_to_placeholder">From %1d to %2d</string>
-    <string name="no_trackings_yet">No trackings yet!</string>
-    <string name="no_start_date" tools:keep="@string/no_start_date"><i>No start date.</i></string>
-    <string name="no_finish_date" tools:keep="@string/no_finish_date"><i>No finish date.</i></string>
-    <string name="finish_date_edit_button">Finish date edit button</string>
-    <string name="start_date_edit_button">Start date edit button</string>
-    <string name="entry_deleted">Entry deleted.</string>
-    <string name="undo">UNDO</string>
+	<string name="app_name"
+		translatable="false">book13</string>
+	<string name="start_tracking">Save Tracking</string>
+	<string name="add_a_book">Add A Book</string>
+	<string name="title">Title</string>
+	<string name="author">Author</string>
+	<string name="number_of_pages">Number of pages</string>
+	<string name="add_the_book">Add the book</string>
+	<string name="start_colon"
+		translatable="false">Start&#58;</string>
+	<string name="finish_colon">Finish&#58;</string>
+	<string name="book">Book</string>
+	<string name="start_page_count">Start page count</string>
+	<string name="finish_page_count">Finish page count</string>
+	<string name="book_title_missing">Book title missing.</string>
+	<string name="book_author_missing">Book author missing.</string>
+	<string name="book_page_count_missing">Book page count missing.</string>
+	<string name="standard_error_message">Unknown error, please try again.</string>
+	<string name="no_book_found">No matching book found.</string>
+	<string name="starting_page_count_missing">Starting page count missing.</string>
+	<string name="finishing_page_count_missing">Finishing page count missing.</string>
+	<string name="book_already_exists">Book already exists. Change title, author, page count or use the existing one.</string>
+	<string name="id_and_title_placeholder"
+		translatable="false">%1d - %2s</string>
+	<string name="started_placeholder">Started&#58; %1s</string>
+	<string name="finished_placeholder">Finished&#58; %1s</string>
+	<string name="pages_read_placeholder">Pages read&#58; %1d</string>
+	<string name="from_to_placeholder">From %1d to %2d</string>
+	<string name="no_trackings_yet">No trackings yet!</string>
+	<string name="no_start_date"
+		tools:keep="@string/no_start_date"><i>No start date.</i></string>
+	<string name="no_finish_date"
+		tools:keep="@string/no_finish_date"><i>No finish date.</i></string>
+	<string name="finish_date_edit_button">Finish date edit button</string>
+	<string name="start_date_edit_button">Start date edit button</string>
+	<string name="entry_deleted">Entry deleted.</string>
+	<string name="undo">UNDO</string>
 </resources>

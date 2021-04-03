@@ -24,30 +24,30 @@ class TrackingListAdapter(private var trackingList: List<TrackingData>): Recycle
 		Timber.d("onCreateViewHolder: called")
 		
 		return TrackingListViewHolder.from(parent)
-
-    }
-
-    override fun onBindViewHolder(
-        holder: TrackingListViewHolder,
-        position: Int
-    ) {
-
-        Timber.d("onBindViewHolder: called")
-
-        val shortDateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
-        val trackingData = trackingList[position]
-
-        holder.binding.apply {
-
-            this.trackingData = trackingData
+		
+	}
 	
-	        startDate = shortDateFormatter.format(trackingData.startDate)
-	        finishDate = shortDateFormatter.format(trackingData.finishDate)
-	        viewHolder = holder
-	
-        }
-	
-    }
+	override fun onBindViewHolder(
+		holder: TrackingListViewHolder,
+		position: Int
+	) {
+		
+		Timber.d("onBindViewHolder: called")
+		
+		val shortDateFormatter = DateFormat.getDateInstance(DateFormat.SHORT)
+		val trackingData = trackingList[position]
+		
+		holder.binding.apply {
+			
+			this.trackingData = trackingData
+			
+			startDate = shortDateFormatter.format(trackingData.startDate)
+			finishDate = shortDateFormatter.format(trackingData.finishDate)
+			viewHolder = holder
+			
+		}
+		
+	}
 	
 	override fun getItemCount(): Int = trackingList.size
 	

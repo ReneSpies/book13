@@ -13,16 +13,16 @@ import timber.log.Timber
  */
 
 class Book13Application: Application() {
-
-    /*
-    ONLY EDIT IF NECESSARY!
-     */
-
-    override fun onCreate() {
-
-        super.onCreate()
-
-        Timber.plant(Timber.DebugTree()) // Launch Timber for logging
-
-    }
+	
+	/*
+	ONLY EDIT IF NECESSARY!
+	 */
+	
+	override fun onCreate() {
+		
+		super.onCreate()
+		
+		Timber.plant(Timber.DebugTree()) // Launch Timber for logging
+		
+	}
 }

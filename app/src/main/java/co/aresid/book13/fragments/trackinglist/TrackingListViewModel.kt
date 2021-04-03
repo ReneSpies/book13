@@ -14,14 +14,14 @@ import co.aresid.book13.repository.Book13Repository
  */
 
 class TrackingListViewModel(application: Application): AndroidViewModel(application) {
-
-    val allTrackingData: LiveData<List<TrackingData>>
-        get() {
-
-            val repository = Book13Repository.getInstance(getApplication())
-
-            return repository.getAllTrackingDataLiveData()
-
-        }
+	
+	val allTrackingData: LiveData<List<TrackingData>>
+		get() {
+			
+			val repository = Book13Repository.getInstance(getApplication())
+			
+			return repository.getAllTrackingDataLiveData()
+			
+		}
 	
 }
