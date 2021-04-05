@@ -18,7 +18,7 @@ The app is available on [Google Play](https://play.google.com/store/apps/details
 <br><br>
 ## Screenshots and presentation
 
-![](https://i.imgur.com/B22MiFAl.png) ![](https://i.imgur.com/000sbcAl.png) ![](https://i.imgur.com/KMa7DnLl.png)
+![](https://i.imgur.com/nFwH7x8l.png) ![](https://i.imgur.com/Y0UXQfbl.png) ![](https://i.imgur.com/9t1Uaunl.png)
 
 #### Video presentation
 [![](http://img.youtube.com/vi/VPxtenJNJAw/0.jpg)](https://youtu.be/VPxtenJNJAw)
